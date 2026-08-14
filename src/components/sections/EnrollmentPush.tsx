@@ -1,4 +1,4 @@
-import { Baby, Building2, Clock3, Package, Sparkles, Sun, WalletCards } from "lucide-react";
+import { Baby, Building2, ClipboardCheck, Clock3, Package, Sparkles, WalletCards } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/site";
 
 const highlights = [
@@ -33,10 +33,10 @@ const highlights = [
     badge: "Sin Gastos Extra",
   },
   {
-    title: "Jornada de extensión",
-    description: "Extensión de jornada gratuita para las familias. Consulta horarios y disponibilidad en cada sede.",
-    icon: Sun,
-    badge: "Gratuita",
+    title: "Evaluación fonoaudiológica",
+    description: "Evaluación diagnóstica inicial sin costo para orientar el ingreso.",
+    icon: ClipboardCheck,
+    badge: "Sin Costo",
   },
 ];
 
