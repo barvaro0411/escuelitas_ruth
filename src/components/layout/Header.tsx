@@ -28,9 +28,17 @@ export default function Header() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        const currentProgress = (window.scrollY / totalHeight) * 100;
+        setScrollProgress(Math.min(100, Math.max(0, currentProgress)));
+      }
+    };
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
@@ -49,6 +57,12 @@ export default function Header() {
             : "bg-gradient-to-b from-primary-dark/80 via-primary-dark/30 to-transparent py-4"
         }`}
       >
+        {/* Dynamic Scroll Progress Bar */}
+        <div
+          className="absolute bottom-0 left-0 h-[3px] bg-gradient-to-r from-primary via-brand-yellow to-emerald-accent transition-all duration-150 ease-out z-20"
+          style={{ width: `${scrollProgress}%` }}
+        />
+
         {/* Rainbow Accent Top Line */}
         {isSolid && (
           <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-primary via-brand-yellow to-emerald-accent" />
