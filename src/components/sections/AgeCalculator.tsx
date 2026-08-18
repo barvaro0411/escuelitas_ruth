@@ -154,10 +154,10 @@ export default function AgeCalculator() {
         </div>
 
         {/* Grid: 1 columna en móvil, 2 en desktop */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-start">
+        <div className="grid min-w-0 grid-cols-1 items-start gap-4 sm:gap-6 lg:grid-cols-12 lg:gap-8">
 
           {/* Panel de entrada */}
-          <div className="lg:col-span-5 w-full rounded-2xl lg:rounded-[2rem] border border-border/80 bg-white p-4 sm:p-6 lg:p-8 shadow-md">
+          <div className="min-w-0 w-full rounded-2xl border border-border/80 bg-white p-4 shadow-md sm:p-6 lg:col-span-5 lg:rounded-[2rem] lg:p-8">
             <div className="flex items-center gap-3 mb-4">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary shrink-0">
                 <Calendar className="h-5 w-5" />
@@ -182,7 +182,7 @@ export default function AgeCalculator() {
               onChange={(event) => setBirthdate(event.target.value)}
               max="2027-03-31"
               min="2019-01-01"
-              className="w-full rounded-xl border-2 border-border/70 bg-surface-raised px-3 sm:px-4 py-3 text-sm font-black text-foreground outline-none transition-all focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10 cursor-pointer mb-4"
+              className="mb-4 block box-border min-w-0 w-full max-w-full cursor-pointer rounded-xl border-2 border-border/70 bg-surface-raised px-3 py-3 text-sm font-black text-foreground outline-none transition-all focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10 sm:px-4"
             />
 
             <p className="text-xs font-bold leading-relaxed text-foreground/70">
@@ -196,9 +196,9 @@ export default function AgeCalculator() {
           </div>
 
           {/* Panel de resultado */}
-          <div aria-live="polite" className="lg:col-span-7 w-full">
+          <div aria-live="polite" className="min-w-0 w-full lg:col-span-7">
             {!result ? (
-              <div className="flex flex-col items-center justify-center rounded-2xl lg:rounded-[2rem] border-2 border-dashed border-primary/15 bg-white/70 p-6 sm:p-8 lg:p-10 text-center min-h-[140px] sm:min-h-[180px] lg:min-h-[300px]">
+              <div className="flex min-w-0 flex-col items-center justify-center rounded-2xl border-2 border-dashed border-primary/15 bg-white/70 p-6 text-center sm:min-h-[180px] sm:p-8 lg:min-h-[300px] lg:rounded-[2rem] lg:p-10">
                 <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-2.5 animate-bounce shrink-0">
                   <Baby className="h-5 w-5 sm:h-6 sm:w-6" />
                 </div>
@@ -210,7 +210,7 @@ export default function AgeCalculator() {
                 </p>
               </div>
             ) : (
-              <div className="relative flex flex-col justify-between rounded-2xl lg:rounded-[2rem] border-2 border-primary/15 bg-white p-4 sm:p-6 lg:p-8 shadow-lg overflow-hidden">
+              <div className="relative flex min-w-0 flex-col justify-between overflow-hidden rounded-2xl border-2 border-primary/15 bg-white p-4 shadow-lg sm:p-6 lg:rounded-[2rem] lg:p-8">
                 {/* Barra de estado superior */}
                 <div
                   className={`absolute top-0 inset-x-0 h-1.5 sm:h-2 ${
@@ -221,12 +221,12 @@ export default function AgeCalculator() {
                 />
 
                 {/* Header con icono y badge */}
-                <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4 pt-1">
-                  <div className="flex items-center gap-2.5">
+                <div className="mb-3 flex min-w-0 items-center justify-between gap-2 pt-1 sm:mb-4">
+                  <div className="flex min-w-0 items-center gap-2.5">
                     <div className="flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-xl bg-primary/10 text-primary shrink-0">
                       <result.icon className="h-5 w-5" />
                     </div>
-                    <h3 className="text-lg sm:text-xl lg:text-2xl font-black text-foreground leading-tight font-display">
+                    <h3 className="min-w-0 text-lg font-black leading-tight text-foreground font-display sm:text-xl lg:text-2xl">
                       {result.levelName}
                     </h3>
                   </div>
