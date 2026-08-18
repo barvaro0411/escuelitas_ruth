@@ -34,7 +34,14 @@ function calculateEligibility(dateStr: string): CalculationResult | null {
   const birthDate = new Date(year, month, day);
   const cutoffDate = new Date(2027, 2, 31);
 
-  if (Number.isNaN(birthDate.getTime())) return null;
+  if (
+    Number.isNaN(birthDate.getTime()) ||
+    birthDate.getFullYear() !== year ||
+    birthDate.getMonth() !== month ||
+    birthDate.getDate() !== day
+  ) {
+    return null;
+  }
 
   let age = cutoffDate.getFullYear() - birthDate.getFullYear();
   const monthDiff = cutoffDate.getMonth() - birthDate.getMonth();
@@ -162,7 +169,7 @@ export default function AgeCalculator() {
                 >
                   Fecha de nacimiento
                 </label>
-                <p className="text-[10px] sm:text-xs font-bold text-foreground/55">
+                <p className="text-[10px] sm:text-xs font-bold text-foreground/65">
                   Edad al 31 de marzo de 2027
                 </p>
               </div>
@@ -178,32 +185,11 @@ export default function AgeCalculator() {
               className="w-full rounded-xl border-2 border-border/70 bg-surface-raised px-3 sm:px-4 py-3 text-sm font-black text-foreground outline-none transition-all focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10 cursor-pointer mb-4"
             />
 
-            <p className="text-[10px] sm:text-xs font-extrabold uppercase tracking-wider text-foreground/55 mb-2">
-              O presiona el año:
+            <p className="text-xs font-bold leading-relaxed text-foreground/70">
+              Necesitamos el día, mes y año exactos: el nivel puede cambiar si el cumpleaños es antes o después del 31 de marzo.
             </p>
-            <div className="grid grid-cols-4 gap-1.5">
-              {[
-                { year: "2023", date: "2023-05-15" },
-                { year: "2022", date: "2022-05-15" },
-                { year: "2021", date: "2021-05-15" },
-                { year: "2020", date: "2020-05-15" },
-              ].map((preset) => (
-                <button
-                  key={preset.year}
-                  type="button"
-                  onClick={() => setBirthdate(preset.date)}
-                  className={`w-full rounded-xl py-2.5 text-xs font-black transition-all ${
-                    birthdate.startsWith(preset.year)
-                      ? "bg-primary text-white shadow-md shadow-primary/20"
-                      : "bg-surface-raised border border-border/70 text-foreground/75 hover:bg-primary/10 hover:text-primary active:scale-95"
-                  }`}
-                >
-                  {preset.year}
-                </button>
-              ))}
-            </div>
 
-            <p className="mt-4 flex items-start gap-2 text-[10px] sm:text-xs font-bold leading-relaxed text-foreground/55 border-t border-border/50 pt-3">
+            <p className="mt-4 flex items-start gap-2 text-[10px] sm:text-xs font-bold leading-relaxed text-foreground/65 border-t border-border/50 pt-3">
               <Lightbulb className="h-3.5 w-3.5 shrink-0 mt-0.5 text-brand-yellow-dark" />
               <span>La vacante se oficializa con la evaluación fonoaudiológica gratuita.</span>
             </p>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -29,6 +29,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,6 +44,20 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobileMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [mobileMenuOpen]);
 
   const isHome = pathname === "/";
   const isSolid = scrolled || !isHome;
@@ -141,6 +156,7 @@ export default function Header() {
 
           {/* Mobile Menu Button */}
           <button
+            ref={menuButtonRef}
             type="button"
             className={`flex h-11 w-11 items-center justify-center rounded-xl transition-all lg:hidden ${
               isSolid
@@ -148,6 +164,7 @@ export default function Header() {
                 : "bg-white/10 text-white hover:bg-white/20"
             }`}
             onClick={() => setMobileMenuOpen((open) => !open)}
+            aria-controls="mobile-navigation"
             aria-expanded={mobileMenuOpen}
             aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
           >
@@ -158,6 +175,9 @@ export default function Header() {
 
       {/* Mobile Drawer Navigation */}
       <div
+        id="mobile-navigation"
+        aria-hidden={!mobileMenuOpen}
+        inert={!mobileMenuOpen}
         className={`overflow-hidden bg-white border-b border-border shadow-2xl transition-[max-height,opacity] duration-300 lg:hidden ${
           mobileMenuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0 pointer-events-none"
         }`}
@@ -174,6 +194,7 @@ export default function Header() {
                 key={item.name}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
+                aria-current={active ? "page" : undefined}
                 className={`block rounded-xl px-4 py-3 text-base font-extrabold transition-all ${
                   active
                     ? "bg-primary text-white shadow-sm"

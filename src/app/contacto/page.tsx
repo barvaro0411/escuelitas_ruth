@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import ContactoClient from "@/components/sections/ContactoClient";
-import { siteConfig, buildBreadcrumbsJsonLd } from "@/lib/site";
+import JsonLd from "@/components/seo/JsonLd";
+import { buildBreadcrumbsJsonLd } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contacto y Agendamiento de Evaluación Fonoaudiológica",
@@ -39,12 +40,7 @@ export default function ContactoPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbsJsonLd).replace(/</g, "\\u003c"),
-        }}
-      />
+      <JsonLd data={breadcrumbsJsonLd} />
       <ContactoClient />
     </>
   );

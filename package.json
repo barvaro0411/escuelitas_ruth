@@ -2,6 +2,9 @@
   "name": "escuelitas-ruth",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
     "dev": "next dev --webpack",
     "dev:turbo": "node --max-old-space-size=2048 ./node_modules/next/dist/bin/next dev --turbopack",
@@ -12,7 +15,7 @@
   },
   "dependencies": {
     "lucide-react": "^0.447.0",
-    "next": "16.2.4",
+    "next": "16.3.1",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-hook-form": "^7.72.1",
@@ -24,7 +27,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.4",
+    "eslint-config-next": "16.3.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

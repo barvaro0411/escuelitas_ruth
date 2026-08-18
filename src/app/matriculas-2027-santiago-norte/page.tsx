@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import AgeCalculator from "@/components/sections/AgeCalculator";
 import CTASection from "@/components/sections/CTASection";
+import JsonLd from "@/components/seo/JsonLd";
 import {
   ArrowRight,
   CalendarCheck,
@@ -28,6 +29,13 @@ export const metadata: Metadata = {
     description:
       "Escuela de Lenguaje Ruth en Santiago norte. Cupos 2027 gratuitos con evaluación fonoaudiológica sin costo para niños con TEL en Conchalí.",
     url: "/matriculas-2027-santiago-norte",
+    images: ["/hero-children.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Matrículas 2027 Escuela de Lenguaje Santiago Norte",
+    description: "Cupos gratuitos con evaluación fonoaudiológica sin costo para familias del norte de Santiago.",
+    images: ["/hero-children.jpg"],
   },
 };
 
@@ -77,12 +85,7 @@ export default function MatriculasSantiagoNortePage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbsJsonLd).replace(/</g, "\\u003c"),
-        }}
-      />
+      <JsonLd data={breadcrumbsJsonLd} />
       <div className="pt-28 overflow-hidden bg-background">
         <section className="relative min-h-[76vh] flex items-center bg-primary-dark text-white">
           <Image

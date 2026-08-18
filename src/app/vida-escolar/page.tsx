@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import { Camera, Heart, Sparkles } from "lucide-react";
 import CTASection from "@/components/sections/CTASection";
+import JsonLd from "@/components/seo/JsonLd";
 import { buildBreadcrumbsJsonLd } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -85,12 +86,7 @@ export default function VidaEscolarPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbsJsonLd).replace(/</g, "\\u003c"),
-        }}
-      />
+      <JsonLd data={breadcrumbsJsonLd} />
       <div className="pt-32 pb-24 overflow-hidden relative">
         {/* Background elements */}
         <div className="absolute top-40 left-0 w-[500px] h-[500px] bg-secondary rounded-full blur-[100px] opacity-20 -translate-x-1/2 pointer-events-none" />
@@ -146,7 +142,7 @@ export default function VidaEscolarPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="animate-fade-up">
               <span className="inline-block px-3 py-1 rounded-full bg-pastel-yellow text-primary-dark text-xs font-black uppercase tracking-widest mb-4">Instalaciones</span>
-              <h2 className="text-4xl sm:text-5xl font-black text-foreground mb-8 tracking-tighter">Espacios <span className="text-secondary">Seguros</span></h2>
+              <h2 className="text-4xl sm:text-5xl font-black text-foreground mb-8 tracking-tighter">Espacios <span className="text-emerald-accent">Seguros</span></h2>
               <p className="text-xl text-foreground/70 leading-relaxed font-semibold mb-8">
                 Nuestras instalaciones han sido diseñadas pensando en la seguridad y estimulación constante de tus hijos.
               </p>

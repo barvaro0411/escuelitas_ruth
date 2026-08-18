@@ -14,6 +14,7 @@ import {
   GraduationCap,
 } from "lucide-react";
 import CTASection from "@/components/sections/CTASection";
+import JsonLd from "@/components/seo/JsonLd";
 import { buildBreadcrumbsJsonLd } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -127,12 +128,7 @@ export default function ProgramaPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbsJsonLd).replace(/</g, "\\u003c"),
-        }}
-      />
+      <JsonLd data={breadcrumbsJsonLd} />
       <div className="pt-32 pb-24 overflow-hidden relative">
         {/* Background blobs */}
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-secondary rounded-full blur-[100px] opacity-20 -translate-y-1/2 translate-x-1/3 pointer-events-none" />

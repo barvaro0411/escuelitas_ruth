@@ -3,7 +3,7 @@ import { CheckCircle2, MapPin, MessageCircle, Share2 } from "lucide-react";
 import { buildWhatsAppUrl, siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Comparte — Escuela de Lenguaje Ruth | Matrículas 2027",
+  title: "Comparte las matrículas 2027",
   description:
     "Matrículas 2027 abiertas en Escuela de Lenguaje Ruth, Conchalí. Gratuita, evaluación fonoaudiológica sin costo, para niños de 3 a 5 años 11 meses con TEL.",
   alternates: {
@@ -14,6 +14,13 @@ export const metadata: Metadata = {
     description:
       "Escuela gratuita en Conchalí para niños con TEL. Evaluación sin costo. Comparte con familias que lo necesiten.",
     url: "/compartir",
+    images: ["/hero-children.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Matrículas 2027 abiertas — Escuela de Lenguaje Ruth",
+    description: "Escuela gratuita en Conchalí para niños con TEL. Evaluación sin costo.",
+    images: ["/hero-children.jpg"],
   },
 };
 

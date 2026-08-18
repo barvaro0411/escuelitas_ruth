@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { ClipboardCheck, FileText, Calendar, CheckCircle, Info, ArrowRight, MessageCircle } from "lucide-react";
 import Link from "next/link";
+import JsonLd from "@/components/seo/JsonLd";
 import { buildWhatsAppUrl, buildBreadcrumbsJsonLd } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -78,12 +79,7 @@ export default function AdmisionPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbsJsonLd).replace(/</g, "\\u003c"),
-        }}
-      />
+      <JsonLd data={breadcrumbsJsonLd} />
       <div className="pt-32 pb-24 overflow-hidden relative">
         {/* Background blobs */}
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-secondary rounded-full blur-[100px] opacity-20 -translate-y-1/2 translate-x-1/3 pointer-events-none" />

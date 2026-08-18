@@ -9,6 +9,18 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/terminos",
   },
+  openGraph: {
+    title: "Términos de Uso | Escuela de Lenguaje Ruth",
+    description: "Condiciones generales de uso del sitio web oficial de Escuela de Lenguaje Ruth.",
+    url: "/terminos",
+    images: ["/hero-children.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Términos de Uso | Escuela de Lenguaje Ruth",
+    description: "Condiciones generales de uso del sitio web oficial de Escuela de Lenguaje Ruth.",
+    images: ["/hero-children.jpg"],
+  },
 };
 
 export default function TerminosPage() {

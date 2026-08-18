@@ -13,11 +13,12 @@
   /* Amarillo / Dorado de Marca */
   --brand-yellow: #f59e0b;
   --brand-yellow-light: #fde047;
-  --brand-yellow-dark: #d97706;
+  /* Contraste AA para texto pequeño sobre fondos claros. */
+  --brand-yellow-dark: #92400e;
   --brand-yellow-bg: #fffbe6;
 
   /* Colores de Acompañamiento */
-  --emerald-accent: #059669;
+  --emerald-accent: #047857;
   --emerald-bg: #ecfdf5;
   --coral-accent: #f43f5e;
 
@@ -120,6 +121,12 @@ body {
   overflow-x: clip;
 }
 
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 3px solid #ffffff !important;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px var(--primary) !important;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-outfit), 'Outfit', sans-serif;
   letter-spacing: -0.02em;
@@ -182,6 +189,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
   .animate-fade-up,
   .animate-float,
   .animate-float-reverse,

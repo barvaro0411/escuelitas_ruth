@@ -2,24 +2,20 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import AgeCalculator from "@/components/sections/AgeCalculator";
+import JsonLd from "@/components/seo/JsonLd";
 import {
-  AlertCircle,
   ArrowRight,
   Baby,
   Building2,
-  CalendarCheck,
   CheckCircle2,
   ClipboardCheck,
   Clock3,
-  GraduationCap,
-  HeartHandshake,
   HelpCircle,
   MapPin,
   MessageCircle,
   PackageCheck,
   PhoneCall,
   ShieldCheck,
-  Sparkles,
   Users,
   WalletCards,
 } from "lucide-react";
@@ -37,6 +33,13 @@ export const metadata: Metadata = {
     description:
       "Educación y fonoaudiología 100% gratuita para niños de 3 a 5 años 11 meses con TEL en Conchalí. Reconocido por MINEDUC (RBD 10375-6 y 26106-8).",
     url: "/matriculas-2027-conchali",
+    images: ["/hero-children.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Matrículas 2027 | Escuela de Lenguaje Ruth en Conchalí",
+    description: "Educación gratuita y evaluación fonoaudiológica sin costo. Dos sedes en Conchalí.",
+    images: ["/hero-children.jpg"],
   },
 };
 
@@ -83,12 +86,7 @@ export default function MatriculasConchaliPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbsJsonLd).replace(/</g, "\\u003c"),
-        }}
-      />
+      <JsonLd data={breadcrumbsJsonLd} />
 
       <div className="pt-24 sm:pt-28 overflow-hidden bg-background">
         {/* ── HERO SECTION HUMANO & OFICIAL ── */}
@@ -528,7 +526,7 @@ export default function MatriculasConchaliPage() {
             </div>
 
             <div className="space-y-4">
-              {faqsConchali.map((faq, index) => (
+              {faqsConchali.map((faq) => (
                 <div
                   key={faq.question}
                   className="rounded-2xl border border-border p-5 sm:p-6 bg-surface-raised"

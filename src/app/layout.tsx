@@ -6,7 +6,8 @@ import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import { Toaster } from "sonner";
-import { buildSchoolJsonLd } from "@/lib/site";
+import JsonLd from "@/components/seo/JsonLd";
+import { buildSchoolJsonLd, siteConfig } from "@/lib/site";
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -23,7 +24,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://escuelitasruth.cl"),
+  metadataBase: new URL(siteConfig.url),
   title: {
     template: "%s | Escuela de Lenguaje Ruth",
     default: "Escuela de Lenguaje Ruth | Matrículas 2027 en Conchalí",
@@ -37,7 +38,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Escuela de Lenguaje Ruth | Matrículas 2027 en Conchalí",
     description: "Educación gratuita, evaluación fonoaudiológica sin costo y acompañamiento especializado para niños con TEL.",
-    url: "https://escuelitasruth.cl",
+    url: siteConfig.url,
     siteName: "Escuela de Lenguaje Ruth",
     locale: "es_CL",
     type: "website",
@@ -66,17 +67,18 @@ export default function RootLayout({
   const schoolJsonLd = buildSchoolJsonLd();
 
   return (
-    <html lang="es" className="scroll-smooth" data-scroll-behavior="smooth">
+    <html lang="es-CL" className="scroll-smooth" data-scroll-behavior="smooth">
       <body className={`${nunito.variable} ${outfit.variable} antialiased`}>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(schoolJsonLd).replace(/</g, "\\u003c"),
-          }}
-        />
+        <JsonLd data={schoolJsonLd} />
+        <a
+          href="#main-content"
+          className="sr-only fixed left-4 top-4 z-[100] rounded-lg bg-white px-4 py-3 font-bold text-primary shadow-xl focus:not-sr-only"
+        >
+          Saltar al contenido principal
+        </a>
         <Toaster position="top-center" richColors />
         <Header />
-        <main className="min-h-screen">
+        <main id="main-content" className="min-h-screen" tabIndex={-1}>
           {children}
         </main>
         <Footer />

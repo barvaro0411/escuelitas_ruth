@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import AgeCalculator from "@/components/sections/AgeCalculator";
 import CTASection from "@/components/sections/CTASection";
+import JsonLd from "@/components/seo/JsonLd";
 import {
   ArrowRight,
   CalendarCheck,
@@ -17,17 +18,24 @@ import {
 import { buildBreadcrumbsJsonLd, buildWhatsAppUrl, siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Matrículas 2027 Escuela de Lenguaje en Huechuraba",
+  title: "Matrículas 2027 Escuela de Lenguaje cerca de Huechuraba",
   description:
     "Cupos 2027 en Escuela de Lenguaje Ruth, cerca de Huechuraba. Gratuita, evaluación fonoaudiológica sin costo para niños 3 a 5 años con TEL.",
   alternates: {
     canonical: "/matriculas-2027-huechuraba",
   },
   openGraph: {
-    title: "Matrículas 2027 Escuela de Lenguaje en Huechuraba",
+    title: "Matrículas 2027 Escuela de Lenguaje cerca de Huechuraba",
     description:
       "Cupos 2027 en Escuela de Lenguaje Ruth, cerca de Huechuraba. Gratuita, evaluación fonoaudiológica sin costo para niños 3 a 5 años con TEL.",
     url: "/matriculas-2027-huechuraba",
+    images: ["/hero-children.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Matrículas 2027 cerca de Huechuraba | Escuela de Lenguaje Ruth",
+    description: "Escuela gratuita en Conchalí, a minutos de Huechuraba, con evaluación fonoaudiológica sin costo.",
+    images: ["/hero-children.jpg"],
   },
 };
 
@@ -60,7 +68,7 @@ const steps = [
   "Confirmamos documentos y matrícula.",
 ];
 
-export default function MatriculasHuechurabPage() {
+export default function MatriculasHuechurabaPage() {
   const breadcrumbsJsonLd = buildBreadcrumbsJsonLd([
     { name: "Inicio", url: "/" },
     { name: "Matrículas Huechuraba", url: "/matriculas-2027-huechuraba" },
@@ -68,12 +76,7 @@ export default function MatriculasHuechurabPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbsJsonLd).replace(/</g, "\\u003c"),
-        }}
-      />
+      <JsonLd data={breadcrumbsJsonLd} />
       <div className="pt-28 overflow-hidden bg-background">
         <section className="relative min-h-[76vh] flex items-center bg-primary-dark text-white">
           <Image

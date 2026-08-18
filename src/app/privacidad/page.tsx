@@ -9,6 +9,18 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/privacidad",
   },
+  openGraph: {
+    title: "Política de Privacidad | Escuela de Lenguaje Ruth",
+    description: "Información sobre el tratamiento de datos y consultas de admisión.",
+    url: "/privacidad",
+    images: ["/hero-children.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Política de Privacidad | Escuela de Lenguaje Ruth",
+    description: "Información sobre el tratamiento de datos y consultas de admisión.",
+    images: ["/hero-children.jpg"],
+  },
 };
 
 export default function PrivacidadPage() {
@@ -23,10 +35,16 @@ export default function PrivacidadPage() {
         </h1>
         <div className="prose prose-lg max-w-none text-foreground/75 font-semibold leading-relaxed space-y-6">
           <p>
-            Escuela de Lenguaje Ruth utiliza los datos enviados por formularios, teléfono o WhatsApp únicamente para responder consultas de admisión, cupos, evaluación y matrícula.
+            El formulario de este sitio no envía ni almacena datos en servidores de Escuela de Lenguaje Ruth. Al presionar el botón, tu navegador prepara un mensaje y abre WhatsApp; la información solo sale del dispositivo si decides enviarla allí.
           </p>
           <p>
-            Podemos solicitar nombre del apoderado, teléfono, correo, comuna, edad del niño(a), jornada preferida y antecedentes generales sobre evaluación o diagnóstico. Esta información permite orientar mejor el proceso y no se publica en el sitio.
+            Si envías el mensaje, Escuela de Lenguaje Ruth utiliza esos datos únicamente para responder consultas de admisión, cupos, evaluación y matrícula. WhatsApp procesa la comunicación bajo sus propias condiciones y política de privacidad.
+          </p>
+          <p>
+            Podemos solicitar nombre del apoderado, teléfono, correo, comuna, edad del niño(a), jornada preferida y antecedentes generales sobre evaluación o diagnóstico. Comparte solo lo necesario: no incluyas informes médicos completos ni otros datos sensibles en el mensaje inicial. Esta información no se publica en el sitio.
+          </p>
+          <p>
+            Actualmente el sitio no usa cuentas de usuario, cookies de seguimiento ni herramientas de analítica de terceros. Si esto cambia, esta política y la configuración de consentimiento deberán actualizarse antes del despliegue.
           </p>
           <p>
             Si deseas corregir o eliminar una consulta enviada, puedes escribir a {siteConfig.contact.email.label} o llamar al {siteConfig.contact.phone.label}.

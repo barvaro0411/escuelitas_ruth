@@ -20,11 +20,8 @@ const priorities: Record<string, number> = {
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const currentDate = new Date();
-
   return siteConfig.routes.map((route) => ({
     url: `${siteConfig.url}${route === "/" ? "" : route}`,
-    lastModified: currentDate,
     changeFrequency: route === "/" || route.includes("matriculas") || route === "/admision" || route === "/contacto" ? "weekly" : "monthly",
     priority: priorities[route] ?? 0.7,
   }));

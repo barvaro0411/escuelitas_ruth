@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, Suspense } from "react";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { Phone, Mail, MapPin, Clock, MessageCircle, Send, GraduationCap } from "lucide-react";
 import { toast } from "sonner";
@@ -25,6 +26,29 @@ const quickWhatsAppUrl = buildWhatsAppUrl(
   "Hola, quiero consultar por matrícula 2027 y agendar una evaluación gratuita."
 );
 
+const allowedLevelPrefills: Record<string, { label: string; age: string }> = {
+  "Medio Mayor": { label: "Medio Mayor", age: "3 años" },
+  "Pre-Kínder": { label: "Pre-Kínder", age: "4 años" },
+  "Pre-Kínder (NT1)": { label: "Pre-Kínder (NT1)", age: "4 años" },
+  Kínder: { label: "Kínder", age: "5 años" },
+  "Kínder (NT2)": { label: "Kínder (NT2)", age: "5 años" },
+};
+
+function isValidBirthdate(value: string | null): value is string {
+  if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+
+  const [year, month, day] = value.split("-").map(Number);
+  const parsed = new Date(Date.UTC(year, month - 1, day));
+
+  return (
+    parsed.getUTCFullYear() === year &&
+    parsed.getUTCMonth() === month - 1 &&
+    parsed.getUTCDate() === day &&
+    value >= "2019-01-01" &&
+    value <= "2027-03-31"
+  );
+}
+
 export default function ContactoClient() {
   return (
     <Suspense
@@ -44,6 +68,8 @@ function ContactoForm() {
   const searchParams = useSearchParams();
   const levelParam = searchParams ? searchParams.get("level") : null;
   const birthdateParam = searchParams ? searchParams.get("birthdate") : null;
+  const levelPrefill = levelParam ? allowedLevelPrefills[levelParam] : undefined;
+  const validBirthdate = isValidBirthdate(birthdateParam) ? birthdateParam : null;
 
   const {
     register,
@@ -54,26 +80,18 @@ function ContactoForm() {
   } = useForm<FormData>();
 
   useEffect(() => {
-    if (levelParam) {
-      if (birthdateParam) {
-        setValue("fechaNacimiento", birthdateParam);
-      }
+    if (validBirthdate) {
+      setValue("fechaNacimiento", validBirthdate);
+    }
 
-      let levelAge = "";
-      if (levelParam.includes("Medio Mayor")) levelAge = "3 años";
-      else if (levelParam.includes("Pre-Kínder")) levelAge = "4 años";
-      else if (levelParam.includes("Kínder")) levelAge = "5 años";
-
-      if (levelAge) {
-        setValue("edadNino", levelAge);
-      }
-
+    if (levelPrefill) {
+      setValue("edadNino", levelPrefill.age);
       setValue(
         "mensaje",
-        `Hola, realicé el cálculo en su web y mi hijo(a) califica para el nivel de ${levelParam}. Quisiera consultar disponibilidad de cupos para matrícula 2027.`
+        `Hola, realicé el cálculo en su web y mi hijo(a) califica para el nivel de ${levelPrefill.label}. Quisiera consultar disponibilidad de cupos para matrícula 2027.`
       );
     }
-  }, [levelParam, birthdateParam, setValue]);
+  }, [levelPrefill, validBirthdate, setValue]);
 
   const onSubmit = (data: FormData) => {
     const whatsappUrl = buildWhatsAppUrl(buildContactWhatsAppMessage(data));
@@ -189,84 +207,140 @@ function ContactoForm() {
           <div className="lg:col-span-7 animate-fade-up">
             <div className="bg-white rounded-[3rem] p-8 sm:p-12 border border-border/50 shadow-2xl relative">
               <h2 className="text-3xl sm:text-4xl font-black text-foreground mb-8 relative z-10">Consulta cupo 2027</h2>
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 relative z-10">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 relative z-10" noValidate>
                 <div>
-                  <label className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Nombre del apoderado/a</label>
+                  <label htmlFor="nombreApoderado" className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Nombre del apoderado/a</label>
                   <input
-                    {...register("nombreApoderado", { required: "Este campo es obligatorio" })}
+                    id="nombreApoderado"
+                    type="text"
+                    autoComplete="name"
+                    maxLength={100}
+                    aria-invalid={Boolean(errors.nombreApoderado)}
+                    aria-describedby={errors.nombreApoderado ? "nombreApoderado-error" : undefined}
+                    {...register("nombreApoderado", {
+                      required: "Este campo es obligatorio",
+                      maxLength: { value: 100, message: "Usa máximo 100 caracteres" },
+                    })}
                     className="w-full px-6 py-5 rounded-3xl bg-accent/50 border border-border/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all outline-none text-lg font-semibold placeholder:text-muted placeholder:font-normal"
                     placeholder="Ej: María González"
                   />
-                  {errors.nombreApoderado && <p className="mt-2 text-sm text-red-500 font-bold ml-2">{errors.nombreApoderado.message}</p>}
+                  {errors.nombreApoderado && <p id="nombreApoderado-error" role="alert" className="mt-2 text-sm text-red-700 font-bold ml-2">{errors.nombreApoderado.message}</p>}
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Teléfono de contacto</label>
+                    <label htmlFor="telefono" className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Teléfono de contacto</label>
                     <input
-                      {...register("telefono", { required: "Este campo es obligatorio" })}
+                      id="telefono"
+                      type="tel"
+                      inputMode="tel"
+                      autoComplete="tel"
+                      maxLength={30}
+                      aria-invalid={Boolean(errors.telefono)}
+                      aria-describedby={errors.telefono ? "telefono-error" : undefined}
+                      {...register("telefono", {
+                        required: "Este campo es obligatorio",
+                        maxLength: { value: 30, message: "Usa máximo 30 caracteres" },
+                        pattern: {
+                          value: /^[+()\d\s-]{8,30}$/,
+                          message: "Ingresa un teléfono válido",
+                        },
+                      })}
                       className="w-full px-6 py-5 rounded-3xl bg-accent/50 border border-border/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all outline-none text-lg font-semibold placeholder:text-muted placeholder:font-normal"
                       placeholder="+56 9 1234 5678"
                     />
-                    {errors.telefono && <p className="mt-2 text-sm text-red-500 font-bold ml-2">{errors.telefono.message}</p>}
+                    {errors.telefono && <p id="telefono-error" role="alert" className="mt-2 text-sm text-red-700 font-bold ml-2">{errors.telefono.message}</p>}
                   </div>
                   <div>
-                    <label className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Correo electrónico opcional</label>
+                    <label htmlFor="email" className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Correo electrónico opcional</label>
                     <input
+                      id="email"
+                      type="email"
+                      autoComplete="email"
+                      maxLength={254}
+                      aria-invalid={Boolean(errors.email)}
+                      aria-describedby={errors.email ? "email-error" : undefined}
                       {...register("email", {
-                        validate: (value) => !value || /^\S+@\S+$/i.test(value) || "Correo inválido",
+                        maxLength: { value: 254, message: "Usa máximo 254 caracteres" },
+                        validate: (value) => !value || /^[^\s@]+@[^\s@]+\.[^\s@]+$/i.test(value) || "Correo inválido",
                       })}
                       className="w-full px-6 py-5 rounded-3xl bg-accent/50 border border-border/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all outline-none text-lg font-semibold placeholder:text-muted placeholder:font-normal"
                       placeholder="nombre@ejemplo.com"
                     />
-                    {errors.email && <p className="mt-2 text-sm text-red-500 font-bold ml-2">{errors.email.message}</p>}
+                    {errors.email && <p id="email-error" role="alert" className="mt-2 text-sm text-red-700 font-bold ml-2">{errors.email.message}</p>}
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Nombre del niño/a opcional</label>
+                    <label htmlFor="nombreNino" className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Nombre del niño/a opcional</label>
                     <input
-                      {...register("nombreNino")}
+                      id="nombreNino"
+                      type="text"
+                      autoComplete="off"
+                      maxLength={100}
+                      {...register("nombreNino", { maxLength: 100 })}
                       className="w-full px-6 py-5 rounded-3xl bg-accent/50 border border-border/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all outline-none text-lg font-semibold placeholder:text-muted placeholder:font-normal"
                       placeholder="Ej: Mateo"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Edad del niño/a</label>
+                    <label htmlFor="edadNino" className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Edad del niño/a</label>
                     <input
-                      {...register("edadNino", { required: "Este campo es obligatorio" })}
+                      id="edadNino"
+                      type="text"
+                      inputMode="numeric"
+                      maxLength={40}
+                      aria-invalid={Boolean(errors.edadNino)}
+                      aria-describedby={errors.edadNino ? "edadNino-error" : undefined}
+                      {...register("edadNino", {
+                        required: "Este campo es obligatorio",
+                        maxLength: { value: 40, message: "Usa máximo 40 caracteres" },
+                      })}
                       className="w-full px-6 py-5 rounded-3xl bg-accent/50 border border-border/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all outline-none text-lg font-semibold placeholder:text-muted placeholder:font-normal"
                       placeholder="Ej: 4 años"
                     />
-                    {errors.edadNino && <p className="mt-2 text-sm text-red-500 font-bold ml-2">{errors.edadNino.message}</p>}
+                    {errors.edadNino && <p id="edadNino-error" role="alert" className="mt-2 text-sm text-red-700 font-bold ml-2">{errors.edadNino.message}</p>}
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Fecha de nacimiento opcional</label>
+                    <label htmlFor="fechaNacimiento" className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Fecha de nacimiento opcional</label>
                     <input
+                      id="fechaNacimiento"
                       type="date"
+                      min="2019-01-01"
+                      max="2027-03-31"
                       {...register("fechaNacimiento")}
                       className="w-full px-6 py-5 rounded-3xl bg-accent/50 border border-border/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all outline-none text-lg font-semibold placeholder:text-muted placeholder:font-normal"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Comuna</label>
+                    <label htmlFor="comuna" className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Comuna</label>
                     <input
-                      {...register("comuna", { required: "Este campo es obligatorio" })}
+                      id="comuna"
+                      type="text"
+                      autoComplete="address-level2"
+                      maxLength={80}
+                      aria-invalid={Boolean(errors.comuna)}
+                      aria-describedby={errors.comuna ? "comuna-error" : undefined}
+                      {...register("comuna", {
+                        required: "Este campo es obligatorio",
+                        maxLength: { value: 80, message: "Usa máximo 80 caracteres" },
+                      })}
                       className="w-full px-6 py-5 rounded-3xl bg-accent/50 border border-border/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all outline-none text-lg font-semibold placeholder:text-muted placeholder:font-normal"
                       placeholder="Ej: Conchalí"
                     />
-                    {errors.comuna && <p className="mt-2 text-sm text-red-500 font-bold ml-2">{errors.comuna.message}</p>}
+                    {errors.comuna && <p id="comuna-error" role="alert" className="mt-2 text-sm text-red-700 font-bold ml-2">{errors.comuna.message}</p>}
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Sede de preferencia</label>
+                    <label htmlFor="sede" className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Sede de preferencia</label>
                     <select
+                      id="sede"
                       {...register("sede")}
                       className="w-full px-6 py-5 rounded-3xl bg-accent/50 border border-border/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all outline-none text-lg font-semibold"
                       defaultValue=""
@@ -278,8 +352,11 @@ function ContactoForm() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Jornada preferida</label>
+                    <label htmlFor="jornada" className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Jornada preferida</label>
                     <select
+                      id="jornada"
+                      aria-invalid={Boolean(errors.jornada)}
+                      aria-describedby={errors.jornada ? "jornada-error" : undefined}
                       {...register("jornada", { required: "Este campo es obligatorio" })}
                       className="w-full px-6 py-5 rounded-3xl bg-accent/50 border border-border/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all outline-none text-lg font-semibold"
                       defaultValue=""
@@ -289,11 +366,14 @@ function ContactoForm() {
                       <option value="Tarde">Tarde</option>
                       <option value="Cualquiera disponible">Cualquiera disponible</option>
                     </select>
-                    {errors.jornada && <p className="mt-2 text-sm text-red-500 font-bold ml-2">{errors.jornada.message}</p>}
+                    {errors.jornada && <p id="jornada-error" role="alert" className="mt-2 text-sm text-red-700 font-bold ml-2">{errors.jornada.message}</p>}
                   </div>
                   <div>
-                    <label className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Evaluación o diagnóstico previo</label>
+                    <label htmlFor="diagnostico" className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Evaluación o diagnóstico previo</label>
                     <select
+                      id="diagnostico"
+                      aria-invalid={Boolean(errors.diagnostico)}
+                      aria-describedby={errors.diagnostico ? "diagnostico-error" : undefined}
                       {...register("diagnostico", { required: "Este campo es obligatorio" })}
                       className="w-full px-6 py-5 rounded-3xl bg-accent/50 border border-border/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all outline-none text-lg font-semibold"
                       defaultValue=""
@@ -303,19 +383,28 @@ function ContactoForm() {
                       <option value="No tiene informe">No tiene informe</option>
                       <option value="No estoy seguro/a">No estoy seguro/a</option>
                     </select>
-                    {errors.diagnostico && <p className="mt-2 text-sm text-red-500 font-bold ml-2">{errors.diagnostico.message}</p>}
+                    {errors.diagnostico && <p id="diagnostico-error" role="alert" className="mt-2 text-sm text-red-700 font-bold ml-2">{errors.diagnostico.message}</p>}
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Mensaje opcional</label>
+                  <label htmlFor="mensaje" className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Mensaje opcional</label>
                   <textarea
-                    {...register("mensaje")}
+                    id="mensaje"
+                    maxLength={500}
+                    {...register("mensaje", { maxLength: 500 })}
                     rows={5}
                     className="w-full px-6 py-5 rounded-3xl bg-accent/50 border border-border/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all outline-none text-lg font-semibold placeholder:text-muted placeholder:font-normal resize-none"
                     placeholder="Cuéntanos la edad de tu hijo(a), nivel o dudas sobre matrícula..."
                   />
                 </div>
+
+                <p className="text-sm font-semibold leading-relaxed text-foreground/70">
+                  Al continuar, se abrirá WhatsApp con estos datos para que tú decidas si envías el mensaje. Revisa nuestra{" "}
+                  <Link href="/privacidad" className="font-black text-primary underline underline-offset-4 hover:text-primary-dark">
+                    política de privacidad
+                  </Link>.
+                </p>
 
                 <button
                   type="submit"
@@ -327,7 +416,7 @@ function ContactoForm() {
               </form>
 
               <div className="mt-12 pt-10 border-t border-border flex flex-col items-center bg-accent/30 rounded-3xl p-8">
-                <p className="text-sm font-black uppercase tracking-widest text-foreground/50 mb-4">Respuesta inmediata:</p>
+                <p className="text-sm font-black uppercase tracking-widest text-foreground/70 mb-4">Respuesta inmediata:</p>
                 <a
                   href={quickWhatsAppUrl}
                   target="_blank"

@@ -6,6 +6,7 @@ import ProgramsSummary from "@/components/sections/ProgramsSummary";
 import SedesSelector from "@/components/sections/SedesSelector";
 import FAQPreview from "@/components/sections/FAQPreview";
 import CTASection from "@/components/sections/CTASection";
+import JsonLd from "@/components/seo/JsonLd";
 import { buildFaqJsonLd } from "@/lib/site";
 
 const homeFaqs = [
@@ -28,12 +29,7 @@ export default function Home() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c"),
-        }}
-      />
+      <JsonLd data={faqJsonLd} />
       <Hero />
       <EnrollmentPush />
       <AgeCalculator />

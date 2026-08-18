@@ -89,7 +89,7 @@ export default function ProgramsSummary() {
                 </div>
 
                 <div className="mb-3 flex items-center gap-2">
-                  <span className="text-xs font-black uppercase tracking-widest text-foreground/40">
+                  <span className="text-xs font-black uppercase tracking-widest text-foreground/65">
                     Nivel {program.stage}
                   </span>
                   <span className="h-px flex-1 bg-border/60" />

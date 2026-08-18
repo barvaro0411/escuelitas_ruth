@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import { Heart, Target, Eye, Sparkles, Smile } from "lucide-react";
 import CTASection from "@/components/sections/CTASection";
+import JsonLd from "@/components/seo/JsonLd";
 import { buildBreadcrumbsJsonLd } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -68,12 +69,7 @@ export default function NosotrosPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbsJsonLd).replace(/</g, "\\u003c"),
-        }}
-      />
+      <JsonLd data={breadcrumbsJsonLd} />
       <div className="pt-32 pb-24 overflow-hidden relative">
         {/* Background elements */}
         <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-secondary rounded-full blur-[100px] opacity-20 translate-x-1/3 pointer-events-none" />

@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import AgeCalculator from "@/components/sections/AgeCalculator";
 import CTASection from "@/components/sections/CTASection";
+import JsonLd from "@/components/seo/JsonLd";
 import {
   AlertCircle,
   ArrowRight,
@@ -30,6 +31,13 @@ export const metadata: Metadata = {
     description:
       "Descubre qué es el TEL, cómo detectarlo en tu hijo y cómo una escuela de lenguaje puede ayudar. Evaluación fonoaudiológica gratuita en Conchalí.",
     url: "/trastorno-especifico-lenguaje",
+    images: ["/hero-children.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "¿Qué es el TEL? | Escuela de Lenguaje Ruth",
+    description: "Señales, diagnóstico y apoyo para niños con TEL en Conchalí.",
+    images: ["/hero-children.jpg"],
   },
 };
 
@@ -149,12 +157,7 @@ export default function TrastornoEspecificoLenguajePage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbsJsonLd).replace(/</g, "\\u003c"),
-        }}
-      />
+      <JsonLd data={breadcrumbsJsonLd} />
       <div className="pt-28 overflow-hidden bg-background">
       {/* ── HERO ── */}
       <section className="relative min-h-[70vh] flex items-center bg-primary-dark text-white">

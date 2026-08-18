@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import AgeCalculator from "@/components/sections/AgeCalculator";
 import CTASection from "@/components/sections/CTASection";
+import JsonLd from "@/components/seo/JsonLd";
 import {
   ArrowRight,
   CalendarCheck,
@@ -17,17 +18,24 @@ import {
 import { buildBreadcrumbsJsonLd, buildWhatsAppUrl, siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Matrículas 2027 Escuela de Lenguaje en Renca",
+  title: "Matrículas 2027 Escuela de Lenguaje cerca de Renca",
   description:
     "Cupos 2027 en Escuela de Lenguaje Ruth, cerca de Renca. Educación gratuita con apoyo fonoaudiológico para niños de 3 a 5 años 11 meses con TEL.",
   alternates: {
     canonical: "/matriculas-2027-renca",
   },
   openGraph: {
-    title: "Matrículas 2027 Escuela de Lenguaje en Renca",
+    title: "Matrículas 2027 Escuela de Lenguaje cerca de Renca",
     description:
       "Cupos 2027 en Escuela de Lenguaje Ruth, cerca de Renca. Educación gratuita con apoyo fonoaudiológico para niños de 3 a 5 años 11 meses con TEL.",
     url: "/matriculas-2027-renca",
+    images: ["/hero-children.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Matrículas 2027 cerca de Renca | Escuela de Lenguaje Ruth",
+    description: "Escuela gratuita en Conchalí, accesible desde Renca, con apoyo fonoaudiológico.",
+    images: ["/hero-children.jpg"],
   },
 };
 
@@ -68,12 +76,7 @@ export default function MatriculasRencaPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbsJsonLd).replace(/</g, "\\u003c"),
-        }}
-      />
+      <JsonLd data={breadcrumbsJsonLd} />
       <div className="pt-28 overflow-hidden bg-background">
         <section className="relative min-h-[76vh] flex items-center bg-primary-dark text-white">
           <Image

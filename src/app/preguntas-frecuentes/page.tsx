@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import FAQClient, { type FAQCategory } from "@/components/sections/FAQClient";
+import JsonLd from "@/components/seo/JsonLd";
 import { buildFaqJsonLd, buildBreadcrumbsJsonLd } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -97,18 +98,8 @@ export default function FAQPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c"),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbsJsonLd).replace(/</g, "\\u003c"),
-        }}
-      />
+      <JsonLd data={faqJsonLd} />
+      <JsonLd data={breadcrumbsJsonLd} />
       <FAQClient faqs={faqsData} />
     </>
   );

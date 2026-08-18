@@ -1,7 +1,9 @@
 export const siteConfig = {
   name: "Escuela de Lenguaje Ruth",
   shortName: "Escuelitas Ruth",
-  url: "https://escuelitasruth.cl",
+  // Dominio público que hoy responde. Cambiar aquí cuando el dominio propio
+  // tenga DNS y redirección HTTPS verificados en Vercel.
+  url: "https://escuelitas-ruth.vercel.app",
   admissionYear: 2027,
   description:
     "Escuela de lenguaje particular subvencionada con dos sedes en Conchalí, 100% gratuita para las familias, con evaluación fonoaudiológica sin costo y apoyo especializado para niños y niñas con TEL.",
@@ -96,28 +98,80 @@ type ContactMessageData = {
 };
 
 export function buildWhatsAppUrl(message: string) {
-  return `https://wa.me/${siteConfig.contact.whatsapp.number}?text=${encodeURIComponent(message)}`;
+  const safeMessage = truncateByCodePoint(toWellFormed(message).trim(), 2_000);
+  return `https://wa.me/${siteConfig.contact.whatsapp.number}?text=${encodeURIComponent(safeMessage)}`;
 }
 
 export function buildContactWhatsAppMessage(data: ContactMessageData) {
+  // Aunque estos datos solo salen hacia WhatsApp, se acotan y se eliminan
+  // controles/saltos de línea para evitar URLs gigantes o campos falsificados.
+  const nombreApoderado = cleanContactField(data.nombreApoderado || data.nombre, 100);
+  const telefono = cleanContactField(data.telefono, 30);
+  const email = cleanContactField(data.email, 254);
+  const nombreNino = cleanContactField(data.nombreNino, 100);
+  const edadNino = cleanContactField(data.edadNino, 40);
+  const fechaNacimiento = cleanContactField(data.fechaNacimiento, 10);
+  const comuna = cleanContactField(data.comuna, 80);
+  const sede = cleanContactField(data.sede, 80);
+  const jornada = cleanContactField(data.jornada, 80);
+  const diagnostico = cleanContactField(data.diagnostico, 100);
+  const mensaje = cleanContactField(data.mensaje, 500);
+
   const parts = [
     "Hola, me gustaría recibir más información sobre cupos y matrículas 2027.",
-    data.nombreApoderado || data.nombre
-      ? `Apoderado/a: ${data.nombreApoderado || data.nombre}`
-      : null,
-    data.telefono ? `Teléfono: ${data.telefono}` : null,
-    data.email ? `Correo: ${data.email}` : null,
-    data.nombreNino ? `Niño/a: ${data.nombreNino}` : null,
-    data.edadNino ? `Edad: ${data.edadNino}` : null,
-    data.fechaNacimiento ? `Fecha de nacimiento: ${data.fechaNacimiento}` : null,
-    data.comuna ? `Comuna: ${data.comuna}` : null,
-    data.sede ? `Sede de preferencia: ${data.sede}` : null,
-    data.jornada ? `Jornada preferida: ${data.jornada}` : null,
-    data.diagnostico ? `Diagnóstico o evaluación previa: ${data.diagnostico}` : null,
-    data.mensaje ? `Mensaje: ${data.mensaje}` : null,
+    nombreApoderado ? `Apoderado/a: ${nombreApoderado}` : null,
+    telefono ? `Teléfono: ${telefono}` : null,
+    email ? `Correo: ${email}` : null,
+    nombreNino ? `Niño/a: ${nombreNino}` : null,
+    edadNino ? `Edad: ${edadNino}` : null,
+    fechaNacimiento ? `Fecha de nacimiento: ${fechaNacimiento}` : null,
+    comuna ? `Comuna: ${comuna}` : null,
+    sede ? `Sede de preferencia: ${sede}` : null,
+    jornada ? `Jornada preferida: ${jornada}` : null,
+    diagnostico ? `Diagnóstico o evaluación previa: ${diagnostico}` : null,
+    mensaje ? `Mensaje: ${mensaje}` : null,
   ];
 
   return parts.filter(Boolean).join("\n");
+}
+
+function cleanContactField(value: string | undefined, maxLength: number) {
+  if (!value) return "";
+
+  const withoutControls = toWellFormed(value)
+    .replace(/[\u0000-\u001f\u007f]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  return truncateByCodePoint(withoutControls, maxLength);
+}
+
+function truncateByCodePoint(value: string, maxLength: number) {
+  return Array.from(value).slice(0, maxLength).join("");
+}
+
+function toWellFormed(value: string) {
+  let result = "";
+
+  for (let index = 0; index < value.length; index += 1) {
+    const code = value.charCodeAt(index);
+
+    if (code >= 0xd800 && code <= 0xdbff) {
+      const nextCode = value.charCodeAt(index + 1);
+      if (nextCode >= 0xdc00 && nextCode <= 0xdfff) {
+        result += value[index] + value[index + 1];
+        index += 1;
+      } else {
+        result += "�";
+      }
+    } else if (code >= 0xdc00 && code <= 0xdfff) {
+      result += "�";
+    } else {
+      result += value[index];
+    }
+  }
+
+  return result;
 }
 
 export function buildSchoolJsonLd() {
