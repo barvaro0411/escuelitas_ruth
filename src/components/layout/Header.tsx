@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, MessageCircle, Sparkles, X } from "lucide-react";
+import { Menu, MessageCircle, X } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/site";
 
 const navigation = [
@@ -63,34 +63,29 @@ export default function Header() {
   const isSolid = scrolled || !isHome;
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 transition-all duration-300">
+    <header className="fixed inset-x-0 top-0 z-50">
       <nav
         aria-label="Navegación principal"
-        className={`transition-all duration-300 ${
+        className={`transition-[background-color,border-color,box-shadow,padding] duration-300 ${
           isSolid
-            ? "border-b border-border/80 bg-white/95 backdrop-blur-md shadow-lg shadow-primary/5 py-2.5"
-            : "bg-gradient-to-b from-primary-dark/80 via-primary-dark/30 to-transparent py-4"
+            ? "border-b border-border bg-white/95 py-3 shadow-sm shadow-primary/10 backdrop-blur-sm"
+            : "bg-primary-dark/90 py-4"
         }`}
       >
-        {/* Dynamic Scroll Progress Bar */}
+        {/* Único gesto decorativo: indica progreso sin competir con la navegación. */}
         <div
-          className="absolute bottom-0 left-0 h-[3px] bg-gradient-to-r from-primary via-brand-yellow to-emerald-accent transition-all duration-150 ease-out z-20"
+          className="absolute bottom-0 left-0 z-20 h-0.5 bg-brand-yellow transition-[width] duration-150 ease-out"
           style={{ width: `${scrollProgress}%` }}
         />
-
-        {/* Rainbow Accent Top Line */}
-        {isSolid && (
-          <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-primary via-brand-yellow to-emerald-accent" />
-        )}
 
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Logo & Brand Identity */}
           <Link
             href="/"
-            className="flex items-center gap-3 group"
+            className="flex items-center gap-3"
             aria-label="Ir al inicio de Escuela de Lenguaje Ruth"
           >
-            <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-2xl border-2 border-brand-yellow bg-white shadow-md transition-transform group-hover:scale-105">
+            <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg border border-brand-yellow/80 bg-white shadow-sm">
               <Image
                 src="/logo.jpg"
                 alt="Escuela de Lenguaje Ruth Logo"
@@ -102,14 +97,14 @@ export default function Header() {
             </div>
             <div className="flex flex-col leading-tight">
               <span
-                className={`text-lg font-black tracking-tight transition-colors sm:text-xl font-display ${
+                className={`font-display text-lg font-extrabold tracking-tight transition-colors sm:text-xl ${
                   isSolid ? "text-foreground" : "text-white"
                 }`}
               >
                 Escuelitas Ruth
               </span>
               <span
-                className={`text-[11px] font-extrabold uppercase tracking-wider transition-colors ${
+                className={`text-[10px] font-bold uppercase tracking-[0.12em] transition-colors ${
                   isSolid ? "text-primary" : "text-brand-yellow-light"
                 }`}
               >
@@ -119,7 +114,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden items-center gap-1.5 lg:flex">
+          <div className="hidden items-center gap-1 lg:flex">
             {navigation.map((item) => {
               const active = isActiveRoute(pathname, item.href);
               return (
@@ -127,14 +122,14 @@ export default function Header() {
                   key={item.name}
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`rounded-xl px-4 py-2 text-sm font-extrabold transition-all ${
+                  className={`border-b-2 px-3 py-2 text-sm font-semibold transition-colors ${
                     active
                       ? isSolid
-                        ? "bg-primary text-white shadow-md shadow-primary/20"
-                        : "bg-white text-primary-dark shadow-md"
+                        ? "border-brand-yellow text-primary"
+                        : "border-brand-yellow text-white"
                       : isSolid
-                        ? "text-foreground/80 hover:bg-surface-blue hover:text-primary"
-                        : "text-white/90 hover:bg-white/15 hover:text-white"
+                        ? "border-transparent text-foreground/80 hover:border-brand-yellow/60 hover:text-primary"
+                        : "border-transparent text-white/80 hover:border-brand-yellow/60 hover:text-white"
                   }`}
                 >
                   {item.name}
@@ -142,12 +137,16 @@ export default function Header() {
               );
             })}
 
-            {/* WhatsApp CTA Button */}
+            {/* CTA principal: visible, pero sin animación ni sombra llamativa. */}
             <a
               href={headerWhatsAppUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-3 inline-flex items-center justify-center gap-2 rounded-xl bg-brand-yellow px-5 py-2.5 text-sm font-black text-primary-dark shadow-md hover:bg-brand-yellow-light hover:shadow-lg transition-all animate-pulse-glow"
+              className={`ml-4 inline-flex items-center justify-center gap-2 rounded-lg border px-4 py-2.5 text-sm font-bold transition-colors ${
+                isSolid
+                  ? "border-primary bg-primary text-white hover:bg-primary-dark"
+                  : "border-brand-yellow bg-brand-yellow text-primary-dark hover:bg-brand-yellow-light"
+              }`}
             >
               <MessageCircle size={17} />
               Consultar Cupo 2027
@@ -158,10 +157,10 @@ export default function Header() {
           <button
             ref={menuButtonRef}
             type="button"
-            className={`flex h-11 w-11 items-center justify-center rounded-xl transition-all lg:hidden ${
+            className={`flex h-11 w-11 items-center justify-center rounded-lg border transition-colors lg:hidden ${
               isSolid
-                ? "bg-surface-raised text-foreground/80 hover:bg-border"
-                : "bg-white/10 text-white hover:bg-white/20"
+                ? "border-border bg-white text-foreground/80 hover:border-primary hover:text-primary"
+                : "border-white/30 bg-transparent text-white hover:border-brand-yellow hover:text-brand-yellow"
             }`}
             onClick={() => setMobileMenuOpen((open) => !open)}
             aria-controls="mobile-navigation"
@@ -178,13 +177,12 @@ export default function Header() {
         id="mobile-navigation"
         aria-hidden={!mobileMenuOpen}
         inert={!mobileMenuOpen}
-        className={`overflow-hidden bg-white border-b border-border shadow-2xl transition-[max-height,opacity] duration-300 lg:hidden ${
+        className={`overflow-hidden border-b border-border bg-white shadow-lg shadow-primary/10 transition-[max-height,opacity] duration-300 lg:hidden ${
           mobileMenuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0 pointer-events-none"
         }`}
       >
-        <div className="mx-auto max-w-7xl space-y-2 px-4 pb-6 pt-3">
-          <div className="flex items-center gap-2 px-3 py-1.5 text-xs font-black uppercase text-primary tracking-wider bg-surface-blue rounded-lg">
-            <Sparkles size={14} />
+        <div className="mx-auto max-w-7xl space-y-1.5 px-4 pb-6 pt-4">
+          <div className="border-l-2 border-brand-yellow px-3 py-1 text-xs font-bold uppercase tracking-[0.12em] text-primary">
             Matrículas 2027 Abiertas en Conchalí
           </div>
           {navigation.map((item) => {
@@ -195,10 +193,10 @@ export default function Header() {
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
                 aria-current={active ? "page" : undefined}
-                className={`block rounded-xl px-4 py-3 text-base font-extrabold transition-all ${
+                className={`block rounded-lg border-l-2 px-4 py-3 text-base font-semibold transition-colors ${
                   active
-                    ? "bg-primary text-white shadow-sm"
-                    : "text-foreground/85 hover:bg-surface-blue hover:text-primary"
+                    ? "border-brand-yellow bg-surface-blue text-primary"
+                    : "border-transparent text-foreground/85 hover:border-brand-yellow/60 hover:bg-surface-blue hover:text-primary"
                 }`}
               >
                 {item.name}
@@ -210,7 +208,7 @@ export default function Header() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-brand-yellow px-5 py-4 text-base font-black text-primary-dark shadow-md hover:bg-brand-yellow-light transition-all animate-pulse-glow"
+            className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-5 py-4 text-base font-bold text-white transition-colors hover:bg-primary-dark"
           >
             <MessageCircle size={20} />
             Consultar Cupo por WhatsApp
