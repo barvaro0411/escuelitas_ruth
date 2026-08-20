@@ -81,10 +81,6 @@ export default function AdmisionPage() {
     <>
       <JsonLd data={breadcrumbsJsonLd} />
       <div className="pt-32 pb-24 overflow-hidden relative">
-        {/* Background blobs */}
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-secondary rounded-full blur-[100px] opacity-20 -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary rounded-full blur-[100px] opacity-20 translate-y-1/3 -translate-x-1/3 pointer-events-none" />
-
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Header */}
           <div className="max-w-3xl mb-24 animate-fade-up text-center mx-auto">
@@ -107,7 +103,7 @@ export default function AdmisionPage() {
               {steps.map((step, index) => (
                 <div 
                   key={step.title} 
-                  className={`relative p-8 rounded-[2.5rem] ${step.bg} shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 ${step.rotation} animate-fade-up`}
+                  className={`relative rounded-2xl border border-border p-7 ${step.bg} shadow-sm transition-shadow duration-200 hover:shadow-md animate-fade-up`}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div className="w-16 h-16 rounded-2xl bg-white/30 backdrop-blur-md flex items-center justify-center mb-8 shadow-inner">
@@ -124,10 +120,7 @@ export default function AdmisionPage() {
 
           {/* Requirements and Info */}
           <div id="requisitos" className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24 items-center scroll-mt-32">
-            <div className="bg-white rounded-[3rem] p-10 lg:p-14 border border-border/50 shadow-2xl relative rotate-1 hover:rotate-0 transition-transform duration-500 animate-fade-up">
-              <div className="absolute -top-6 -right-6 w-24 h-24 bg-pastel-pink rounded-full flex items-center justify-center shadow-lg -rotate-12 animate-bounce-slow border-4 border-white">
-                <FileText size={32} className="text-white" />
-              </div>
+            <div className="relative rounded-2xl border border-border bg-white p-8 shadow-sm lg:p-10 animate-fade-up">
               
               <h2 className="text-3xl font-black text-foreground mb-8">¿Qué documentos necesitas?</h2>
               <ul className="space-y-6">
@@ -176,7 +169,7 @@ export default function AdmisionPage() {
           </div>
 
           {/* CTA */}
-          <div className="bg-secondary rounded-[4rem] p-12 sm:p-20 text-center text-primary-dark relative overflow-hidden shadow-2xl animate-fade-up">
+          <div className="rounded-2xl bg-secondary p-10 text-center text-primary-dark shadow-sm sm:p-14 animate-fade-up">
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/40 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
             
@@ -186,9 +179,9 @@ export default function AdmisionPage() {
                 Escríbenos ahora y revisamos contigo edad, nivel, cupo disponible y fecha para evaluación.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                <a href={admissionWhatsAppUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center bg-primary text-white px-10 py-5 rounded-full font-black uppercase tracking-widest text-lg hover:bg-primary-dark hover:scale-105 transition-all shadow-xl shadow-primary/30">
+                <a href={admissionWhatsAppUrl} target="_blank" rel="noopener noreferrer" aria-label="Abrir WhatsApp para consultar disponibilidad 2027" className="inline-flex min-h-14 items-center justify-center rounded-xl bg-brand-yellow px-8 py-4 text-base font-extrabold text-primary-dark transition-colors hover:bg-brand-yellow-light">
                   <MessageCircle className="mr-3 h-6 w-6" />
-                  WhatsApp Directo
+                  Consultar disponibilidad
                 </a>
                 <Link href="/contacto" className="inline-flex items-center justify-center bg-white text-primary-dark px-10 py-5 rounded-full font-black uppercase tracking-widest text-lg hover:bg-gray-100 hover:scale-105 transition-all shadow-xl shadow-black/5">
                   Formulario de contacto

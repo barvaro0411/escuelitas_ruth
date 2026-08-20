@@ -91,24 +91,24 @@ const focusAreas = [
     description:
       "Aprendemos a través del juego libre, la música y la exploración sensorial.",
     icon: Baby,
-    bg: "bg-pastel-blue",
-    iconColor: "text-white",
+    bg: "bg-primary/10",
+    iconColor: "text-primary",
   },
   {
     title: "Comunicación y lenguaje",
     description:
       "Estimulamos la interacción y el desarrollo del lenguaje en un ambiente lúdico.",
     icon: MessageCircle,
-    bg: "bg-pastel-pink",
-    iconColor: "text-white",
+    bg: "bg-brand-yellow/15",
+    iconColor: "text-primary-dark",
   },
   {
     title: "Socialización",
     description:
       "Fomentamos la interacción social, las rutinas y las habilidades pre-académicas.",
     icon: Users2,
-    bg: "bg-pastel-mint",
-    iconColor: "text-white",
+    bg: "bg-emerald-50",
+    iconColor: "text-emerald-800",
   },
   {
     title: "Transición escolar",
@@ -130,10 +130,6 @@ export default function ProgramaPage() {
     <>
       <JsonLd data={breadcrumbsJsonLd} />
       <div className="pt-32 pb-24 overflow-hidden relative">
-        {/* Background blobs */}
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-secondary rounded-full blur-[100px] opacity-20 -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-pastel-pink rounded-full blur-[100px] opacity-20 translate-y-1/3 -translate-x-1/3 pointer-events-none" />
-
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Header */}
           <div className="max-w-3xl mb-24 animate-fade-up text-center mx-auto">
@@ -159,7 +155,7 @@ export default function ProgramaPage() {
 
           {/* ¿Qué es el TEL? Section */}
           <div className="mb-28">
-            <div className="bg-primary-dark rounded-[4rem] p-10 lg:p-20 text-white relative overflow-hidden shadow-2xl animate-fade-up">
+            <div className="relative overflow-hidden rounded-2xl bg-primary-dark p-8 text-white shadow-lg animate-fade-up lg:p-14">
               <div className="absolute top-0 right-0 w-64 h-64 bg-primary rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/2" />
               <div className="absolute bottom-0 left-0 w-80 h-80 bg-secondary/30 rounded-full blur-3xl translate-y-1/3 -translate-x-1/3" />
 
@@ -218,7 +214,7 @@ export default function ProgramaPage() {
                   </div>
                 </div>
 
-                <div className="relative aspect-square rounded-[3rem] overflow-hidden bg-primary shadow-inner border-4 border-white/15 flex items-center justify-center transform rotate-2 hover:rotate-0 transition-transform duration-500">
+                <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl border-4 border-white/15 bg-primary shadow-inner">
                   <div
                     className="absolute -top-10 -right-10 w-40 h-40 bg-white/5 rounded-full"
                     aria-hidden="true"
@@ -236,10 +232,10 @@ export default function ProgramaPage() {
                     className="absolute inset-0 bg-gradient-to-t from-primary-dark/80 to-transparent"
                     aria-hidden="true"
                   />
-                  <div className="absolute top-8 left-8 w-16 h-16 rounded-2xl bg-brand-yellow/90 flex items-center justify-center rotate-12 animate-float shadow-lg">
+                  <div className="absolute left-8 top-8 flex h-14 w-14 items-center justify-center rounded-xl bg-brand-yellow/90 shadow-md">
                     <Sparkles size={26} className="text-primary-dark" />
                   </div>
-                  <div className="absolute bottom-8 right-8 w-14 h-14 rounded-full bg-secondary/90 flex items-center justify-center -rotate-6 animate-float-reverse shadow-lg">
+                  <div className="absolute bottom-8 right-8 flex h-12 w-12 items-center justify-center rounded-full bg-secondary/90 shadow-md">
                     <Speech size={22} className="text-primary-dark" />
                   </div>
                 </div>
@@ -297,7 +293,7 @@ export default function ProgramaPage() {
               {programs.map((program, index) => (
                 <div
                   key={program.title}
-                  className={`relative p-10 rounded-[3rem] ${program.bg} shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 ${program.rotation} animate-fade-up overflow-hidden group`}
+                  className={`relative overflow-hidden rounded-2xl p-8 ${program.bg} shadow-sm transition-shadow duration-200 hover:shadow-md animate-fade-up group`}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div

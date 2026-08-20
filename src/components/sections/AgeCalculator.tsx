@@ -237,7 +237,7 @@ export default function AgeCalculator() {
                         : "bg-amber-100 text-amber-900 border border-amber-300"
                     }`}
                   >
-                    {result.status === "eligible" ? "Cumple requisitos" : "Orientación"}
+                    {result.status === "eligible" ? "Cumple requisito de edad" : "Orientación"}
                   </span>
                 </div>
 
@@ -249,7 +249,7 @@ export default function AgeCalculator() {
                       : "bg-amber-100 text-amber-900 border border-amber-300"
                   }`}
                 >
-                  {result.status === "eligible" ? "✓ Cumple requisitos" : "⚠ Orientación especial"}
+                  {result.status === "eligible" ? "✓ Cumple requisito de edad" : "⚠ Requiere orientación"}
                 </span>
 
                 <p className="mb-3 sm:mb-4 text-xs sm:text-sm font-semibold leading-relaxed text-foreground/70">

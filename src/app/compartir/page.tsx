@@ -5,12 +5,16 @@ import { buildWhatsAppUrl, siteConfig } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Comparte las matrículas 2027",
   description:
-    "Matrículas 2027 abiertas en Escuela de Lenguaje Ruth, Conchalí. Gratuita, evaluación fonoaudiológica sin costo, para niños de 3 a 5 años 11 meses con TEL.",
+    "Consulta cupos 2027 en Escuela de Lenguaje Ruth, Conchalí. Educación gratuita y evaluación fonoaudiológica sin costo para niños de 3 a 5 años 11 meses con TEL.",
   alternates: {
     canonical: "/compartir",
   },
+  robots: {
+    index: false,
+    follow: false,
+  },
   openGraph: {
-    title: "Matrículas 2027 abiertas — Escuela de Lenguaje Ruth",
+    title: "Consulta cupos 2027 — Escuela de Lenguaje Ruth",
     description:
       "Escuela gratuita en Conchalí para niños con TEL. Evaluación sin costo. Comparte con familias que lo necesiten.",
     url: "/compartir",
@@ -18,7 +22,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Matrículas 2027 abiertas — Escuela de Lenguaje Ruth",
+    title: "Consulta cupos 2027 — Escuela de Lenguaje Ruth",
     description: "Escuela gratuita en Conchalí para niños con TEL. Evaluación sin costo.",
     images: ["/hero-children.jpg"],
   },
@@ -53,8 +57,8 @@ export default function CompartirPage() {
         {/* Main heading */}
         <div className="flex flex-col gap-3">
           <h1 className="text-5xl font-black text-white leading-[0.95] tracking-tight">
-            Matrículas&nbsp;2027{" "}
-            <span className="text-secondary">abiertas</span>
+            Consulta&nbsp;cupos&nbsp;2027{" "}
+            <span className="text-secondary">hoy</span>
           </h1>
           <p className="text-white/75 font-bold text-lg leading-snug">
             Escuela de Lenguaje Ruth · Conchalí · Gratuita

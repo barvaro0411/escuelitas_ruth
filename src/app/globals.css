@@ -252,12 +252,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .card-hover {
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .card-hover:hover {
-  transform: translateY(-8px) scale(1.01);
-  box-shadow: 0 24px 48px -12px rgba(15, 43, 128, 0.2), 0 8px 20px -6px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -16px rgba(15, 43, 128, 0.24), 0 4px 12px -8px rgba(0, 0, 0, 0.08);
 }
 
 .glow-border-yellow {

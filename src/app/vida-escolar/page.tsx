@@ -88,10 +88,6 @@ export default function VidaEscolarPage() {
     <>
       <JsonLd data={breadcrumbsJsonLd} />
       <div className="pt-32 pb-24 overflow-hidden relative">
-        {/* Background elements */}
-        <div className="absolute top-40 left-0 w-[500px] h-[500px] bg-secondary rounded-full blur-[100px] opacity-20 -translate-x-1/2 pointer-events-none" />
-        <div className="absolute inset-0 dot-pattern opacity-10 pointer-events-none" />
-
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Header */}
           <div className="max-w-3xl mb-20 animate-fade-up text-center mx-auto">
@@ -113,7 +109,7 @@ export default function VidaEscolarPage() {
               {galleryItems.map((item, index) => (
                 <div 
                   key={index} 
-                  className={`group relative w-full ${item.height} rounded-[3rem] overflow-hidden bg-primary shadow-xl hover:shadow-2xl transition-all duration-500 animate-fade-up break-inside-avoid border-4 border-transparent hover:border-white/50 hover:scale-[1.02]`}
+                  className={`group relative w-full ${item.height} overflow-hidden rounded-2xl bg-primary shadow-sm transition-shadow duration-200 animate-fade-up break-inside-avoid hover:shadow-md`}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <Image
@@ -163,7 +159,7 @@ export default function VidaEscolarPage() {
               </ul>
             </div>
             
-            <div className="bg-primary rounded-[4rem] p-12 lg:p-16 text-white relative shadow-2xl animate-fade-up animate-delay-200 overflow-hidden">
+            <div className="relative overflow-hidden rounded-2xl bg-primary p-8 text-white shadow-sm animate-fade-up animate-delay-200 lg:p-12">
               <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
               <Heart size={64} className="text-secondary mb-8 drop-shadow-md" />
               <h2 className="text-3xl font-black mb-6 drop-shadow-sm">Nuestra Comunidad</h2>

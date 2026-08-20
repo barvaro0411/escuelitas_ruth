@@ -36,7 +36,7 @@ export default function ScrollToTop() {
       aria-label="Volver arriba"
       aria-hidden={!isVisible}
       tabIndex={isVisible ? 0 : -1}
-      className={`group fixed bottom-20 right-4 sm:bottom-22 sm:right-6 z-40 flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/95 border-2 border-primary/20 text-primary-dark shadow-lg shadow-black/10 backdrop-blur-md transition-all duration-300 hover:bg-primary hover:text-white hover:scale-110 active:scale-95 ${
+      className={`group fixed bottom-28 right-4 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-primary/20 bg-white/95 text-primary-dark shadow-md shadow-black/10 backdrop-blur-md transition-all duration-200 hover:bg-primary hover:text-white sm:bottom-24 sm:right-6 sm:h-12 sm:w-12 ${
         isVisible
           ? "opacity-100 translate-y-0 pointer-events-auto"
           : "opacity-0 translate-y-4 pointer-events-none"

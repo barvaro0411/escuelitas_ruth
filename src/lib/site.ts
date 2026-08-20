@@ -3,7 +3,7 @@ export const siteConfig = {
   shortName: "Escuelitas Ruth",
   // Dominio público que hoy responde. Cambiar aquí cuando el dominio propio
   // tenga DNS y redirección HTTPS verificados en Vercel.
-  url: "https://escuelitas-ruth.vercel.app",
+  url: process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://escuelitas-ruth.vercel.app",
   admissionYear: 2027,
   description:
     "Escuela de lenguaje particular subvencionada con dos sedes en Conchalí, 100% gratuita para las familias, con evaluación fonoaudiológica sin costo y apoyo especializado para niños y niñas con TEL.",
@@ -76,7 +76,6 @@ export const siteConfig = {
     "/programa-educativo",
     "/vida-escolar",
     "/preguntas-frecuentes",
-    "/compartir",
     "/privacidad",
     "/terminos",
   ],

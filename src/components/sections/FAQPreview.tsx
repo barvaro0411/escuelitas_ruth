@@ -18,7 +18,7 @@ const faqs = [
   {
     question: "¿Cuál es el costo?",
     answer:
-      "La escuela es 100% gratuita para las familias. No se cobra matrícula, mensualidades ni materiales de estudio, ya que cuenta con subvención estatal.",
+      "La escuela es 100% gratuita para las familias. No se cobra matrícula, mensualidad ni materiales de estudio, ya que cuenta con subvención estatal.",
   },
 ];
 
@@ -26,68 +26,43 @@ export default function FAQPreview() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="border-b border-border bg-gradient-to-b from-white to-[#fffdf5] py-20 sm:py-28">
-      <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16 lg:px-8">
-        {/* Encabezado */}
-        <div className="lg:pt-2">
-          <p className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-brand-yellow-dark">
-            Preguntas frecuentes
-          </p>
-          <h2 className="mb-4 text-3xl font-black tracking-tight text-foreground sm:text-5xl leading-tight font-display">
+    <section className="border-b border-border bg-white py-16 sm:py-20">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:px-8">
+        <div>
+          <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-primary">Preguntas frecuentes</p>
+          <h2 className="mt-2 font-display text-3xl font-extrabold leading-tight text-foreground sm:text-4xl">
             Respuestas antes de comenzar
           </h2>
-          <p className="mb-8 text-base font-semibold leading-relaxed text-foreground/65">
-            Revisa las dudas principales de nuestros apoderados y contáctanos si necesitas orientación para tu caso particular.
+          <p className="mt-4 max-w-xl text-base font-semibold leading-relaxed text-muted">
+            Revisa las dudas principales de nuestros apoderados y contáctanos si necesitas orientación para tu caso.
           </p>
-          <Link
-            href="/preguntas-frecuentes"
-            className="inline-flex items-center gap-1.5 text-sm font-black text-primary transition-all hover:text-primary-dark group"
-          >
+          <Link href="/preguntas-frecuentes" className="mt-6 inline-flex items-center gap-2 text-sm font-extrabold text-primary hover:text-primary-dark">
             Ver todas las preguntas
-            <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
         </div>
 
-        {/* Acordeón */}
-        <div className="space-y-4">
+        <div className="space-y-3">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
             const buttonId = `faq-preview-button-${index}`;
             const panelId = `faq-preview-panel-${index}`;
 
             return (
-              <article
-                key={faq.question}
-                className={`overflow-hidden rounded-[2rem] border-2 bg-white transition-all duration-300 card-hover ${
-                  isOpen ? "border-primary shadow-xl shadow-primary/5" : "border-border/60"
-                }`}
-              >
+              <article key={faq.question} className={`overflow-hidden rounded-xl border bg-white transition-colors ${isOpen ? "border-primary" : "border-border"}`}>
                 <button
                   id={buttonId}
                   type="button"
-                  className="flex w-full items-center justify-between gap-4 px-6 py-5.5 text-left font-black text-lg text-foreground transition-colors hover:bg-surface-blue/30 sm:px-8"
+                  className="flex min-h-14 w-full items-center justify-between gap-4 px-5 py-4 text-left text-base font-extrabold text-foreground hover:bg-surface-blue/30 sm:px-6"
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                   aria-expanded={isOpen}
                   aria-controls={panelId}
                 >
-                  <span className="tracking-tight leading-snug">{faq.question}</span>
-                  <ChevronDown
-                    className={`h-5 w-5 shrink-0 text-primary transition-transform duration-300 ${
-                      isOpen ? "rotate-180" : ""
-                    }`}
-                    aria-hidden="true"
-                  />
+                  <span>{faq.question}</span>
+                  <ChevronDown className={`h-5 w-5 shrink-0 text-primary transition-transform ${isOpen ? "rotate-180" : ""}`} aria-hidden="true" />
                 </button>
-                <div
-                  id={panelId}
-                  role="region"
-                  aria-labelledby={buttonId}
-                  hidden={!isOpen}
-                  className="border-t border-primary/10 bg-surface-blue/20 px-6 py-5 sm:px-8"
-                >
-                  <p className="text-base font-semibold leading-relaxed text-foreground/70">
-                    {faq.answer}
-                  </p>
+                <div id={panelId} role="region" aria-labelledby={buttonId} hidden={!isOpen} className="border-t border-border bg-surface-blue/25 px-5 py-4 sm:px-6">
+                  <p className="text-sm font-semibold leading-relaxed text-muted sm:text-base">{faq.answer}</p>
                 </div>
               </article>
             );

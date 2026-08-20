@@ -55,7 +55,7 @@ const values = [
     title: "Valores Institucionales",
     description: "El respeto, el diálogo, la tolerancia, la responsabilidad, la honestidad y la amistad son la base de nuestra convivencia escolar.",
     icon: Heart,
-    bg: "bg-pastel-pink",
+    bg: "bg-primary",
     color: "text-white",
     rotation: "-rotate-1",
   },
@@ -71,10 +71,6 @@ export default function NosotrosPage() {
     <>
       <JsonLd data={breadcrumbsJsonLd} />
       <div className="pt-32 pb-24 overflow-hidden relative">
-        {/* Background elements */}
-        <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-secondary rounded-full blur-[100px] opacity-20 translate-x-1/3 pointer-events-none" />
-        <div className="absolute inset-0 dot-pattern opacity-10 pointer-events-none" />
-
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Header Section */}
           <div className="max-w-3xl mb-24 animate-fade-up text-center mx-auto">
@@ -95,7 +91,7 @@ export default function NosotrosPage() {
             {values.map((item, index) => (
               <div 
                 key={item.title} 
-                className={`p-10 rounded-[3rem] ${item.bg} shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 ${item.rotation} animate-fade-up`}
+                className={`rounded-2xl p-8 ${item.bg} shadow-sm transition-shadow duration-200 hover:shadow-md animate-fade-up`}
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className="w-16 h-16 rounded-2xl bg-white/30 backdrop-blur-md flex items-center justify-center mb-8 shadow-inner">
@@ -112,7 +108,7 @@ export default function NosotrosPage() {
           {/* Philosophy Section */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-32">
             <div className="relative animate-fade-up">
-              <div className="aspect-square rounded-[4rem] rounded-tr-[10rem] rounded-bl-[10rem] overflow-hidden bg-pastel-blue border-8 border-white/50 shadow-2xl relative rotate-3 hover:rotate-0 transition-transform duration-500">
+              <div className="relative aspect-square overflow-hidden rounded-2xl border-4 border-white bg-surface-blue shadow-lg">
                 <Image
                   src="/equipo-escuela-ruth.jpg"
                   alt="Integrantes del equipo educativo de la Escuela de Lenguaje Ruth"
@@ -125,8 +121,8 @@ export default function NosotrosPage() {
                 </div>
               </div>
               {/* Decorative element */}
-              <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-secondary rounded-full flex items-center justify-center shadow-lg border-4 border-white animate-bounce-slow">
-                <Sparkles size={40} className="text-primary-dark" />
+              <div className="absolute -bottom-4 -left-4 flex h-16 w-16 items-center justify-center rounded-full border-4 border-white bg-secondary shadow-md">
+                <Sparkles size={24} className="text-primary-dark" />
               </div>
             </div>
             
@@ -139,7 +135,7 @@ export default function NosotrosPage() {
                 </p>
                 <ul className="space-y-6">
                   <li className="flex items-start bg-white p-4 rounded-3xl shadow-sm border border-border/50 hover:-translate-y-1 transition-transform">
-                    <div className="h-10 w-10 rounded-xl bg-pastel-pink text-white flex items-center justify-center mr-4 mt-0.5 shrink-0 shadow-sm">
+                    <div className="mr-4 mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-white shadow-sm">
                       <Heart size={20} className="fill-white" />
                     </div>
                     <div><strong className="text-foreground font-black block text-xl mb-1">Currículo humanista</strong> Valoramos y respetamos la singularidad de cada niño y niña.</div>
@@ -151,7 +147,7 @@ export default function NosotrosPage() {
                     <div><strong className="text-foreground font-black block text-xl mb-1">Autonomía y crecimiento</strong> Potenciamos activamente la independencia personal en cada estudiante.</div>
                   </li>
                   <li className="flex items-start bg-white p-4 rounded-3xl shadow-sm border border-border/50 hover:-translate-y-1 transition-transform">
-                    <div className="h-10 w-10 rounded-xl bg-pastel-blue text-white flex items-center justify-center mr-4 mt-0.5 shrink-0 shadow-sm">
+                    <div className="mr-4 mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-white shadow-sm">
                       <Eye size={20} />
                     </div>
                     <div><strong className="text-foreground font-black block text-xl mb-1">Enfoque en procesos</strong> Nos centramos en el camino de aprendizaje, no únicamente en los resultados.</div>
@@ -162,7 +158,7 @@ export default function NosotrosPage() {
           </div>
 
           {/* Team Preview Section */}
-          <div className="bg-primary rounded-[4rem] p-12 lg:p-24 text-center text-white relative overflow-hidden shadow-2xl animate-fade-up">
+          <div className="relative overflow-hidden rounded-2xl bg-primary p-9 text-center text-white shadow-lg animate-fade-up lg:p-16">
             <div className="absolute top-0 left-0 w-64 h-64 bg-white/20 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2" />
             <div className="relative z-10 max-w-4xl mx-auto">
               <h2 className="text-4xl sm:text-6xl font-black mb-8 tracking-tighter drop-shadow-md">Un equipo a su <span className="text-secondary drop-shadow-none">servicio</span></h2>

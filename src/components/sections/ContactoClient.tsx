@@ -3,27 +3,24 @@
 import { useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { Phone, Mail, MapPin, Clock, MessageCircle, Send, GraduationCap } from "lucide-react";
+import { Clock, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
 import { toast } from "sonner";
 import { useSearchParams } from "next/navigation";
 import { buildContactWhatsAppMessage, buildWhatsAppUrl, siteConfig } from "@/lib/site";
 
 type FormData = {
   nombreApoderado: string;
-  email?: string;
   telefono: string;
-  nombreNino?: string;
-  edadNino: string;
   fechaNacimiento?: string;
-  comuna: string;
+  comuna?: string;
   sede?: string;
-  jornada: string;
-  diagnostico: string;
+  jornada?: string;
   mensaje?: string;
+  consent: boolean;
 };
 
 const quickWhatsAppUrl = buildWhatsAppUrl(
-  "Hola, quiero consultar por matrícula 2027 y agendar una evaluación gratuita."
+  "Hola, quiero consultar disponibilidad 2027 y agendar una evaluación gratuita."
 );
 
 const allowedLevelPrefills: Record<string, { label: string; age: string }> = {
@@ -53,9 +50,8 @@ export default function ContactoClient() {
   return (
     <Suspense
       fallback={
-        <div className="pt-40 pb-24 text-center min-h-[60vh] flex flex-col items-center justify-center">
-          <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4" />
-          <p className="text-xl font-black text-primary-dark">Cargando formulario...</p>
+        <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 pt-32 pb-24 text-center">
+          <p className="text-lg font-extrabold text-primary">Cargando formulario…</p>
         </div>
       }
     >
@@ -66,370 +62,221 @@ export default function ContactoClient() {
 
 function ContactoForm() {
   const searchParams = useSearchParams();
-  const levelParam = searchParams ? searchParams.get("level") : null;
-  const birthdateParam = searchParams ? searchParams.get("birthdate") : null;
+  const levelParam = searchParams?.get("level");
+  const birthdateParam = searchParams?.get("birthdate");
   const levelPrefill = levelParam ? allowedLevelPrefills[levelParam] : undefined;
-  const validBirthdate = isValidBirthdate(birthdateParam) ? birthdateParam : null;
+  const validBirthdate = isValidBirthdate(birthdateParam);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
     setValue,
-  } = useForm<FormData>();
+  } = useForm<FormData>({
+    defaultValues: { consent: false },
+  });
 
   useEffect(() => {
-    if (validBirthdate) {
-      setValue("fechaNacimiento", validBirthdate);
+    if (validBirthdate && birthdateParam) {
+      setValue("fechaNacimiento", birthdateParam);
     }
 
     if (levelPrefill) {
-      setValue("edadNino", levelPrefill.age);
       setValue(
         "mensaje",
-        `Hola, realicé el cálculo en su web y mi hijo(a) califica para el nivel de ${levelPrefill.label}. Quisiera consultar disponibilidad de cupos para matrícula 2027.`
+        `Hola, realicé el cálculo en su web y mi hijo(a) tiene edad para ${levelPrefill.label}. Quisiera consultar disponibilidad para 2027.`
       );
     }
-  }, [levelPrefill, validBirthdate, setValue]);
+  }, [birthdateParam, levelPrefill, setValue, validBirthdate]);
 
   const onSubmit = (data: FormData) => {
     const whatsappUrl = buildWhatsAppUrl(buildContactWhatsAppMessage(data));
-    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
-    toast.success("Abrimos WhatsApp para enviar tu consulta", {
-      description: "El equipo podrá responderte más rápido por ese canal.",
+    const whatsappWindow = window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+
+    if (!whatsappWindow) {
+      toast.error("No pudimos abrir WhatsApp", {
+        description: "Permite ventanas emergentes o usa el botón de WhatsApp directo.",
+      });
+      return;
+    }
+
+    toast.success("WhatsApp está listo para tu consulta", {
+      description: "Revisa el mensaje y decide si quieres enviarlo.",
     });
-    reset();
   };
 
   return (
-    <div className="pt-32 pb-24 overflow-hidden relative">
-      <div className="absolute inset-0 dot-pattern opacity-10 pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-3xl mb-16 animate-fade-up">
-          <span className="inline-block px-5 py-2 rounded-full bg-accent text-primary-dark font-black uppercase tracking-widest mb-6 shadow-sm">
-            Contacto y matrícula
-          </span>
-          <h1 className="text-5xl sm:text-7xl font-black text-foreground mb-6 tracking-tight leading-tight">
-            Agenda tu evaluación gratuita.
+    <div className="relative overflow-hidden bg-background pt-32 pb-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto mb-12 max-w-3xl">
+          <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-primary">Contacto y admisión</p>
+          <h1 className="mt-2 font-display text-4xl font-extrabold leading-tight text-foreground sm:text-5xl">
+            Consulta disponibilidad y agenda tu evaluación
           </h1>
-          <p className="text-xl text-foreground/70 leading-relaxed font-semibold">
-            Déjanos los datos principales y se abrirá WhatsApp con tu consulta lista para enviar. Así podemos revisar edad, cupo, jornada y próximos pasos.
+          <p className="mt-4 text-base font-semibold leading-relaxed text-muted sm:text-lg">
+            Completa solo los datos necesarios. Se abrirá WhatsApp para que revises la consulta antes de enviarla.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
-          <div className="lg:col-span-5 flex flex-col gap-6 animate-fade-up animate-delay-200">
-            <div className="bg-primary-dark rounded-[3rem] p-10 text-white shadow-2xl relative overflow-hidden group">
-              <MapPin className="text-secondary mb-6 relative z-10" size={40} />
-              <h2 className="text-2xl font-black text-white mb-4 relative z-10">Nuestras Sedes</h2>
-              <div className="space-y-4 relative z-10">
-                {siteConfig.contact.addresses.map((addr) => (
-                  <div key={addr.id}>
-                    <p className="text-xs text-secondary font-black uppercase tracking-widest mb-1">{addr.name}</p>
-                    <p className="text-xs text-white/50 font-bold mb-1">RBD {addr.rbd}</p>
-                    <a
-                      href={addr.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-base text-white/80 font-semibold hover:text-secondary transition-colors"
-                    >
-                      {addr.label}
+        <div className="grid items-start gap-8 lg:grid-cols-[0.8fr_1.2fr]">
+          <aside className="space-y-4">
+            <div className="rounded-2xl bg-primary-dark p-7 text-white">
+              <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-brand-yellow-light">Dónde encontrarnos</p>
+              <h2 className="mt-2 font-display text-2xl font-extrabold">Dos sedes en Conchalí</h2>
+              <div className="mt-6 space-y-5">
+                {siteConfig.contact.addresses.map((address) => (
+                  <div key={address.id}>
+                    <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-brand-yellow-light">{address.name}</p>
+                    <p className="mt-1 text-xs font-bold text-white/60">RBD {address.rbd}</p>
+                    <a href={address.href} target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex items-start gap-2 text-sm font-bold text-white/85 hover:text-white">
+                      <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-yellow" aria-hidden="true" />
+                      {address.label}
                     </a>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="bg-white rounded-[2rem] p-8 border border-border/50 shadow-lg hover:-translate-y-1 transition-transform">
-                <div className="w-12 h-12 rounded-full bg-pastel-blue text-white flex items-center justify-center mb-6 shadow-sm">
-                  <Phone size={24} />
-                </div>
-                <h2 className="text-xl font-black text-foreground mb-2">Teléfono</h2>
-                <a href={siteConfig.contact.phone.href} className="text-foreground/70 font-bold hover:text-primary transition-colors">
+            <div className="rounded-2xl border border-border bg-white p-6 shadow-sm">
+              <h2 className="font-display text-xl font-extrabold text-foreground">Canales directos</h2>
+              <div className="mt-5 space-y-4 text-sm font-bold text-muted">
+                <a href={siteConfig.contact.phone.href} className="flex items-center gap-3 hover:text-primary">
+                  <Phone className="h-5 w-5 text-primary" aria-hidden="true" />
                   {siteConfig.contact.phone.label}
                 </a>
-              </div>
-
-              <div className="bg-white rounded-[2rem] p-8 border border-border/50 shadow-lg hover:-translate-y-1 transition-transform">
-                <div className="w-12 h-12 rounded-full bg-pastel-pink text-white flex items-center justify-center mb-6 shadow-sm">
-                  <Mail size={24} />
-                </div>
-                <h2 className="text-xl font-black text-foreground mb-2">Correo</h2>
-                <a href={siteConfig.contact.email.href} className="text-foreground/70 font-bold break-all hover:text-primary transition-colors">
+                <a href={siteConfig.contact.email.href} className="flex items-center gap-3 break-all hover:text-primary">
+                  <Mail className="h-5 w-5 text-primary" aria-hidden="true" />
                   {siteConfig.contact.email.label}
                 </a>
-              </div>
-
-              <div className="bg-white rounded-[2rem] p-8 border border-border/50 shadow-lg hover:-translate-y-1 transition-transform">
-                <div className="w-12 h-12 rounded-full bg-secondary text-primary-dark flex items-center justify-center mb-6 shadow-sm">
-                  <Clock size={24} />
-                </div>
-                <h2 className="text-xl font-black text-foreground mb-2">Horario</h2>
-                <p className="text-foreground/70 font-bold text-sm">{siteConfig.contact.hours}</p>
-              </div>
-
-              <div className="bg-white rounded-[2rem] p-8 border border-border/50 shadow-lg hover:-translate-y-1 transition-transform">
-                <div className="w-12 h-12 rounded-full bg-pastel-mint text-white flex items-center justify-center mb-6 shadow-sm">
-                  <GraduationCap size={24} />
-                </div>
-                <h2 className="text-xl font-black text-foreground mb-2">Niveles</h2>
-                <p className="text-foreground/70 font-bold text-sm">Medio Mayor a Kínder.</p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {siteConfig.contact.addresses.map((addr) => (
-                <a
-                  key={addr.id}
-                  href={addr.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="aspect-[4/3] rounded-[2.5rem] bg-accent border-4 border-white shadow-xl flex items-center justify-center text-muted overflow-hidden relative group hover:shadow-2xl transition-all"
-                >
-                  <div className="absolute inset-0 bg-secondary/10 group-hover:bg-secondary/20 transition-colors" />
-                  <div className="relative z-10 flex flex-col items-center px-4 text-center">
-                    <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg mb-3 text-primary animate-bounce-slow">
-                      <MapPin size={28} />
-                    </div>
-                    <span className="text-xs font-black text-secondary uppercase tracking-widest bg-primary-dark/80 px-3 py-1 rounded-full mb-2">{addr.name}</span>
-                    <span className="text-xs font-black text-primary-dark uppercase tracking-widest bg-white/80 px-3 py-1.5 rounded-full backdrop-blur-sm">
-                      Ver en Google Maps
-                    </span>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div className="lg:col-span-7 animate-fade-up">
-            <div className="bg-white rounded-[3rem] p-8 sm:p-12 border border-border/50 shadow-2xl relative">
-              <h2 className="text-3xl sm:text-4xl font-black text-foreground mb-8 relative z-10">Consulta cupo 2027</h2>
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 relative z-10" noValidate>
-                <div>
-                  <label htmlFor="nombreApoderado" className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Nombre del apoderado/a</label>
-                  <input
-                    id="nombreApoderado"
-                    type="text"
-                    autoComplete="name"
-                    maxLength={100}
-                    aria-invalid={Boolean(errors.nombreApoderado)}
-                    aria-describedby={errors.nombreApoderado ? "nombreApoderado-error" : undefined}
-                    {...register("nombreApoderado", {
-                      required: "Este campo es obligatorio",
-                      maxLength: { value: 100, message: "Usa máximo 100 caracteres" },
-                    })}
-                    className="w-full px-6 py-5 rounded-3xl bg-accent/50 border border-border/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all outline-none text-lg font-semibold placeholder:text-muted placeholder:font-normal"
-                    placeholder="Ej: María González"
-                  />
-                  {errors.nombreApoderado && <p id="nombreApoderado-error" role="alert" className="mt-2 text-sm text-red-700 font-bold ml-2">{errors.nombreApoderado.message}</p>}
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="telefono" className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Teléfono de contacto</label>
-                    <input
-                      id="telefono"
-                      type="tel"
-                      inputMode="tel"
-                      autoComplete="tel"
-                      maxLength={30}
-                      aria-invalid={Boolean(errors.telefono)}
-                      aria-describedby={errors.telefono ? "telefono-error" : undefined}
-                      {...register("telefono", {
-                        required: "Este campo es obligatorio",
-                        maxLength: { value: 30, message: "Usa máximo 30 caracteres" },
-                        pattern: {
-                          value: /^[+()\d\s-]{8,30}$/,
-                          message: "Ingresa un teléfono válido",
-                        },
-                      })}
-                      className="w-full px-6 py-5 rounded-3xl bg-accent/50 border border-border/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all outline-none text-lg font-semibold placeholder:text-muted placeholder:font-normal"
-                      placeholder="+56 9 1234 5678"
-                    />
-                    {errors.telefono && <p id="telefono-error" role="alert" className="mt-2 text-sm text-red-700 font-bold ml-2">{errors.telefono.message}</p>}
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Correo electrónico opcional</label>
-                    <input
-                      id="email"
-                      type="email"
-                      autoComplete="email"
-                      maxLength={254}
-                      aria-invalid={Boolean(errors.email)}
-                      aria-describedby={errors.email ? "email-error" : undefined}
-                      {...register("email", {
-                        maxLength: { value: 254, message: "Usa máximo 254 caracteres" },
-                        validate: (value) => !value || /^[^\s@]+@[^\s@]+\.[^\s@]+$/i.test(value) || "Correo inválido",
-                      })}
-                      className="w-full px-6 py-5 rounded-3xl bg-accent/50 border border-border/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all outline-none text-lg font-semibold placeholder:text-muted placeholder:font-normal"
-                      placeholder="nombre@ejemplo.com"
-                    />
-                    {errors.email && <p id="email-error" role="alert" className="mt-2 text-sm text-red-700 font-bold ml-2">{errors.email.message}</p>}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="nombreNino" className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Nombre del niño/a opcional</label>
-                    <input
-                      id="nombreNino"
-                      type="text"
-                      autoComplete="off"
-                      maxLength={100}
-                      {...register("nombreNino", { maxLength: 100 })}
-                      className="w-full px-6 py-5 rounded-3xl bg-accent/50 border border-border/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all outline-none text-lg font-semibold placeholder:text-muted placeholder:font-normal"
-                      placeholder="Ej: Mateo"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="edadNino" className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Edad del niño/a</label>
-                    <input
-                      id="edadNino"
-                      type="text"
-                      inputMode="numeric"
-                      maxLength={40}
-                      aria-invalid={Boolean(errors.edadNino)}
-                      aria-describedby={errors.edadNino ? "edadNino-error" : undefined}
-                      {...register("edadNino", {
-                        required: "Este campo es obligatorio",
-                        maxLength: { value: 40, message: "Usa máximo 40 caracteres" },
-                      })}
-                      className="w-full px-6 py-5 rounded-3xl bg-accent/50 border border-border/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all outline-none text-lg font-semibold placeholder:text-muted placeholder:font-normal"
-                      placeholder="Ej: 4 años"
-                    />
-                    {errors.edadNino && <p id="edadNino-error" role="alert" className="mt-2 text-sm text-red-700 font-bold ml-2">{errors.edadNino.message}</p>}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="fechaNacimiento" className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Fecha de nacimiento opcional</label>
-                    <input
-                      id="fechaNacimiento"
-                      type="date"
-                      min="2019-01-01"
-                      max="2027-03-31"
-                      {...register("fechaNacimiento")}
-                      className="w-full px-6 py-5 rounded-3xl bg-accent/50 border border-border/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all outline-none text-lg font-semibold placeholder:text-muted placeholder:font-normal"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="comuna" className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Comuna</label>
-                    <input
-                      id="comuna"
-                      type="text"
-                      autoComplete="address-level2"
-                      maxLength={80}
-                      aria-invalid={Boolean(errors.comuna)}
-                      aria-describedby={errors.comuna ? "comuna-error" : undefined}
-                      {...register("comuna", {
-                        required: "Este campo es obligatorio",
-                        maxLength: { value: 80, message: "Usa máximo 80 caracteres" },
-                      })}
-                      className="w-full px-6 py-5 rounded-3xl bg-accent/50 border border-border/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all outline-none text-lg font-semibold placeholder:text-muted placeholder:font-normal"
-                      placeholder="Ej: Conchalí"
-                    />
-                    {errors.comuna && <p id="comuna-error" role="alert" className="mt-2 text-sm text-red-700 font-bold ml-2">{errors.comuna.message}</p>}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="sede" className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Sede de preferencia</label>
-                    <select
-                      id="sede"
-                      {...register("sede")}
-                      className="w-full px-6 py-5 rounded-3xl bg-accent/50 border border-border/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all outline-none text-lg font-semibold"
-                      defaultValue=""
-                    >
-                      <option value="" disabled>Selecciona una opción</option>
-                      <option value="Sede Vascongados">Sede Vascongados</option>
-                      <option value="Sede Gral. Gambino">Sede Gral. Gambino</option>
-                      <option value="No estoy seguro/a">No estoy seguro/a</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label htmlFor="jornada" className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Jornada preferida</label>
-                    <select
-                      id="jornada"
-                      aria-invalid={Boolean(errors.jornada)}
-                      aria-describedby={errors.jornada ? "jornada-error" : undefined}
-                      {...register("jornada", { required: "Este campo es obligatorio" })}
-                      className="w-full px-6 py-5 rounded-3xl bg-accent/50 border border-border/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all outline-none text-lg font-semibold"
-                      defaultValue=""
-                    >
-                      <option value="" disabled>Selecciona una opción</option>
-                      <option value="Mañana">Mañana</option>
-                      <option value="Tarde">Tarde</option>
-                      <option value="Cualquiera disponible">Cualquiera disponible</option>
-                    </select>
-                    {errors.jornada && <p id="jornada-error" role="alert" className="mt-2 text-sm text-red-700 font-bold ml-2">{errors.jornada.message}</p>}
-                  </div>
-                  <div>
-                    <label htmlFor="diagnostico" className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Evaluación o diagnóstico previo</label>
-                    <select
-                      id="diagnostico"
-                      aria-invalid={Boolean(errors.diagnostico)}
-                      aria-describedby={errors.diagnostico ? "diagnostico-error" : undefined}
-                      {...register("diagnostico", { required: "Este campo es obligatorio" })}
-                      className="w-full px-6 py-5 rounded-3xl bg-accent/50 border border-border/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all outline-none text-lg font-semibold"
-                      defaultValue=""
-                    >
-                      <option value="" disabled>Selecciona una opción</option>
-                      <option value="Tiene informe fonoaudiológico">Tiene informe fonoaudiológico</option>
-                      <option value="No tiene informe">No tiene informe</option>
-                      <option value="No estoy seguro/a">No estoy seguro/a</option>
-                    </select>
-                    {errors.diagnostico && <p id="diagnostico-error" role="alert" className="mt-2 text-sm text-red-700 font-bold ml-2">{errors.diagnostico.message}</p>}
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="mensaje" className="block text-sm font-black uppercase tracking-wider text-foreground/70 mb-3 ml-2">Mensaje opcional</label>
-                  <textarea
-                    id="mensaje"
-                    maxLength={500}
-                    {...register("mensaje", { maxLength: 500 })}
-                    rows={5}
-                    className="w-full px-6 py-5 rounded-3xl bg-accent/50 border border-border/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all outline-none text-lg font-semibold placeholder:text-muted placeholder:font-normal resize-none"
-                    placeholder="Cuéntanos la edad de tu hijo(a), nivel o dudas sobre matrícula..."
-                  />
-                </div>
-
-                <p className="text-sm font-semibold leading-relaxed text-foreground/70">
-                  Al continuar, se abrirá WhatsApp con estos datos para que tú decidas si envías el mensaje. Revisa nuestra{" "}
-                  <Link href="/privacidad" className="font-black text-primary underline underline-offset-4 hover:text-primary-dark">
-                    política de privacidad
-                  </Link>.
+                <p className="flex items-start gap-3">
+                  <Clock className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
+                  {siteConfig.contact.hours}
                 </p>
-
-                <button
-                  type="submit"
-                  className="w-full bg-primary text-white py-6 rounded-2xl font-black text-xl hover:bg-primary-dark transition-all shadow-xl shadow-primary/30 flex items-center justify-center hover:scale-[1.02]"
-                >
-                  <Send className="mr-3 h-6 w-6" />
-                  Consultar cupo por WhatsApp
-                </button>
-              </form>
-
-              <div className="mt-12 pt-10 border-t border-border flex flex-col items-center bg-accent/30 rounded-3xl p-8">
-                <p className="text-sm font-black uppercase tracking-widest text-foreground/70 mb-4">Respuesta inmediata:</p>
-                <a
-                  href={quickWhatsAppUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-primary-dark font-black text-lg bg-secondary px-8 py-4 rounded-full hover:bg-secondary-light transition-all shadow-lg shadow-secondary/20 hover:-translate-y-1"
-                >
-                  <MessageCircle className="mr-3 h-6 w-6" />
-                  Chatea por WhatsApp
-                </a>
-                <p className="mt-4 text-sm text-foreground/60 font-bold">{siteConfig.contact.whatsapp.label}</p>
               </div>
             </div>
-          </div>
+          </aside>
+
+          <section className="rounded-2xl border border-border bg-white p-6 shadow-sm sm:p-9">
+            <div className="mb-7">
+              <h2 className="font-display text-2xl font-extrabold text-foreground sm:text-3xl">Cuéntanos cómo orientarte</h2>
+              <p className="mt-2 text-sm font-semibold leading-relaxed text-muted">
+                Los campos marcados como obligatorios nos permiten responderte. El diagnóstico previo no es necesario para escribirnos.
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
+              <div>
+                <label htmlFor="nombreApoderado" className="mb-2 block text-sm font-extrabold text-foreground">
+                  Nombre del apoderado/a <span className="font-bold text-muted">(obligatorio)</span>
+                </label>
+                <input
+                  id="nombreApoderado"
+                  type="text"
+                  autoComplete="name"
+                  maxLength={100}
+                  aria-required="true"
+                  aria-invalid={Boolean(errors.nombreApoderado)}
+                  aria-describedby={errors.nombreApoderado ? "nombreApoderado-error" : undefined}
+                  {...register("nombreApoderado", {
+                    required: "Escribe tu nombre para poder orientarte.",
+                    maxLength: { value: 100, message: "Usa máximo 100 caracteres." },
+                    validate: (value) => value.trim().length > 0 || "Escribe tu nombre para poder orientarte.",
+                  })}
+                  className="min-h-12 w-full rounded-xl border border-border bg-surface-raised px-4 py-3 text-base font-semibold text-foreground outline-none transition-colors focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10"
+                  placeholder="Ej.: María González"
+                />
+                {errors.nombreApoderado && <p id="nombreApoderado-error" role="alert" className="mt-1 text-sm font-bold text-red-700">{errors.nombreApoderado.message}</p>}
+              </div>
+
+              <div>
+                <label htmlFor="telefono" className="mb-2 block text-sm font-extrabold text-foreground">
+                  Teléfono o WhatsApp <span className="font-bold text-muted">(obligatorio)</span>
+                </label>
+                <input
+                  id="telefono"
+                  type="tel"
+                  inputMode="tel"
+                  autoComplete="tel"
+                  maxLength={30}
+                  aria-required="true"
+                  aria-invalid={Boolean(errors.telefono)}
+                  aria-describedby={errors.telefono ? "telefono-error" : undefined}
+                  {...register("telefono", {
+                    required: "Escribe un teléfono para poder contactarte.",
+                    maxLength: { value: 30, message: "Usa máximo 30 caracteres." },
+                    pattern: { value: /^[+()\d\s-]{8,30}$/, message: "Ingresa un teléfono válido." },
+                  })}
+                  className="min-h-12 w-full rounded-xl border border-border bg-surface-raised px-4 py-3 text-base font-semibold text-foreground outline-none transition-colors focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10"
+                  placeholder="+56 9 1234 5678"
+                />
+                {errors.telefono && <p id="telefono-error" role="alert" className="mt-1 text-sm font-bold text-red-700">{errors.telefono.message}</p>}
+              </div>
+
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="fechaNacimiento" className="mb-2 block text-sm font-extrabold text-foreground">Fecha de nacimiento <span className="font-bold text-muted">(opcional)</span></label>
+                  <input id="fechaNacimiento" type="date" min="2019-01-01" max="2027-03-31" {...register("fechaNacimiento")} className="min-h-12 w-full rounded-xl border border-border bg-surface-raised px-4 py-3 text-base font-semibold text-foreground outline-none transition-colors focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10" />
+                </div>
+                <div>
+                  <label htmlFor="comuna" className="mb-2 block text-sm font-extrabold text-foreground">Comuna <span className="font-bold text-muted">(opcional)</span></label>
+                  <input id="comuna" type="text" autoComplete="address-level2" maxLength={80} {...register("comuna")} className="min-h-12 w-full rounded-xl border border-border bg-surface-raised px-4 py-3 text-base font-semibold text-foreground outline-none transition-colors focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10" placeholder="Ej.: Conchalí" />
+                </div>
+              </div>
+
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="sede" className="mb-2 block text-sm font-extrabold text-foreground">Sede de preferencia <span className="font-bold text-muted">(opcional)</span></label>
+                  <select id="sede" {...register("sede")} defaultValue="" className="min-h-12 w-full rounded-xl border border-border bg-surface-raised px-4 py-3 text-base font-semibold text-foreground outline-none transition-colors focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10">
+                    <option value="">Aún no lo sé</option>
+                    <option value="Escuela Vascongados">Escuela Vascongados</option>
+                    <option value="Escuela Gral. Gambino">Escuela Gral. Gambino</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="jornada" className="mb-2 block text-sm font-extrabold text-foreground">Jornada preferida <span className="font-bold text-muted">(opcional)</span></label>
+                  <select id="jornada" {...register("jornada")} defaultValue="" className="min-h-12 w-full rounded-xl border border-border bg-surface-raised px-4 py-3 text-base font-semibold text-foreground outline-none transition-colors focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10">
+                    <option value="">Cualquiera disponible</option>
+                    <option value="Mañana">Mañana</option>
+                    <option value="Tarde">Tarde</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="mensaje" className="mb-2 block text-sm font-extrabold text-foreground">Mensaje <span className="font-bold text-muted">(opcional)</span></label>
+                <textarea id="mensaje" maxLength={500} rows={4} {...register("mensaje")} className="w-full resize-y rounded-xl border border-border bg-surface-raised px-4 py-3 text-base font-semibold text-foreground outline-none transition-colors focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10" placeholder="Cuéntanos qué necesitas saber…" />
+              </div>
+
+              <div>
+                <label className="flex items-start gap-3 rounded-xl border border-border bg-surface-blue/30 p-4 text-sm font-semibold leading-relaxed text-muted">
+                  <input
+                    type="checkbox"
+                    aria-required="true"
+                    aria-invalid={Boolean(errors.consent)}
+                    {...register("consent", { required: "Necesitamos tu autorización para preparar el mensaje." })}
+                    className="mt-1 h-4 w-4 shrink-0 accent-primary"
+                  />
+                  <span>
+                    Autorizo que estos datos se incorporen en un mensaje de WhatsApp para responder mi consulta. No se almacenan en servidores de la escuela. Revisa la <Link href="/privacidad" className="font-extrabold text-primary underline underline-offset-2">política de privacidad</Link>.
+                  </span>
+                </label>
+                {errors.consent && <p role="alert" className="mt-1 text-sm font-bold text-red-700">{errors.consent.message}</p>}
+              </div>
+
+              <button type="submit" className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-4 text-base font-extrabold text-white transition-colors hover:bg-primary-dark focus-visible:ring-4 focus-visible:ring-primary/20">
+                <Send className="h-5 w-5" aria-hidden="true" />
+                Abrir WhatsApp con mi consulta
+              </button>
+            </form>
+
+            <div className="mt-7 border-t border-border pt-6 text-center">
+              <p className="text-sm font-bold text-muted">¿Prefieres escribir directamente?</p>
+              <a href={quickWhatsAppUrl} target="_blank" rel="noopener noreferrer" aria-label="Abrir WhatsApp directo" className="mt-3 inline-flex items-center gap-2 text-sm font-extrabold text-primary hover:text-primary-dark">
+                <MessageCircle className="h-5 w-5" aria-hidden="true" />
+                Abrir WhatsApp directo
+              </a>
+            </div>
+          </section>
         </div>
       </div>
     </div>

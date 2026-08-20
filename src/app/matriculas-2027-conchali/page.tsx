@@ -135,15 +135,15 @@ export default function MatriculasConchaliPage() {
                     href={mainWhatsAppUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex w-full sm:w-auto items-center justify-center gap-3 px-8 py-5 rounded-2xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-black text-lg shadow-xl shadow-[#25D366]/25 hover:scale-[1.02] active:scale-95 transition-all text-center"
+                    className="inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-xl bg-brand-yellow px-7 py-4 text-center text-base font-extrabold text-primary-dark transition-colors hover:bg-brand-yellow-light sm:w-auto"
                   >
                     <MessageCircle className="h-6 w-6 shrink-0" />
-                    <span>Consultar Cupo 2027 por WhatsApp</span>
+                    <span>Consultar disponibilidad por WhatsApp</span>
                   </a>
 
                   <div className="flex flex-wrap items-center gap-4 text-xs font-bold text-foreground/65 pt-1">
                     <span className="flex items-center gap-1.5">
-                      <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                      <span className="h-2 w-2 rounded-full bg-emerald-500" />
                       Atención directa para familias
                     </span>
                     <span>·</span>
@@ -320,7 +320,7 @@ export default function MatriculasConchaliPage() {
                   className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-primary text-white font-black text-sm sm:text-base shadow-lg shadow-primary/20 hover:bg-primary-dark transition-colors"
                 >
                   <MessageCircle className="h-5 w-5" />
-                  <span>Iniciar postulación por WhatsApp</span>
+                  <span>Consultar disponibilidad por WhatsApp</span>
                 </a>
               </div>
 
@@ -548,7 +548,7 @@ export default function MatriculasConchaliPage() {
         <section className="py-16 sm:py-20 bg-gradient-to-r from-primary-dark via-primary to-primary-dark text-white relative overflow-hidden">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-brand-yellow text-xs font-black uppercase tracking-widest mb-4">
-              Cupos Limitados por Sala
+              Consulta disponibilidad por nivel y jornada
             </span>
 
             <h2 className="text-3xl sm:text-5xl font-black font-display tracking-tight mb-5 leading-tight">
@@ -564,10 +564,10 @@ export default function MatriculasConchaliPage() {
                 href={mainWhatsAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-full sm:w-auto items-center justify-center gap-3 px-8 py-5 rounded-2xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-black text-lg shadow-2xl hover:scale-105 active:scale-95 transition-transform"
+                   className="inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-xl bg-brand-yellow px-7 py-4 text-base font-extrabold text-primary-dark transition-colors hover:bg-brand-yellow-light sm:w-auto"
               >
                 <MessageCircle className="h-6 w-6" />
-                <span>Hablar directamente por WhatsApp</span>
+                <span>Consultar disponibilidad por WhatsApp</span>
               </a>
 
               <Link

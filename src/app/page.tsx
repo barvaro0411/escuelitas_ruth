@@ -33,9 +33,9 @@ export default function Home() {
       <Hero />
       <EnrollmentPush />
       <AgeCalculator />
-      <ProgramsSummary />
-      <SedesSelector />
       <HowWeWork />
+      <SedesSelector />
+      <ProgramsSummary />
       <FAQPreview />
       <CTASection />
     </>

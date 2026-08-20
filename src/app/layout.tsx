@@ -27,16 +27,16 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
     template: "%s | Escuela de Lenguaje Ruth",
-    default: "Escuela de Lenguaje Ruth | Matrículas 2027 en Conchalí",
+    default: "Escuela de Lenguaje Ruth | Consulta cupos 2027 en Conchalí",
   },
-  description: "Matrículas 2027 abiertas en Escuela de Lenguaje Ruth, Conchalí. Educación gratuita, evaluación fonoaudiológica sin costo y apoyo especializado para niños con TEL.",
+  description: "Consulta cupos 2027 en Escuela de Lenguaje Ruth, Conchalí. Educación gratuita, evaluación fonoaudiológica sin costo y apoyo especializado para niños con TEL.",
   keywords: ["matrículas 2027 escuela de lenguaje", "escuela de lenguaje Conchalí", "TEL", "Santiago norte", "educación preescolar gratuita", "fonoaudiología infantil", "colegio para niños con TEL", "apoyo de lenguaje infantil", "escuela de lenguaje para prekínder", "evaluación fonoaudiológica gratuita"],
   authors: [{ name: "Escuelitas Ruth" }],
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Escuela de Lenguaje Ruth | Matrículas 2027 en Conchalí",
+    title: "Escuela de Lenguaje Ruth | Consulta cupos 2027 en Conchalí",
     description: "Educación gratuita, evaluación fonoaudiológica sin costo y acompañamiento especializado para niños con TEL.",
     url: siteConfig.url,
     siteName: "Escuela de Lenguaje Ruth",
