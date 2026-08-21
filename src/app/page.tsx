@@ -8,6 +8,8 @@ import FAQPreview from "@/components/sections/FAQPreview";
 import CTASection from "@/components/sections/CTASection";
 import JsonLd from "@/components/seo/JsonLd";
 import { buildFaqJsonLd } from "@/lib/site";
+import FiestasPatriasMode from "@/components/seasonal/FiestasPatriasMode";
+import FiestasPatriasSection from "@/components/seasonal/FiestasPatriasSection";
 
 const homeFaqs = [
   {
@@ -34,6 +36,9 @@ export default function Home() {
       <EnrollmentPush />
       <AgeCalculator />
       <HowWeWork />
+      <FiestasPatriasMode>
+        <FiestasPatriasSection />
+      </FiestasPatriasMode>
       <SedesSelector />
       <ProgramsSummary />
       <FAQPreview />

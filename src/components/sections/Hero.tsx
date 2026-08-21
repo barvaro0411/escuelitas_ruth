@@ -9,6 +9,9 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/site";
+import ChileanBunting from "@/components/seasonal/ChileanBunting";
+import FiestasPatriasDecorations from "@/components/seasonal/FiestasPatriasDecorations";
+import FiestasPatriasMode from "@/components/seasonal/FiestasPatriasMode";
 
 const heroWhatsAppUrl = buildWhatsAppUrl(
   "Hola, quiero consultar disponibilidad 2027 y agendar una evaluación fonoaudiológica gratuita."
@@ -22,7 +25,7 @@ const proofPoints = [
 
 export default function Hero() {
   return (
-    <section className="relative isolate flex min-h-[700px] items-center overflow-hidden bg-primary-dark pb-16 pt-32 sm:min-h-[720px] sm:pt-36 lg:min-h-[730px] lg:pb-20">
+    <section className="fiestas-hero relative isolate flex min-h-[700px] items-center overflow-hidden bg-primary-dark pb-16 pt-32 sm:min-h-[720px] sm:pt-36 lg:min-h-[730px] lg:pb-20">
       <Image
         src="/hero-kids.jpg"
         alt="Niños aprendiendo en la Escuela de Lenguaje Ruth"
@@ -33,8 +36,32 @@ export default function Hero() {
       />
       <div className="absolute inset-0 bg-primary-dark/85 lg:bg-gradient-to-r lg:from-primary-dark/95 lg:via-primary-dark/88 lg:to-primary-dark/55" />
 
+      <FiestasPatriasMode>
+        <>
+          <ChileanBunting className="absolute inset-x-0 top-[6.6rem] z-[2] hidden opacity-90 sm:block" />
+          <FiestasPatriasDecorations />
+        </>
+      </FiestasPatriasMode>
+
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-8">
         <div className="max-w-2xl">
+          <FiestasPatriasMode>
+            <div className="mb-6 border-l-2 border-[#efc04f] pl-4 sm:pl-5">
+              <div className="inline-flex rounded-full border border-white/25 bg-white/10 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.18em] text-white backdrop-blur-sm">
+                Edición septiembre
+              </div>
+              <p className="mt-3 font-display text-3xl font-black tracking-tight text-brand-yellow-light sm:text-4xl">
+                ¡TIKI TIKI TIII!
+              </p>
+              <p className="mt-1 text-base font-extrabold text-white sm:text-lg">
+                En Escuelitas Ruth celebramos Chile
+              </p>
+              <p className="mt-1 max-w-xl text-sm font-semibold leading-relaxed text-white/80 sm:text-base">
+                Este septiembre vivimos nuestras tradiciones con juegos, música, aprendizaje y mucha alegría. También te orientamos para encontrar el cupo y la evaluación que tu hijo o hija necesita.
+              </p>
+            </div>
+          </FiestasPatriasMode>
+
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand-yellow/30 bg-brand-yellow px-4 py-2 text-xs font-extrabold uppercase tracking-[0.12em] text-primary-dark">
             <ShieldCheck className="h-4 w-4" aria-hidden="true" />
             Consulta cupos 2027 en Conchalí

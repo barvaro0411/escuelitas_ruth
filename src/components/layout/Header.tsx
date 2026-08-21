@@ -6,6 +6,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, MessageCircle, X } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/site";
+import FiestasPatriasBanner from "@/components/seasonal/FiestasPatriasBanner";
+import FiestasPatriasMode from "@/components/seasonal/FiestasPatriasMode";
 
 const navigation = [
   { name: "Inicio", href: "/" },
@@ -56,6 +58,9 @@ export default function Header() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
+      <FiestasPatriasMode>
+        <FiestasPatriasBanner />
+      </FiestasPatriasMode>
       <nav
         aria-label="Navegación principal"
         className={`border-b transition-[background-color,border-color,box-shadow,padding] duration-300 ${

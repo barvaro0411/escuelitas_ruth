@@ -121,6 +121,30 @@ body {
   overflow-x: clip;
 }
 
+.fiestas-only {
+  display: none !important;
+}
+
+html[data-fiestas-patrias="true"] .fiestas-only {
+  display: contents !important;
+}
+
+html[data-fiestas-patrias="true"] .fiestas-hero {
+  padding-top: 11rem;
+}
+
+@media (min-width: 640px) {
+  html[data-fiestas-patrias="true"] .fiestas-hero {
+    padding-top: 12rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  html[data-fiestas-patrias="true"] .fiestas-hero {
+    min-height: 900px;
+  }
+}
+
 :where(a, button, input, select, textarea):focus-visible {
   outline: 3px solid #ffffff !important;
   outline-offset: 2px;
@@ -184,6 +208,34 @@ h1, h2, h3, h4, h5, h6 {
   50% { transform: translateY(-10px); }
 }
 
+@keyframes fiestas-bunting-wave {
+  0%, 100% { transform: rotate(-0.8deg) translateY(0); }
+  50% { transform: rotate(1.2deg) translateY(1.5px); }
+}
+
+@keyframes fiestas-kite-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-2deg); }
+  50% { transform: translate3d(-5px, -7px, 0) rotate(2deg); }
+}
+
+@keyframes fiestas-handkerchief-wave {
+  0%, 100% { transform: rotate(-3deg) translateY(0); }
+  50% { transform: rotate(3deg) translateY(-3px); }
+}
+
+.fiestas-bunting-flag {
+  animation: fiestas-bunting-wave 5.5s ease-in-out infinite;
+}
+
+.fiestas-kite {
+  animation: fiestas-kite-drift 7s ease-in-out infinite;
+}
+
+.fiestas-handkerchief {
+  animation: fiestas-handkerchief-wave 6s ease-in-out infinite;
+  transform-origin: 20% 80%;
+}
+
 .animate-bounce-slow {
   animation: bounce-slow 2.4s ease-in-out infinite;
 }
@@ -207,6 +259,12 @@ h1, h2, h3, h4, h5, h6 {
   .animate-float-reverse,
   .animate-pulse-glow,
   .animate-bounce-slow {
+    animation: none;
+  }
+
+  .fiestas-bunting-flag,
+  .fiestas-kite,
+  .fiestas-handkerchief {
     animation: none;
   }
 }

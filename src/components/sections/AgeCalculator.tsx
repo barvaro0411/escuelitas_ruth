@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ComponentType } from "react";
+import { useState, type ComponentType, type FormEvent } from "react";
 import {
   AlertCircle,
   Baby,
@@ -21,7 +21,7 @@ type CalculationResult = {
   icon: ComponentType<{ className?: string }>;
 };
 
-function calculateEligibility(dateStr: string): CalculationResult | null {
+export function calculateEligibility(dateStr: string): CalculationResult | null {
   if (!dateStr) return null;
 
   const [yearValue, monthValue, dayValue] = dateStr.split("-");
@@ -123,7 +123,14 @@ function calculateEligibility(dateStr: string): CalculationResult | null {
 
 export default function AgeCalculator() {
   const [birthdate, setBirthdate] = useState("");
-  const result = calculateEligibility(birthdate);
+  const [hasCalculated, setHasCalculated] = useState(false);
+  const result = hasCalculated ? calculateEligibility(birthdate) : null;
+  const hasDateError = hasCalculated && !result;
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setHasCalculated(true);
+  };
 
   const formattedDate = birthdate
     ? birthdate.split("-").reverse().join("/")
@@ -157,7 +164,11 @@ export default function AgeCalculator() {
         <div className="grid min-w-0 grid-cols-1 items-start gap-4 sm:gap-6 lg:grid-cols-12 lg:gap-8">
 
           {/* Panel de entrada */}
-          <div className="min-w-0 w-full rounded-2xl border border-border/80 bg-white p-4 shadow-md sm:p-6 lg:col-span-5 lg:rounded-[2rem] lg:p-8">
+          <form
+            noValidate
+            onSubmit={handleSubmit}
+            className="min-w-0 w-full rounded-2xl border border-border/80 bg-white p-4 shadow-md sm:p-6 lg:col-span-5 lg:rounded-[2rem] lg:p-8"
+          >
             <div className="flex items-center gap-3 mb-4">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary shrink-0">
                 <Calendar className="h-5 w-5" />
@@ -179,21 +190,45 @@ export default function AgeCalculator() {
               id="birthdate"
               type="date"
               value={birthdate}
-              onChange={(event) => setBirthdate(event.target.value)}
+              onChange={(event) => {
+                setBirthdate(event.target.value);
+                setHasCalculated(false);
+              }}
               max="2027-03-31"
               min="2019-01-01"
-              className="mb-4 block box-border min-w-0 w-full max-w-full cursor-pointer rounded-xl border-2 border-border/70 bg-surface-raised px-3 py-3 text-sm font-black text-foreground outline-none transition-all focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10 sm:px-4"
+              required
+              aria-invalid={hasDateError}
+              aria-describedby={hasDateError ? "birthdate-error" : "birthdate-help"}
+              className={`block box-border min-w-0 w-full max-w-full cursor-pointer rounded-xl border-2 bg-surface-raised px-3 py-3 text-sm font-black text-foreground outline-none transition-all focus:bg-white focus:ring-4 sm:px-4 ${
+                hasDateError
+                  ? "border-red-500 focus:border-red-600 focus:ring-red-500/10"
+                  : "border-border/70 focus:border-primary focus:ring-primary/10"
+              }`}
             />
 
-            <p className="text-xs font-bold leading-relaxed text-foreground/70">
-              Necesitamos el día, mes y año exactos: el nivel puede cambiar si el cumpleaños es antes o después del 31 de marzo.
-            </p>
+            {hasDateError ? (
+              <p id="birthdate-error" role="alert" className="mt-3 text-xs font-extrabold leading-relaxed text-red-700">
+                Ingresa una fecha válida entre el 1 de enero de 2019 y el 31 de marzo de 2027.
+              </p>
+            ) : (
+              <p id="birthdate-help" className="mt-3 text-xs font-bold leading-relaxed text-foreground/70">
+                Necesitamos el día, mes y año exactos: el nivel puede cambiar si el cumpleaños es antes o después del 31 de marzo.
+              </p>
+            )}
+
+            <button
+              type="submit"
+              className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-extrabold text-white shadow-sm transition-colors hover:bg-primary-dark"
+            >
+              <Calendar className="h-4 w-4" aria-hidden="true" />
+              Calcular nivel para 2027
+            </button>
 
             <p className="mt-4 flex items-start gap-2 text-[10px] sm:text-xs font-bold leading-relaxed text-foreground/65 border-t border-border/50 pt-3">
               <Lightbulb className="h-3.5 w-3.5 shrink-0 mt-0.5 text-brand-yellow-dark" />
               <span>La vacante se oficializa con la evaluación fonoaudiológica gratuita.</span>
             </p>
-          </div>
+          </form>
 
           {/* Panel de resultado */}
           <div aria-live="polite" className="min-w-0 w-full lg:col-span-7">

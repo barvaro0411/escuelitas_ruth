@@ -8,6 +8,8 @@ import ScrollToTop from "@/components/ui/ScrollToTop";
 import { Toaster } from "sonner";
 import JsonLd from "@/components/seo/JsonLd";
 import { buildSchoolJsonLd, siteConfig } from "@/lib/site";
+import { getSeasonalThemeBootstrapScript } from "@/lib/seasonal-theme";
+import FiestasPatriasPageCta from "@/components/seasonal/FiestasPatriasPageCta";
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -67,7 +69,13 @@ export default function RootLayout({
   const schoolJsonLd = buildSchoolJsonLd();
 
   return (
-    <html lang="es-CL" className="scroll-smooth" data-scroll-behavior="smooth">
+    <html lang="es-CL" className="scroll-smooth" data-scroll-behavior="smooth" suppressHydrationWarning>
+      <head>
+        <script
+          id="seasonal-theme"
+          dangerouslySetInnerHTML={{ __html: getSeasonalThemeBootstrapScript() }}
+        />
+      </head>
       <body className={`${nunito.variable} ${outfit.variable} antialiased`}>
         <JsonLd data={schoolJsonLd} />
         <a
@@ -80,6 +88,7 @@ export default function RootLayout({
         <Header />
         <main id="main-content" className="min-h-screen" tabIndex={-1}>
           {children}
+          <FiestasPatriasPageCta />
         </main>
         <Footer />
         <ScrollToTop />

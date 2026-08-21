@@ -8,6 +8,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/site";
+import FiestasPatriasMode from "@/components/seasonal/FiestasPatriasMode";
 
 const campuses = [
   {
@@ -61,6 +62,12 @@ export default function SedesSelector() {
                   </span>
                 </div>
 
+                <FiestasPatriasMode>
+                  <p className="mt-5 inline-flex items-center gap-1.5 rounded-full border border-[#b4232e]/15 bg-red-50 px-3 py-1 text-xs font-extrabold text-[#9f1d29]">
+                    <span aria-hidden="true">★</span>
+                    ¡Celebramos Chile!
+                  </p>
+                </FiestasPatriasMode>
                 <h3 className="mt-6 font-display text-2xl font-extrabold text-foreground">{campus.name}</h3>
                 <p className={`mt-2 flex items-start gap-2 text-sm font-extrabold ${campus.accent}`}>
                   <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
