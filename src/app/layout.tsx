@@ -10,6 +10,8 @@ import JsonLd from "@/components/seo/JsonLd";
 import { buildSchoolJsonLd, siteConfig } from "@/lib/site";
 import { getSeasonalThemeBootstrapScript } from "@/lib/seasonal-theme";
 import FiestasPatriasPageCta from "@/components/seasonal/FiestasPatriasPageCta";
+import FiestasPatriasMode from "@/components/seasonal/FiestasPatriasMode";
+import FiestasPatriasFallingDecorations from "@/components/seasonal/FiestasPatriasFallingDecorations";
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -86,6 +88,9 @@ export default function RootLayout({
         </a>
         <Toaster position="top-center" richColors />
         <Header />
+        <FiestasPatriasMode>
+          <FiestasPatriasFallingDecorations />
+        </FiestasPatriasMode>
         <main id="main-content" className="min-h-screen" tabIndex={-1}>
           {children}
           <FiestasPatriasPageCta />
