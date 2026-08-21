@@ -244,7 +244,7 @@ export default function ProgramaPage() {
           </div>
 
           {/* Nuestro Enfoque */}
-          <div className="mb-24">
+          <div id="niveles" className="mb-24 scroll-mt-36">
             <div className="text-center mb-14 animate-fade-up">
               <span className="inline-block px-4 py-1.5 rounded-full bg-brand-yellow-bg text-brand-yellow-dark font-black text-xs uppercase tracking-widest mb-5">
                 Nuestro Enfoque

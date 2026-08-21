@@ -7,29 +7,9 @@ import {
   MessageCircle,
   ShieldCheck,
 } from "lucide-react";
-import { buildWhatsAppUrl } from "@/lib/site";
+import { createWhatsAppUrl } from "@/lib/site";
 import FiestasPatriasMode from "@/components/seasonal/FiestasPatriasMode";
-
-const campuses = [
-  {
-    name: "Escuela Vascongados",
-    address: "Vascongados 4314, Conchalí",
-    rbd: "10375-6",
-    description: "Espacios adaptados para atención fonoaudiológica, estimulación temprana y juego.",
-    whatsapp: buildWhatsAppUrl("Hola, quiero consultar disponibilidad 2027 para la Escuela Vascongados en Conchalí."),
-    map: "https://www.google.com/maps/search/?api=1&query=Vascongados%204314%2C%20Conchal%C3%AD%2C%20Chile",
-    accent: "text-primary",
-  },
-  {
-    name: "Escuela Gral. Gambino",
-    address: "Gral. Gambino 4613, Conchalí",
-    rbd: "26106-8",
-    description: "Salas luminosas y gabinete de atención fonoaudiológica individual para acompañar cada proceso.",
-    whatsapp: buildWhatsAppUrl("Hola, quiero consultar disponibilidad 2027 para la Escuela Gral. Gambino en Conchalí."),
-    map: "https://www.google.com/maps/search/?api=1&query=Gral.%20Gambino%204613%2C%20Conchal%C3%AD%2C%20Chile",
-    accent: "text-brand-yellow-dark",
-  },
-];
+import { campuses, schoolLevels } from "@/content/school-data";
 
 export default function SedesSelector() {
   return (
@@ -69,17 +49,14 @@ export default function SedesSelector() {
                   </p>
                 </FiestasPatriasMode>
                 <h3 className="mt-6 font-display text-2xl font-extrabold text-foreground">{campus.name}</h3>
-                <p className={`mt-2 flex items-start gap-2 text-sm font-extrabold ${campus.accent}`}>
+                <p className="mt-2 flex items-start gap-2 text-sm font-extrabold text-primary">
                   <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
                   {campus.address}
                 </p>
                 <p className="mt-4 text-sm font-semibold leading-relaxed text-muted">{campus.description}</p>
 
                 <ul className="mt-6 space-y-2 text-sm font-bold text-foreground/80">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-accent" aria-hidden="true" />
-                    Medio Mayor, Pre-Kínder y Kínder
-                  </li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-accent" aria-hidden="true" />{schoolLevels.filter((level) => campus.levelIds.includes(level.id)).map((level) => level.name).join(", ")}</li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-accent" aria-hidden="true" />
                     Jornada mañana y tarde
@@ -93,7 +70,7 @@ export default function SedesSelector() {
 
               <div className="mt-8 flex flex-col gap-3 border-t border-border pt-6 sm:flex-row">
                 <a
-                  href={campus.whatsapp}
+                  href={createWhatsAppUrl({ source: "campus", campusId: campus.id })}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Abrir WhatsApp para consultar ${campus.name}`}
@@ -102,17 +79,16 @@ export default function SedesSelector() {
                   <MessageCircle className="h-4 w-4" aria-hidden="true" />
                   Consultar esta sede
                 </a>
-                <a
-                  href={campus.map}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Abrir mapa de ${campus.name}`}
+                <Link
+                  href={`/sedes#${campus.id}`}
+                  aria-label={`Conocer información completa de ${campus.name}`}
                   className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-border px-4 py-3 text-sm font-bold text-foreground transition-colors hover:border-primary hover:text-primary"
                 >
-                  Ver mapa
+                  Conoce nuestra sede
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </a>
+                </Link>
               </div>
+              <a href={campus.mapHref} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex min-h-11 items-center justify-center text-sm font-extrabold text-primary hover:text-primary-dark">Ver ubicación en Google Maps</a>
             </article>
           ))}
         </div>

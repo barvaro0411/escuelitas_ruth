@@ -1,31 +1,18 @@
-export type SeasonalMode = "auto" | "on" | "off";
+import {
+  seasonalThemeConfig,
+  seasonalThemeIds,
+  type SeasonalThemeDefinition,
+  type SeasonalThemeId,
+  type SeasonalThemeMode,
+} from "@/config/seasonal-themes";
 
-type MonthDay = {
-  month: number;
-  day: number;
-};
-
-const envMode = process.env.NEXT_PUBLIC_FIESTAS_PATRIAS_MODE;
-
-function getFiestasPatriasMode(): SeasonalMode {
-  if (envMode === "on" || envMode === "off" || envMode === "auto") {
-    return envMode;
-  }
-
-  return "auto";
-}
+type MonthDay = { month: number; day: number };
 
 export const seasonalTheme = {
-  fiestasPatrias: {
-    /** Interruptor maestro. Cámbialo a false para deshabilitar el modo por completo. */
-    enabled: true,
-    /** "auto" usa las fechas; "on" y "off" fuerzan el estado manualmente. */
-    mode: getFiestasPatriasMode(),
-    timeZone: "America/Santiago",
-    start: { month: 8, day: 21 },
-    end: { month: 9, day: 30 },
-  },
-} as const;
+  activeTheme: seasonalThemeConfig.mode,
+  automatic: seasonalThemeConfig.mode === "auto",
+  ...seasonalThemeConfig,
+};
 
 function toComparableDate({ month, day }: MonthDay) {
   return month * 100 + day;
@@ -38,74 +25,104 @@ function getDateInTimeZone(date: Date, timeZone: string): MonthDay {
     day: "numeric",
   }).formatToParts(date);
 
-  const month = Number(parts.find((part) => part.type === "month")?.value);
-  const day = Number(parts.find((part) => part.type === "day")?.value);
+  return {
+    month: Number(parts.find((part) => part.type === "month")?.value),
+    day: Number(parts.find((part) => part.type === "day")?.value),
+  };
+}
 
-  return { month, day };
+function isDateInsideTheme(date: MonthDay, theme: SeasonalThemeDefinition) {
+  const current = toComparableDate(date);
+  const start = toComparableDate(theme.start);
+  const end = toComparableDate(theme.end);
+  return start <= end ? current >= start && current <= end : current >= start || current <= end;
+}
+
+export function getActiveSeasonalTheme(date = new Date()): SeasonalThemeId | null {
+  const config = seasonalThemeConfig;
+  if (!config.enabled || config.mode === "off") return null;
+
+  if (config.mode !== "auto") return config.mode;
+
+  const localDate = getDateInTimeZone(date, config.timeZone);
+  const active = [...config.themes]
+    .filter((theme) => theme.enabled && isDateInsideTheme(localDate, theme))
+    .sort((a, b) => b.priority - a.priority)[0];
+
+  return active?.id ?? null;
 }
 
 export function isFiestasPatriasActive(date = new Date()) {
-  const config = seasonalTheme.fiestasPatrias;
-
-  if (!config.enabled || config.mode === "off") return false;
-  if (config.mode === "on") return true;
-
-  const current = toComparableDate(getDateInTimeZone(date, config.timeZone));
-  const start = toComparableDate(config.start);
-  const end = toComparableDate(config.end);
-
-  if (start <= end) return current >= start && current <= end;
-
-  // También permite rangos que atraviesan el cambio de año.
-  return current >= start || current <= end;
+  return getActiveSeasonalTheme(date) === "fiestas-patrias";
 }
 
 export function getSeasonalThemeBootstrapScript() {
-  const config = seasonalTheme.fiestasPatrias;
-  const publicConfig = JSON.stringify({
-    enabled: config.enabled,
-    mode: config.mode,
-    timeZone: config.timeZone,
-    start: config.start,
-    end: config.end,
-  });
+  const publicConfig = JSON.stringify(seasonalThemeConfig);
+  const validThemes = JSON.stringify(seasonalThemeIds);
 
   return `(() => {
     const config = ${publicConfig};
+    const validThemes = ${validThemes};
+    const isValidMode = (value) => value === "auto" || value === "off" || validThemes.includes(value);
     const update = () => {
       let mode = config.mode;
       try {
-        const queryMode = new URLSearchParams(window.location.search).get("fiestas");
-        if (queryMode === "on" || queryMode === "off") {
-          window.sessionStorage.setItem("fiestasPatriasPreview", queryMode);
-        } else if (queryMode === "auto") {
-          window.sessionStorage.removeItem("fiestasPatriasPreview");
+        const params = new URLSearchParams(window.location.search);
+        const requestedTheme = params.get("theme");
+        const legacyFiestas = params.get("fiestas");
+        const preview = isValidMode(requestedTheme)
+          ? requestedTheme
+          : legacyFiestas === "on"
+            ? "fiestas-patrias"
+            : legacyFiestas === "off" || legacyFiestas === "auto"
+              ? legacyFiestas
+              : null;
+
+        if (preview === "auto") {
+          window.sessionStorage.removeItem("seasonalThemePreview");
+        } else if (preview) {
+          window.sessionStorage.setItem("seasonalThemePreview", preview);
         }
-        mode = window.sessionStorage.getItem("fiestasPatriasPreview") || mode;
+
+        const storedMode = window.sessionStorage.getItem("seasonalThemePreview");
+        if (storedMode && isValidMode(storedMode)) mode = storedMode;
       } catch {
-        // El modo automático continúa funcionando si el almacenamiento está bloqueado.
+        // El modo automático continúa si el almacenamiento está bloqueado.
       }
 
-      let active = config.enabled && mode !== "off";
-      if (active && mode === "auto") {
-        const parts = new Intl.DateTimeFormat("en-CA", {
-          timeZone: config.timeZone,
-          month: "numeric",
-          day: "numeric"
-        }).formatToParts(new Date());
-        const month = Number(parts.find((part) => part.type === "month")?.value);
-        const day = Number(parts.find((part) => part.type === "day")?.value);
-        const current = month * 100 + day;
-        const start = config.start.month * 100 + config.start.day;
-        const end = config.end.month * 100 + config.end.day;
-        active = start <= end
-          ? current >= start && current <= end
-          : current >= start || current <= end;
+      let activeTheme = null;
+      if (config.enabled && mode !== "off") {
+        if (mode !== "auto") {
+          activeTheme = mode;
+        } else {
+          const parts = new Intl.DateTimeFormat("en-CA", {
+            timeZone: config.timeZone,
+            month: "numeric",
+            day: "numeric"
+          }).formatToParts(new Date());
+          const month = Number(parts.find((part) => part.type === "month")?.value);
+          const day = Number(parts.find((part) => part.type === "day")?.value);
+          const current = month * 100 + day;
+          activeTheme = [...config.themes]
+            .filter((theme) => {
+              if (!theme.enabled) return false;
+              const start = theme.start.month * 100 + theme.start.day;
+              const end = theme.end.month * 100 + theme.end.day;
+              return start <= end
+                ? current >= start && current <= end
+                : current >= start || current <= end;
+            })
+            .sort((a, b) => b.priority - a.priority)[0]?.id || null;
+        }
       }
-      document.documentElement.dataset.fiestasPatrias = String(active);
+
+      document.documentElement.dataset.seasonalTheme = activeTheme || "none";
+      document.documentElement.dataset.fiestasPatrias = String(activeTheme === "fiestas-patrias");
     };
     update();
     window.setInterval(update, 15 * 60 * 1000);
     document.addEventListener("visibilitychange", update);
   })();`;
 }
+
+export type { SeasonalThemeId, SeasonalThemeMode };

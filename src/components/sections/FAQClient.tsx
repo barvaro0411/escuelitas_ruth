@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown, MessageCircle } from "lucide-react";
-import { buildWhatsAppUrl } from "@/lib/site";
+import { createWhatsAppUrl } from "@/lib/site";
 
 export type FAQCategory = {
   category: string;
@@ -13,9 +13,7 @@ export type FAQCategory = {
 
 type FAQClientProps = { faqs: FAQCategory[] };
 
-const faqWhatsAppUrl = buildWhatsAppUrl(
-  "Hola, tengo una pregunta sobre disponibilidad 2027 en la Escuela de Lenguaje Ruth."
-);
+const faqWhatsAppUrl = createWhatsAppUrl({ source: "faq" });
 
 export default function FAQClient({ faqs }: FAQClientProps) {
   const [activeIndices, setActiveIndices] = useState<Record<string, number | null>>({});

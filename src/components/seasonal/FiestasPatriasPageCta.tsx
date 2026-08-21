@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowRight, MessageCircle, Sparkles } from "lucide-react";
-import { buildWhatsAppUrl } from "@/lib/site";
+import { createWhatsAppUrl } from "@/lib/site";
 
 type SeasonalMessage = {
   eyebrow: string;
@@ -71,9 +71,7 @@ export default function FiestasPatriasPageCta() {
   if (pathname === "/") return null;
 
   const message = getPageMessage(pathname);
-  const whatsAppUrl = buildWhatsAppUrl(
-    "Hola, estoy visitando la edición de septiembre y quiero orientación sobre cupos 2027 y evaluación fonoaudiológica gratuita."
-  );
+  const whatsAppUrl = createWhatsAppUrl({ source: "seasonal" });
 
   return (
     <div className="fiestas-only">

@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { ClipboardCheck, FileText, Calendar, CheckCircle, Info, ArrowRight, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import JsonLd from "@/components/seo/JsonLd";
-import { buildWhatsAppUrl, buildBreadcrumbsJsonLd } from "@/lib/site";
+import { createWhatsAppUrl, buildBreadcrumbsJsonLd } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Admisión y Matrículas 2027",
@@ -67,9 +67,7 @@ const documents = [
   "Ficha de matrícula (entregada en la escuela).",
 ];
 
-const admissionWhatsAppUrl = buildWhatsAppUrl(
-  "Hola, quiero consultar por cupos 2027 y saber qué necesito para matricular."
-);
+const admissionWhatsAppUrl = createWhatsAppUrl({ source: "admission" });
 
 export default function AdmisionPage() {
   const breadcrumbsJsonLd = buildBreadcrumbsJsonLd([

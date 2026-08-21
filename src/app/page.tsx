@@ -10,6 +10,11 @@ import JsonLd from "@/components/seo/JsonLd";
 import { buildFaqJsonLd } from "@/lib/site";
 import FiestasPatriasMode from "@/components/seasonal/FiestasPatriasMode";
 import FiestasPatriasSection from "@/components/seasonal/FiestasPatriasSection";
+import WeeklyUpdates from "@/components/sections/WeeklyUpdates";
+import ImportantDates from "@/components/sections/ImportantDates";
+import SchoolLifePreview from "@/components/sections/SchoolLifePreview";
+import FamilyResourcesPreview from "@/components/sections/FamilyResourcesPreview";
+import TestimonialsSection from "@/components/sections/TestimonialsSection";
 
 const homeFaqs = [
   {
@@ -39,8 +44,13 @@ export default function Home() {
       <FiestasPatriasMode>
         <FiestasPatriasSection />
       </FiestasPatriasMode>
+      <WeeklyUpdates />
+      <ImportantDates />
+      <SchoolLifePreview />
       <SedesSelector />
       <ProgramsSummary />
+      <FamilyResourcesPreview />
+      <TestimonialsSection />
       <FAQPreview />
       <CTASection />
     </>

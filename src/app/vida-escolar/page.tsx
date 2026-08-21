@@ -1,182 +1,106 @@
-import { Metadata } from "next";
-import Image from "next/image";
-import { Camera, Heart, Sparkles } from "lucide-react";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowRight, CalendarDays, Camera, Images, Sparkles } from "lucide-react";
 import CTASection from "@/components/sections/CTASection";
+import ImportantDates from "@/components/sections/ImportantDates";
+import PhotoGallery from "@/components/sections/PhotoGallery";
+import WeeklyUpdates from "@/components/sections/WeeklyUpdates";
 import JsonLd from "@/components/seo/JsonLd";
+import { galleryImages } from "@/content/gallery";
+import { schoolLifeEvents } from "@/content/school-life";
 import { buildBreadcrumbsJsonLd } from "@/lib/site";
 
+function formatSchoolDate(date: string) {
+  return new Intl.DateTimeFormat("es-CL", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "America/Santiago",
+  }).format(new Date(`${date}T12:00:00`));
+}
+
 export const metadata: Metadata = {
-  title: "Vida Escolar — Actividades, Talleres y Comunidad",
-  description:
-    "Descubre la vida escolar, ambientes lúdicos, salas de estimulación y comunidad de familias en Escuela de Lenguaje Ruth, Conchalí.",
-  alternates: {
-    canonical: "/vida-escolar",
-  },
+  title: "Vida Escolar — Actividades y Comunidad",
+  description: "Conoce las actividades, novedades, fechas importantes y fotografías autorizadas de la comunidad de Escuela de Lenguaje Ruth en Conchalí.",
+  alternates: { canonical: "/vida-escolar" },
   openGraph: {
     title: "Vida Escolar | Escuela de Lenguaje Ruth",
-    description: "Ambiente cálido, seguro y estimulante para el aprendizaje y desarrollo del habla.",
+    description: "Actividades, novedades y comunidad escolar de Escuelitas Ruth.",
     url: "/vida-escolar",
-    images: [
-      {
-        url: "/hero-children.jpg",
-        width: 1024,
-        height: 1024,
-        alt: "Vida Escolar Escuela de Lenguaje Ruth",
-      },
-    ],
+    images: [{ url: "/equipo-escuela-ruth.jpg", width: 1024, height: 683, alt: "Equipo educativo de Escuela de Lenguaje Ruth" }],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Vida Escolar | Escuela de Lenguaje Ruth",
-    description: "Galería de actividades y espacios de aprendizaje en Conchalí.",
-    images: ["/hero-children.jpg"],
-  },
+  twitter: { card: "summary_large_image", title: "Vida Escolar | Escuela de Lenguaje Ruth", description: "Actividades y comunidad escolar en Conchalí.", images: ["/equipo-escuela-ruth.jpg"] },
 };
-
-const galleryItems = [
-  {
-    title: "Actividades Significativas",
-    category: "Aprendizaje Activo",
-    image: "/hero-children.jpg",
-    alt: "Niños participando en actividades de aprendizaje",
-    height: "h-64 sm:h-80",
-  },
-  {
-    title: "Acompañamiento Familiar",
-    category: "Comunidad",
-    image: "/family-support.jpg",
-    alt: "Familia acompañada por Escuela de Lenguaje Ruth",
-    height: "h-80 sm:h-96",
-  },
-  {
-    title: "Ambiente Cercano",
-    category: "Buen Trato",
-    image: "/testimonial-avatars.jpg",
-    alt: "Comunidad de familias de Escuela de Lenguaje Ruth",
-    height: "h-56 sm:h-72",
-  },
-  {
-    title: "Apoyo Fonoaudiológico",
-    category: "Especializado",
-    image: "/hero-children.jpg",
-    alt: "Apoyo especializado para niños y niñas",
-    height: "h-72 sm:h-96",
-  },
-  {
-    title: "Juego y Lenguaje",
-    category: "Desarrollo",
-    image: "/family-support.jpg",
-    alt: "Desarrollo de lenguaje con juego y acompañamiento",
-    height: "h-56 sm:h-72",
-  },
-  {
-    title: "Comunidad Ruth",
-    category: "Familias",
-    image: "/testimonial-avatars.jpg",
-    alt: "Familias y comunidad escolar",
-    height: "h-64 sm:h-80",
-  },
-];
 
 export default function VidaEscolarPage() {
   const breadcrumbsJsonLd = buildBreadcrumbsJsonLd([
     { name: "Inicio", url: "/" },
     { name: "Vida Escolar", url: "/vida-escolar" },
   ]);
+  const publishedEvents = schoolLifeEvents.filter((event) => event.published);
 
   return (
     <>
       <JsonLd data={breadcrumbsJsonLd} />
-      <div className="pt-32 pb-24 overflow-hidden relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          {/* Header */}
-          <div className="max-w-3xl mb-20 animate-fade-up text-center mx-auto">
-            <span className="inline-block px-5 py-2 rounded-full bg-accent text-primary-dark font-black uppercase tracking-widest mb-6 shadow-sm">
-              Nuestra Comunidad
-            </span>
-            <h1 className="text-5xl sm:text-7xl font-black text-foreground mb-6 tracking-tighter leading-tight">
-              Vida <span className="text-primary">Escolar.</span>
-            </h1>
-            <p className="text-xl text-foreground/70 leading-relaxed font-semibold">
-              Creemos que los niños aprenden mejor cuando están felices. Fomentamos un ambiente colorido y seguro donde el juego es el motor del aprendizaje.
-            </p>
-          </div>
-
-          {/* Masonry-style Gallery */}
-          <div className="mb-32">
-            <h2 className="sr-only">Galería de actividades y ambiente escolar</h2>
-            <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-              {galleryItems.map((item, index) => (
-                <div 
-                  key={index} 
-                  className={`group relative w-full ${item.height} overflow-hidden rounded-2xl bg-primary shadow-sm transition-shadow duration-200 animate-fade-up break-inside-avoid hover:shadow-md`}
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <Image
-                    src={item.image}
-                    alt={item.alt}
-                    fill
-                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  
-                  {/* Overlay with info */}
-                  <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent p-8 flex flex-col justify-end translate-y-4 group-hover:translate-y-0 transition-all duration-500`}>
-                    <span className="inline-block px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-black uppercase tracking-widest mb-3 w-fit shadow-sm">
-                      {item.category}
-                    </span>
-                    <h3 className="text-white font-black text-2xl sm:text-3xl leading-tight drop-shadow-md">
-                      {item.title}
-                    </h3>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Info Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="animate-fade-up">
-              <span className="inline-block px-3 py-1 rounded-full bg-pastel-yellow text-primary-dark text-xs font-black uppercase tracking-widest mb-4">Instalaciones</span>
-              <h2 className="text-4xl sm:text-5xl font-black text-foreground mb-8 tracking-tighter">Espacios <span className="text-emerald-accent">Seguros</span></h2>
-              <p className="text-xl text-foreground/70 leading-relaxed font-semibold mb-8">
-                Nuestras instalaciones han sido diseñadas pensando en la seguridad y estimulación constante de tus hijos.
-              </p>
-              <ul className="space-y-6">
-                {[
-                  "Salas climatizadas, coloridas y luminosas",
-                  "Patio de juegos seguro con pasto sintético",
-                  "Sala de fonoaudiología equipada",
-                  "Material didáctico especializado"
-                ].map((text, i) => (
-                  <li key={i} className="flex items-center bg-white p-4 rounded-2xl shadow-sm border border-border/50 hover:-translate-y-1 transition-transform">
-                    <div className="h-12 w-12 rounded-xl bg-primary text-white flex items-center justify-center mr-5 shrink-0 shadow-md">
-                      <Camera size={24} />
-                    </div>
-                    <span className="text-lg font-bold text-foreground/80">{text}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            <div className="relative overflow-hidden rounded-2xl bg-primary p-8 text-white shadow-sm animate-fade-up animate-delay-200 lg:p-12">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-              <Heart size={64} className="text-secondary mb-8 drop-shadow-md" />
-              <h2 className="text-3xl font-black mb-6 drop-shadow-sm">Nuestra Comunidad</h2>
-              <p className="text-xl leading-relaxed font-semibold opacity-90 mb-8">
-                &quot;Más que una escuela, somos una gran familia. Celebramos cada logro, por pequeño que parezca, porque sabemos el esfuerzo que hay detrás de cada nueva palabra.&quot;
-              </p>
-              <div className="flex items-center">
-                <div className="w-12 h-12 rounded-full bg-secondary text-primary-dark flex items-center justify-center shadow-lg mr-4">
-                  <Sparkles size={20} />
-                </div>
-                <p className="font-black tracking-wider uppercase">El Equipo Ruth</p>
-              </div>
-            </div>
+      <section className="relative overflow-hidden bg-primary-dark pb-16 pt-36 text-white sm:pb-20 sm:pt-40">
+        <div className="absolute inset-0 opacity-20 [background-image:radial-gradient(circle_at_20%_20%,#f59e0b_0,transparent_24%),radial-gradient(circle_at_80%_70%,#10b981_0,transparent_22%)]" aria-hidden="true" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.16em]"><Sparkles className="h-4 w-4 text-brand-yellow" aria-hidden="true" />Nuestra comunidad</div>
+            <h1 className="mt-6 font-display text-4xl font-extrabold tracking-tight sm:text-6xl">Vida Escolar</h1>
+            <p className="mt-5 max-w-2xl text-lg font-semibold leading-relaxed text-white/82 sm:text-xl">Así vivimos y aprendemos en Escuelitas Ruth. Aquí encontrarás actividades confirmadas, fechas importantes y fotografías autorizadas por la escuela.</p>
           </div>
         </div>
-        <CTASection />
-      </div>
+      </section>
+
+      <WeeklyUpdates />
+      <ImportantDates />
+
+      <section className="border-b border-border bg-white py-16 sm:py-20" aria-labelledby="activities-title">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-primary">Aprender y compartir</p>
+            <h2 id="activities-title" className="mt-2 font-display text-3xl font-extrabold text-foreground sm:text-4xl">Actividades y celebraciones</h2>
+            <p className="mt-3 font-semibold leading-relaxed text-muted">La estructura está preparada para publicar actividades por categoría, fecha y sede sin modificar los componentes.</p>
+          </div>
+
+          {publishedEvents.length > 0 ? (
+            <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {publishedEvents.map((event) => (
+                <article key={event.id} className="rounded-2xl border border-border bg-surface-blue/25 p-6">
+                  <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-primary">{event.category}</p>
+                  <h3 className="mt-2 font-display text-xl font-extrabold text-foreground">{event.title}</h3>
+                  <time dateTime={event.date} className="mt-2 block text-xs font-bold text-muted">{formatSchoolDate(event.date)}</time>
+                  <p className="mt-3 text-sm font-semibold leading-relaxed text-muted">{event.summary}</p>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-8 rounded-2xl border border-dashed border-primary/25 bg-surface-blue/25 p-7">
+              <CalendarDays className="h-7 w-7 text-primary" aria-hidden="true" />
+              <h3 className="mt-3 font-display text-xl font-extrabold text-foreground">Próximamente publicaremos actividades</h3>
+              <p className="mt-2 max-w-2xl text-sm font-semibold leading-relaxed text-muted">No mostramos actividades de ejemplo como si fueran reales. Esta sección se activará al agregar información y fotografías confirmadas.</p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="bg-surface-raised py-16 sm:py-20" aria-labelledby="gallery-title">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+            <div className="max-w-3xl">
+              <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.18em] text-primary"><Camera className="h-4 w-4" aria-hidden="true" />Galería fotográfica</div>
+              <h2 id="gallery-title" className="mt-2 font-display text-3xl font-extrabold text-foreground sm:text-4xl">Momentos de Escuelitas Ruth</h2>
+              <p className="mt-3 font-semibold leading-relaxed text-muted">Selecciona una fotografía para verla en tamaño ampliado. Incorporaremos nuevas categorías al recibir material autorizado.</p>
+            </div>
+            <div className="inline-flex items-center gap-2 text-sm font-extrabold text-muted"><Images className="h-5 w-5 text-primary" aria-hidden="true" />{galleryImages.length} fotografía{galleryImages.length === 1 ? "" : "s"}</div>
+          </div>
+          <div className="mt-8"><PhotoGallery images={galleryImages} /></div>
+          <Link href="/contacto" className="mt-8 inline-flex min-h-12 items-center gap-2 rounded-xl border border-primary/25 bg-white px-5 py-3 text-sm font-extrabold text-primary hover:border-primary">Consultar por actividades o visitas <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
+        </div>
+      </section>
+
+      <CTASection />
     </>
   );
 }

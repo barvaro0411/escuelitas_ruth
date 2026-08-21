@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Dices, Flower2, MessageCircle, Music2, Palette, Sparkles, Wind } from "lucide-react";
-import { buildWhatsAppUrl } from "@/lib/site";
+import { createWhatsAppUrl } from "@/lib/site";
 import ChileanBunting from "./ChileanBunting";
 
 const activities = [
@@ -13,9 +13,7 @@ const activities = [
   { title: "Nuestras tradiciones", description: "Conocer Chile desde la infancia.", icon: Flower2, color: "bg-emerald-50 text-emerald-800" },
 ];
 
-const septemberWhatsAppUrl = buildWhatsAppUrl(
-  "Hola, vi la edición de septiembre y quiero consultar cupos 2027 y agendar una evaluación fonoaudiológica gratuita."
-);
+const septemberWhatsAppUrl = createWhatsAppUrl({ source: "seasonal" });
 
 export default function FiestasPatriasSection() {
   return (

@@ -3,6 +3,8 @@ import type { NextConfig } from "next";
 // CSP compatible con páginas prerenderizadas. Next.js necesita scripts y estilos
 // inline para la hidratación estática; si el sitio incorpora backend/middleware,
 // conviene migrar a nonces por respuesta y retirar 'unsafe-inline' de script-src.
+const isDevelopment = process.env.NODE_ENV === "development";
+
 const contentSecurityPolicy = [
   "default-src 'self'",
   "base-uri 'self'",
@@ -15,7 +17,7 @@ const contentSecurityPolicy = [
   "manifest-src 'self'",
   "media-src 'self'",
   "object-src 'none'",
-  "script-src 'self' 'unsafe-inline'",
+  `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
   "worker-src 'self' blob:",
   "upgrade-insecure-requests",
@@ -23,6 +25,7 @@ const contentSecurityPolicy = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  allowedDevOrigins: ["127.0.0.1"],
   experimental: {
     optimizePackageImports: ["lucide-react"],
   },

@@ -8,14 +8,12 @@ import {
   MessageCircle,
   ShieldCheck,
 } from "lucide-react";
-import { buildWhatsAppUrl } from "@/lib/site";
+import { createWhatsAppUrl } from "@/lib/site";
 import ChileanBunting from "@/components/seasonal/ChileanBunting";
 import FiestasPatriasDecorations from "@/components/seasonal/FiestasPatriasDecorations";
 import FiestasPatriasMode from "@/components/seasonal/FiestasPatriasMode";
 
-const heroWhatsAppUrl = buildWhatsAppUrl(
-  "Hola, quiero consultar disponibilidad 2027 y agendar una evaluación fonoaudiológica gratuita."
-);
+const heroWhatsAppUrl = createWhatsAppUrl({ source: "hero" });
 
 const proofPoints = [
   "Evaluación fonoaudiológica sin costo",

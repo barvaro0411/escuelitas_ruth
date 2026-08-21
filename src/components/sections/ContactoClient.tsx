@@ -6,7 +6,8 @@ import { useForm } from "react-hook-form";
 import { Clock, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
 import { toast } from "sonner";
 import { useSearchParams } from "next/navigation";
-import { buildContactWhatsAppMessage, buildWhatsAppUrl, siteConfig } from "@/lib/site";
+import { buildContactWhatsAppMessage, buildWhatsAppUrl, createWhatsAppUrl, siteConfig } from "@/lib/site";
+import { campuses } from "@/content/school-data";
 
 type FormData = {
   nombreApoderado: string;
@@ -19,9 +20,7 @@ type FormData = {
   consent: boolean;
 };
 
-const quickWhatsAppUrl = buildWhatsAppUrl(
-  "Hola, quiero consultar disponibilidad 2027 y agendar una evaluación gratuita."
-);
+const quickWhatsAppUrl = createWhatsAppUrl({ source: "contact" });
 
 const allowedLevelPrefills: Record<string, { label: string; age: string }> = {
   "Medio Mayor": { label: "Medio Mayor", age: "3 años" },
@@ -228,8 +227,7 @@ function ContactoForm() {
                   <label htmlFor="sede" className="mb-2 block text-sm font-extrabold text-foreground">Sede de preferencia <span className="font-bold text-muted">(opcional)</span></label>
                   <select id="sede" {...register("sede")} defaultValue="" className="min-h-12 w-full rounded-xl border border-border bg-surface-raised px-4 py-3 text-base font-semibold text-foreground outline-none transition-colors focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10">
                     <option value="">Aún no lo sé</option>
-                    <option value="Escuela Vascongados">Escuela Vascongados</option>
-                    <option value="Escuela Gral. Gambino">Escuela Gral. Gambino</option>
+                    {campuses.map((campus) => <option key={campus.id} value={campus.name}>{campus.name}</option>)}
                   </select>
                 </div>
                 <div>

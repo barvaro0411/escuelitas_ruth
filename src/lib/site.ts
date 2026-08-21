@@ -1,3 +1,5 @@
+import { campuses, type CampusId } from "@/content/school-data";
+
 export const siteConfig = {
   name: "Escuela de Lenguaje Ruth",
   shortName: "Escuelitas Ruth",
@@ -20,40 +22,19 @@ export const siteConfig = {
       label: "escuelaruth@gmail.com",
       href: "mailto:escuelaruth@gmail.com",
     },
-    addresses: [
-      {
-        id: "vascongados",
-        name: "Escuela Vascongados",
-        rbd: "10375-6",
-        label: "Vascongados 4314, Conchalí",
-        street: "Vascongados 4314",
-        locality: "Conchalí",
-        region: "Región Metropolitana",
-        country: "CL",
-        postalCode: "8540000",
-        geo: {
-          latitude: -33.3934,
-          longitude: -70.6695,
-        },
-        href: "https://www.google.com/maps/search/?api=1&query=Vascongados%204314%2C%20Conchal%C3%AD%2C%20Chile",
-      },
-      {
-        id: "gambino",
-        name: "Escuela Gral. Gambino",
-        rbd: "26106-8",
-        label: "Gral. Gambino 4613, Conchalí",
-        street: "Gral. Gambino 4613",
-        locality: "Conchalí",
-        region: "Región Metropolitana",
-        country: "CL",
-        postalCode: "8540000",
-        geo: {
-          latitude: -33.3906,
-          longitude: -70.6723,
-        },
-        href: "https://www.google.com/maps/search/?api=1&query=Gral.%20Gambino%204613%2C%20Conchal%C3%AD%2C%20Chile",
-      },
-    ],
+    addresses: campuses.map((campus) => ({
+      id: campus.id,
+      name: campus.name,
+      rbd: campus.rbd,
+      label: campus.address,
+      street: campus.street,
+      locality: campus.locality,
+      region: campus.region,
+      country: campus.country,
+      postalCode: campus.postalCode,
+      geo: campus.geo,
+      href: campus.mapHref,
+    })),
     /** @deprecated Use addresses[0] directly. Kept for backward compatibility. */
     get address() {
       return this.addresses[0];
@@ -74,8 +55,11 @@ export const siteConfig = {
     "/contacto",
     "/nosotros",
     "/programa-educativo",
+    "/sedes",
     "/vida-escolar",
+    "/familias",
     "/preguntas-frecuentes",
+    "/compartir",
     "/privacidad",
     "/terminos",
   ],
@@ -99,6 +83,67 @@ type ContactMessageData = {
 export function buildWhatsAppUrl(message: string) {
   const safeMessage = truncateByCodePoint(toWellFormed(message).trim(), 2_000);
   return `https://wa.me/${siteConfig.contact.whatsapp.number}?text=${encodeURIComponent(safeMessage)}`;
+}
+
+export type WhatsAppContext = {
+  source:
+    | "header"
+    | "hero"
+    | "floating"
+    | "calculator"
+    | "campus"
+    | "level"
+    | "admission"
+    | "faq"
+    | "seasonal"
+    | "contact"
+    | "family-resource";
+  campusId?: CampusId;
+  level?: string;
+  birthdate?: string;
+  topic?: string;
+};
+
+export function createWhatsAppMessage(context: WhatsAppContext) {
+  const year = siteConfig.admissionYear;
+  const campus = context.campusId
+    ? campuses.find((item) => item.id === context.campusId)
+    : undefined;
+
+  if (context.source === "calculator" && context.level) {
+    const birthdate = context.birthdate ? ` Mi hijo/a nació el ${context.birthdate}.` : "";
+    return `Hola, utilicé la calculadora de nivel y a mi hijo/a le correspondería ${context.level}.${birthdate} Quisiera consultar disponibilidad para ${year} y la evaluación fonoaudiológica sin costo.`;
+  }
+
+  if (campus) {
+    const level = context.level ? ` para ${context.level}` : "";
+    return `Hola, quisiera información sobre matrícula ${year}${level} en la sede ${campus.shortName}. Quisiera consultar disponibilidad y próximos pasos.`;
+  }
+
+  if (context.level) {
+    return `Hola, quisiera consultar disponibilidad para ${context.level} ${year} y conocer los próximos pasos de admisión.`;
+  }
+
+  if (context.source === "family-resource") {
+    const topic = context.topic ? ` sobre “${context.topic}”` : "";
+    return `Hola, leí el recurso${topic} en su web y quisiera recibir orientación sobre el lenguaje de mi hijo/a.`;
+  }
+
+  const messages: Partial<Record<WhatsAppContext["source"], string>> = {
+    header: `Hola, quisiera consultar disponibilidad de matrícula ${year} y conocer los requisitos.`,
+    hero: `Hola, quisiera consultar disponibilidad ${year} y agendar una evaluación fonoaudiológica sin costo.`,
+    floating: `Hola, estoy visitando la web de Escuelitas Ruth y quisiera consultar disponibilidad ${year}.`,
+    admission: `Hola, quisiera orientación sobre los requisitos y el proceso de admisión ${year}.`,
+    faq: `Hola, revisé las preguntas frecuentes y quisiera resolver una duda sobre matrícula ${year}.`,
+    seasonal: `Hola, quisiera consultar cupos ${year}, sedes y evaluación fonoaudiológica sin costo.`,
+    contact: `Hola, quisiera consultar disponibilidad ${year} y agendar una evaluación fonoaudiológica sin costo.`,
+  };
+
+  return messages[context.source] ?? `Hola, quisiera recibir información sobre matrícula ${year}.`;
+}
+
+export function createWhatsAppUrl(context: WhatsAppContext) {
+  return buildWhatsAppUrl(createWhatsAppMessage(context));
 }
 
 export function buildContactWhatsAppMessage(data: ContactMessageData) {

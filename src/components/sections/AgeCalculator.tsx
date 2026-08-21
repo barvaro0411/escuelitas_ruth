@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ComponentType, type FormEvent } from "react";
+import Link from "next/link";
 import {
   AlertCircle,
   Baby,
@@ -11,11 +12,16 @@ import {
   MessageCircle,
   Sparkles,
 } from "lucide-react";
-import { buildWhatsAppUrl } from "@/lib/site";
+import { createWhatsAppUrl } from "@/lib/site";
+import { admissionCutoff, campuses, schoolLevels, type CampusId, type LevelId } from "@/content/school-data";
 
 type CalculationResult = {
   status: "eligible" | "too_young" | "too_old";
   levelName: string;
+  levelId?: LevelId;
+  ageAtCutoff: { years: number; months: number };
+  campusIds: readonly CampusId[];
+  journeys: readonly string[];
   description: string;
   bulletPoints: string[];
   icon: ComponentType<{ className?: string }>;
@@ -29,10 +35,10 @@ export function calculateEligibility(dateStr: string): CalculationResult | null 
   const month = Number(monthValue) - 1;
   const day = Number(dayValue);
 
-  if (!year || month < 0 || !day || year < 1900 || year > 2027) return null;
+  if (!year || month < 0 || !day || year < 1900 || year > admissionCutoff.year) return null;
 
   const birthDate = new Date(year, month, day);
-  const cutoffDate = new Date(2027, 2, 31);
+  const cutoffDate = new Date(admissionCutoff.year, 2, 31);
 
   if (
     Number.isNaN(birthDate.getTime()) ||
@@ -44,15 +50,23 @@ export function calculateEligibility(dateStr: string): CalculationResult | null 
   }
 
   let age = cutoffDate.getFullYear() - birthDate.getFullYear();
-  const monthDiff = cutoffDate.getMonth() - birthDate.getMonth();
-  const dayDiff = cutoffDate.getDate() - birthDate.getDate();
+  let ageMonths = cutoffDate.getMonth() - birthDate.getMonth();
+  if (cutoffDate.getDate() < birthDate.getDate()) ageMonths -= 1;
+  if (ageMonths < 0) {
+    age -= 1;
+    ageMonths += 12;
+  }
 
-  if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) age -= 1;
+  const level = schoolLevels.find((item) => item.ageYears === age);
 
-  if (age === 3) {
+  if (level?.id === "medio-mayor") {
     return {
       status: "eligible",
-      levelName: "Medio Mayor",
+      levelName: level.name,
+      levelId: level.id,
+      ageAtCutoff: { years: age, months: ageMonths },
+      campusIds: level.campusIds,
+      journeys: level.journeys,
       icon: Baby,
       description:
         "Cumple los requisitos para ingresar a Medio Mayor en 2027.",
@@ -64,10 +78,14 @@ export function calculateEligibility(dateStr: string): CalculationResult | null 
     };
   }
 
-  if (age === 4) {
+  if (level?.id === "prekinder") {
     return {
       status: "eligible",
-      levelName: "Pre-Kínder (NT1)",
+      levelName: level.name,
+      levelId: level.id,
+      ageAtCutoff: { years: age, months: ageMonths },
+      campusIds: level.campusIds,
+      journeys: level.journeys,
       icon: GraduationCap,
       description:
         "Cumple los requisitos para ingresar a Pre-Kínder en 2027.",
@@ -79,10 +97,14 @@ export function calculateEligibility(dateStr: string): CalculationResult | null 
     };
   }
 
-  if (age === 5) {
+  if (level?.id === "kinder") {
     return {
       status: "eligible",
-      levelName: "Kínder (NT2)",
+      levelName: level.name,
+      levelId: level.id,
+      ageAtCutoff: { years: age, months: ageMonths },
+      campusIds: level.campusIds,
+      journeys: level.journeys,
       icon: GraduationCap,
       description:
         "Cumple los requisitos para ingresar a Kínder en 2027.",
@@ -98,6 +120,9 @@ export function calculateEligibility(dateStr: string): CalculationResult | null 
     return {
       status: "too_young",
       levelName: "Menor de 3 años",
+      ageAtCutoff: { years: age, months: ageMonths },
+      campusIds: [],
+      journeys: [],
       icon: Baby,
       description:
         "Al 31 de marzo de 2027 tendrá menos de 3 años. Escríbenos para orientación.",
@@ -111,6 +136,9 @@ export function calculateEligibility(dateStr: string): CalculationResult | null 
   return {
     status: "too_old",
     levelName: "Mayor de 5 años 11 meses",
+    ageAtCutoff: { years: age, months: ageMonths },
+    campusIds: [],
+    journeys: [],
     icon: GraduationCap,
     description:
       "Al 31 de marzo de 2027 tendrá 6 años o más. Podemos orientarte.",
@@ -135,11 +163,19 @@ export default function AgeCalculator() {
   const formattedDate = birthdate
     ? birthdate.split("-").reverse().join("/")
     : "";
-  const whatsappMessage =
-    result?.status === "eligible"
-      ? `Hola, usé la calculadora en su web. Mi hijo(a) nació el ${formattedDate} y califica para ${result.levelName} en 2027. Quisiera agendar la evaluación fonoaudiológica gratuita.`
-      : `Hola, usé la calculadora en su web. Mi hijo(a) nació el ${formattedDate} y quisiera recibir orientación sobre cupos.`;
-  const whatsappUrl = result ? buildWhatsAppUrl(whatsappMessage) : "#";
+  const whatsappUrl = result
+    ? createWhatsAppUrl({
+        source: "calculator",
+        level: result.status === "eligible" ? result.levelName : undefined,
+        birthdate: formattedDate,
+      })
+    : "#";
+  const resultCampuses = result?.campusIds
+    .map((campusId) => campuses.find((campus) => campus.id === campusId))
+    .filter((campus): campus is (typeof campuses)[number] => Boolean(campus)) ?? [];
+  const ageAtCutoffLabel = result
+    ? `${result.ageAtCutoff.years} ${result.ageAtCutoff.years === 1 ? "año" : "años"} y ${result.ageAtCutoff.months} ${result.ageAtCutoff.months === 1 ? "mes" : "meses"}`
+    : "";
 
   return (
     <section className="relative w-full overflow-hidden border-b border-border bg-gradient-to-b from-white via-surface-yellow/30 to-white py-10 sm:py-16 lg:py-24">
@@ -262,7 +298,7 @@ export default function AgeCalculator() {
                       <result.icon className="h-5 w-5" />
                     </div>
                     <h3 className="min-w-0 text-lg font-black leading-tight text-foreground font-display sm:text-xl lg:text-2xl">
-                      {result.levelName}
+                      {result.status === "eligible" ? `Le correspondería ${result.levelName}` : result.levelName}
                     </h3>
                   </div>
                   <span
@@ -291,6 +327,32 @@ export default function AgeCalculator() {
                   {result.description}
                 </p>
 
+                <div className="mb-4 rounded-xl border border-primary/15 bg-surface-blue/45 p-4">
+                  <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">Edad al {admissionCutoff.label}</p>
+                  <p className="mt-1 font-display text-xl font-black text-foreground">{ageAtCutoffLabel}</p>
+                </div>
+
+                {result.status === "eligible" && (
+                  <div className="mb-4 grid gap-3 sm:grid-cols-2">
+                    <div className="rounded-xl border border-border bg-white p-4">
+                      <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">Este nivel se imparte en</p>
+                      <ul className="mt-2 space-y-1.5">
+                        {resultCampuses.map((campus) => (
+                          <li key={campus.id} className="flex items-start gap-2 text-xs font-extrabold text-foreground/80">
+                            <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-accent" aria-hidden="true" />
+                            {campus.shortName}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="rounded-xl border border-border bg-white p-4">
+                      <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-primary">Jornadas que se imparten</p>
+                      <p className="mt-2 text-xs font-extrabold text-foreground/80">{result.journeys.join(" y ")}</p>
+                      <p className="mt-1 text-[10px] font-semibold leading-relaxed text-muted">La jornada y los cupos se confirman al consultar.</p>
+                    </div>
+                  </div>
+                )}
+
                 <ul className="space-y-2 mb-4">
                   {result.bulletPoints.map((point) => (
                     <li
@@ -307,6 +369,13 @@ export default function AgeCalculator() {
                   ))}
                 </ul>
 
+                {result.status === "eligible" && (
+                  <div className="mb-4 flex items-center justify-between gap-3 rounded-xl bg-emerald-50 px-4 py-3 text-emerald-900">
+                    <span className="text-xs font-extrabold">Evaluación fonoaudiológica</span>
+                    <strong className="font-display text-lg">$0</strong>
+                  </div>
+                )}
+
                 <a
                   href={whatsappUrl}
                   target="_blank"
@@ -316,10 +385,15 @@ export default function AgeCalculator() {
                   <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5 shrink-0" />
                   <span>
                     {result.status === "eligible"
-                      ? "Agendar Evaluación Gratis"
+                      ? `Consultar disponibilidad para ${result.levelName}`
                       : "Pedir Orientación por WhatsApp"}
                   </span>
                 </a>
+                {result.status === "eligible" && (
+                  <Link href="/sedes" className="mt-3 flex min-h-11 w-full items-center justify-center text-center text-xs font-extrabold text-primary hover:text-primary-dark sm:text-sm">
+                    Conocer sedes, direcciones y jornadas
+                  </Link>
+                )}
               </div>
             )}
           </div>

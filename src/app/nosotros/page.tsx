@@ -4,6 +4,7 @@ import { Heart, Target, Eye, Sparkles, Smile } from "lucide-react";
 import CTASection from "@/components/sections/CTASection";
 import JsonLd from "@/components/seo/JsonLd";
 import { buildBreadcrumbsJsonLd } from "@/lib/site";
+import TeamSection from "@/components/sections/TeamSection";
 
 export const metadata: Metadata = {
   title: "Sobre Nosotros — Historia, Misión y Equipo Educativo",
@@ -110,14 +111,14 @@ export default function NosotrosPage() {
             <div className="relative animate-fade-up">
               <div className="relative aspect-square overflow-hidden rounded-2xl border-4 border-white bg-surface-blue shadow-lg">
                 <Image
-                  src="/equipo-escuela-ruth.jpg"
-                  alt="Integrantes del equipo educativo de la Escuela de Lenguaje Ruth"
+                  src="/hero-children.jpg"
+                  alt="Ilustración de una educadora acompañando actividades de lenguaje con niños y niñas"
                   fill
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   className="object-cover"
                 />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-primary-dark/80 to-transparent px-8 pb-8 pt-20">
-                  <p className="text-xl font-black text-white drop-shadow-md">Nuestro equipo educativo</p>
+                  <p className="text-xl font-black text-white drop-shadow-md">Acompañar con cercanía</p>
                 </div>
               </div>
               {/* Decorative element */}
@@ -157,24 +158,8 @@ export default function NosotrosPage() {
             </div>
           </div>
 
-          {/* Team Preview Section */}
-          <div className="relative overflow-hidden rounded-2xl bg-primary p-9 text-center text-white shadow-lg animate-fade-up lg:p-16">
-            <div className="absolute top-0 left-0 w-64 h-64 bg-white/20 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2" />
-            <div className="relative z-10 max-w-4xl mx-auto">
-              <h2 className="text-4xl sm:text-6xl font-black mb-8 tracking-tighter drop-shadow-md">Un equipo a su <span className="text-secondary drop-shadow-none">servicio</span></h2>
-              <p className="text-xl sm:text-2xl mb-12 font-semibold opacity-90 leading-relaxed">
-                Nuestro equipo está compuesto por educadoras diferenciales con mención en lenguaje, fonoaudiólogos, técnicos en educación parvularia y personal administrativo, todos comprometidos con la excelencia y el buen trato.
-              </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                {["Fonoaudiólogos", "Educadoras", "Técnicos Parvularios", "Administrativos"].map((prof) => (
-                  <div key={prof} className="bg-white/10 backdrop-blur-md px-6 py-3 rounded-full border border-white/30 text-white font-black text-lg shadow-lg hover:bg-secondary hover:text-primary-dark hover:border-secondary transition-all cursor-default">
-                    {prof}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
         </div>
+        <TeamSection />
         <CTASection />
       </div>
     </>

@@ -5,25 +5,25 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, MessageCircle, X } from "lucide-react";
-import { buildWhatsAppUrl } from "@/lib/site";
+import { createWhatsAppUrl } from "@/lib/site";
 import FiestasPatriasBanner from "@/components/seasonal/FiestasPatriasBanner";
 import FiestasPatriasMode from "@/components/seasonal/FiestasPatriasMode";
 
 const navigation = [
   { name: "Inicio", href: "/" },
-  { name: "Nosotros", href: "/nosotros" },
-  { name: "Programa Educativo", href: "/programa-educativo" },
-  { name: "Matrículas 2027", href: "/matriculas-2027-conchali" },
-  { name: "Contacto", href: "/contacto" },
+  { name: "Matrícula", href: "/matriculas-2027-conchali" },
+  { name: "Niveles", href: "/programa-educativo#niveles" },
+  { name: "Sedes", href: "/sedes" },
+  { name: "Vida Escolar", href: "/vida-escolar" },
+  { name: "Familias", href: "/familias" },
 ];
 
-const headerWhatsAppUrl = buildWhatsAppUrl(
-  "Hola, quiero consultar disponibilidad 2027 y agendar una evaluación fonoaudiológica gratuita."
-);
+const headerWhatsAppUrl = createWhatsAppUrl({ source: "header" });
 
 function isActiveRoute(pathname: string, href: string) {
-  if (href === "/") return pathname === "/";
-  return pathname.startsWith(href);
+  const routePath = href.split("#")[0];
+  if (routePath === "/") return pathname === "/";
+  return pathname.startsWith(routePath);
 }
 
 export default function Header() {
@@ -42,6 +42,9 @@ export default function Header() {
   useEffect(() => {
     if (!mobileMenuOpen) return;
 
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setMobileMenuOpen(false);
@@ -50,7 +53,10 @@ export default function Header() {
     };
 
     document.addEventListener("keydown", closeOnEscape);
-    return () => document.removeEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", closeOnEscape);
+    };
   }, [mobileMenuOpen]);
 
   const isHome = pathname === "/";
@@ -95,7 +101,7 @@ export default function Header() {
             </div>
           </Link>
 
-          <div className="hidden items-center gap-1 lg:flex">
+          <div className="hidden items-center gap-1 xl:flex">
             {navigation.map((item) => {
               const active = isActiveRoute(pathname, item.href);
               return (
@@ -131,7 +137,7 @@ export default function Header() {
           <button
             ref={menuButtonRef}
             type="button"
-            className={`flex h-11 w-11 items-center justify-center rounded-lg border transition-colors lg:hidden ${
+            className={`flex h-11 w-11 items-center justify-center rounded-lg border transition-colors xl:hidden ${
               isSolid
                 ? "border-border bg-white text-foreground/80 hover:border-primary hover:text-primary"
                 : "border-white/40 bg-transparent text-white hover:border-brand-yellow hover:text-brand-yellow"
@@ -150,7 +156,7 @@ export default function Header() {
         id="mobile-navigation"
         aria-hidden={!mobileMenuOpen}
         inert={!mobileMenuOpen}
-        className={`overflow-hidden border-b border-border bg-white transition-[max-height,opacity] duration-200 lg:hidden ${
+        className={`max-h-[calc(100dvh-5rem)] overflow-y-auto border-b border-border bg-white transition-[max-height,opacity] duration-200 xl:hidden ${
           mobileMenuOpen ? "max-h-[520px] opacity-100" : "pointer-events-none max-h-0 opacity-0"
         }`}
       >
@@ -176,6 +182,9 @@ export default function Header() {
               </Link>
             );
           })}
+          <Link href="/contacto" onClick={() => setMobileMenuOpen(false)} className="block rounded-lg border-l-2 border-transparent px-4 py-3 text-base font-bold text-foreground/85 transition-colors hover:border-brand-yellow/60 hover:bg-surface-blue hover:text-primary">
+            Contacto
+          </Link>
           <a
             href={headerWhatsAppUrl}
             target="_blank"

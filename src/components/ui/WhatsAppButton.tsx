@@ -2,11 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { MessageCircle } from "lucide-react";
-import { buildWhatsAppUrl } from "@/lib/site";
+import { createWhatsAppUrl } from "@/lib/site";
 
-const whatsappUrl = buildWhatsAppUrl(
-  "Hola, quiero consultar disponibilidad 2027 y agendar una evaluación gratuita."
-);
+const whatsappUrl = createWhatsAppUrl({ source: "floating" });
 
 export default function WhatsAppButton() {
   const [isVisible, setIsVisible] = useState(false);
@@ -26,7 +24,7 @@ export default function WhatsAppButton() {
       aria-label="Abrir WhatsApp para consultar disponibilidad 2027"
       aria-hidden={!isVisible}
       tabIndex={isVisible ? 0 : -1}
-      className={`fixed bottom-5 right-4 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-md shadow-black/20 transition-[opacity,transform,background-color] duration-200 hover:bg-[#1ebe5d] sm:bottom-6 sm:right-6 ${
+      className={`fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] right-4 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-md shadow-black/20 transition-[opacity,transform,background-color] duration-200 hover:bg-[#1ebe5d] sm:bottom-6 sm:right-6 ${
         isVisible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0"
       }`}
     >

@@ -58,7 +58,9 @@ export default function Footer() {
                   { name: "Programa Educativo", href: "/programa-educativo" },
                   { name: "Matrículas 2027", href: "/matriculas-2027-conchali" },
                   { name: "Admisión", href: "/admision" },
+                  { name: "Sedes", href: "/sedes" },
                   { name: "Vida Escolar", href: "/vida-escolar" },
+                  { name: "Recursos para familias", href: "/familias" },
                 ].map((link) => (
                   <li key={link.name}>
                     <Link

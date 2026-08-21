@@ -1,10 +1,8 @@
 import Link from "next/link";
 import { ArrowRight, MessageCircle, PhoneCall } from "lucide-react";
-import { buildWhatsAppUrl, siteConfig } from "@/lib/site";
+import { createWhatsAppUrl, siteConfig } from "@/lib/site";
 
-const ctaWhatsAppUrl = buildWhatsAppUrl(
-  "Hola, quiero consultar disponibilidad 2027 y agendar una evaluación fonoaudiológica gratuita."
-);
+const ctaWhatsAppUrl = createWhatsAppUrl({ source: "hero" });
 
 export default function CTASection() {
   return (
