@@ -1,5 +1,6 @@
 export type CampusId = "vascongados" | "gambino";
 export type LevelId = "medio-mayor" | "prekinder" | "kinder";
+export type CampusGalleryImage = { src: string; alt: string; title: string };
 
 export const admissionCutoff = {
   year: 2027,
@@ -55,8 +56,8 @@ export const campuses = [
     levelIds: ["medio-mayor", "prekinder", "kinder"],
     journeys: ["Mañana", "Tarde"],
     description: "Sede de Escuela de Lenguaje Ruth ubicada en Vascongados 4314, Conchalí.",
-    gallery: [],
-    media: { videoUrl: null, virtualTourUrl: null, panoramas: [] },
+    gallery: [] as CampusGalleryImage[],
+    media: { videoUrl: null as string | null, virtualTourUrl: null as string | null, panoramas: [] as CampusGalleryImage[] },
   },
   {
     id: "gambino",
@@ -75,8 +76,8 @@ export const campuses = [
     levelIds: ["medio-mayor", "prekinder", "kinder"],
     journeys: ["Mañana", "Tarde"],
     description: "Sede de Escuela de Lenguaje Ruth ubicada en Gral. Gambino 4613, Conchalí.",
-    gallery: [],
-    media: { videoUrl: null, virtualTourUrl: null, panoramas: [] },
+    gallery: [] as CampusGalleryImage[],
+    media: { videoUrl: null as string | null, virtualTourUrl: null as string | null, panoramas: [] as CampusGalleryImage[] },
   },
 ] as const satisfies ReadonlyArray<{
   id: CampusId;
@@ -95,8 +96,8 @@ export const campuses = [
   levelIds: readonly LevelId[];
   journeys: readonly string[];
   description: string;
-  gallery: readonly string[];
-  media: { videoUrl: string | null; virtualTourUrl: string | null; panoramas: readonly string[] };
+  gallery: readonly CampusGalleryImage[];
+  media: { videoUrl: string | null; virtualTourUrl: string | null; panoramas: readonly CampusGalleryImage[] };
 }>;
 
 export function getCampusById(id: CampusId) {

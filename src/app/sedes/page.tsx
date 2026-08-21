@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Building2, CalendarClock, Camera, CheckCircle2, MapPin, MessageCircle, ShieldCheck, Video } from "lucide-react";
 import CTASection from "@/components/sections/CTASection";
@@ -56,7 +57,32 @@ export default function SedesPage() {
 
                     <div className="mt-6 rounded-xl border border-dashed border-primary/25 p-5">
                       <div className="flex items-center gap-3"><Camera className="h-5 w-5 text-primary" aria-hidden="true" /><Video className="h-5 w-5 text-primary" aria-hidden="true" /><h3 className="font-display text-lg font-extrabold text-foreground">Fotografías y recorrido virtual</h3></div>
-                      {hasPublishedMedia ? <p className="mt-2 text-sm font-semibold text-muted">Material multimedia disponible para esta sede.</p> : <p className="mt-2 text-sm font-semibold leading-relaxed text-muted">La estructura admite fotografías, video, panorámicas y un futuro tour 360°. Se mostrará cuando exista material real y autorizado.</p>}
+                      {hasPublishedMedia ? (
+                        <div className="mt-4 space-y-4">
+                          {campus.gallery.length > 0 && (
+                            <div className="grid grid-cols-2 gap-3">
+                              {campus.gallery.map((image) => (
+                                <figure key={image.src} className="overflow-hidden rounded-xl border border-border bg-surface-raised">
+                                  <div className="relative aspect-[4/3]"><Image src={image.src} alt={image.alt} fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" /></div>
+                                  <figcaption className="p-2 text-xs font-bold text-foreground/75">{image.title}</figcaption>
+                                </figure>
+                              ))}
+                            </div>
+                          )}
+                          {campus.media.panoramas.length > 0 && (
+                            <div className="grid grid-cols-2 gap-3">
+                              {campus.media.panoramas.map((image) => (
+                                <figure key={image.src} className="overflow-hidden rounded-xl border border-border bg-surface-raised">
+                                  <div className="relative aspect-[2/1]"><Image src={image.src} alt={image.alt} fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" /></div>
+                                  <figcaption className="p-2 text-xs font-bold text-foreground/75">{image.title}</figcaption>
+                                </figure>
+                              ))}
+                            </div>
+                          )}
+                          {campus.media.videoUrl && <a href={campus.media.videoUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center text-sm font-extrabold text-primary">Ver video de la sede</a>}
+                          {campus.media.virtualTourUrl && <a href={campus.media.virtualTourUrl} target="_blank" rel="noopener noreferrer" className="ml-4 inline-flex min-h-11 items-center text-sm font-extrabold text-primary">Iniciar recorrido virtual</a>}
+                        </div>
+                      ) : <p className="mt-2 text-sm font-semibold leading-relaxed text-muted">La estructura admite fotografías, video, panorámicas y un futuro tour 360°. Se mostrará cuando exista material real y autorizado.</p>}
                     </div>
                   </div>
                 </div>
