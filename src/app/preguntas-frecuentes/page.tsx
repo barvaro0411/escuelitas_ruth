@@ -48,7 +48,7 @@ const faqsData: FAQCategory[] = [
       },
       {
         q: "¿El TEL se cura?",
-        a: "Con la intervención adecuada y temprana, la gran mayoría de los niños superan sus dificultades y logran integrarse con éxito a la educación básica regular.",
+        a: "La evolución varía en cada niño o niña. Una evaluación profesional y el apoyo oportuno pueden favorecer significativamente su comunicación y aprendizaje; el equipo tratante debe orientar las expectativas de cada caso.",
       },
     ],
   },

@@ -95,7 +95,7 @@ export default function CompartirPage() {
         {/* Address */}
         <div className="flex items-center gap-2 text-white/65 font-semibold text-sm">
           <MapPin className="h-4 w-4 text-secondary shrink-0" />
-          <span>{siteConfig.contact.address.label}</span>
+          <span>2 sedes en Conchalí: Vascongados 4314 · Gral. Gambino 4613</span>
         </div>
 
         {/* Share note */}

@@ -34,6 +34,7 @@ export default function TerminosPage() {
           Términos de Uso
         </h1>
         <div className="prose prose-lg max-w-none text-foreground/75 font-semibold leading-relaxed space-y-6">
+          <p><strong>Última actualización:</strong> 24 de agosto de 2026.</p>
           <p>
             Este sitio entrega información institucional, de admisión y contacto de {siteConfig.name}. Los contenidos pueden actualizarse para reflejar cambios en cupos, horarios, requisitos o procesos internos.
           </p>

@@ -100,7 +100,7 @@ export default function MatriculasHuechurabaPage() {
                 Matrícula en escuela de lenguaje cerca de Huechuraba.
               </h1>
               <p className="text-xl sm:text-2xl text-white/90 font-bold leading-snug max-w-2xl mb-8">
-                A minutos de Huechuraba, en Vascongados 4314, Conchalí. Consulta cupo 2027 con evaluación fonoaudiológica sin costo para niños y niñas con TEL.
+                A minutos de Huechuraba, con 2 sedes en Conchalí (Vascongados 4314 y Gral. Gambino 4613). Consulta cupo 2027 con evaluación fonoaudiológica sin costo para niños y niñas con TEL.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
@@ -125,7 +125,7 @@ export default function MatriculasHuechurabaPage() {
               <div className="flex flex-col sm:flex-row sm:items-center gap-3 text-white/85 font-bold">
                 <span className="flex items-center gap-2">
                   <MapPin className="h-5 w-5 text-secondary" />
-                  A minutos de Huechuraba, en {siteConfig.contact.address.label}
+                  2 Sedes en Conchalí: Vascongados 4314 · Gral. Gambino 4613
                 </span>
                 <span className="hidden sm:block text-white/40">|</span>
                 <span>{siteConfig.contact.hours}</span>

@@ -8,6 +8,11 @@ export const admissionCutoff = {
   label: "31 de marzo de 2027",
 } as const;
 
+export const birthdateInputBounds = {
+  min: `${admissionCutoff.year - 8}-01-01`,
+  max: admissionCutoff.isoDate,
+} as const;
+
 export const schoolLevels = [
   {
     id: "medio-mayor",

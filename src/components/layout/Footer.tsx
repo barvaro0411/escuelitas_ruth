@@ -82,7 +82,7 @@ export default function Footer() {
               <ul className="space-y-3">
                 {[
                   { name: "Preguntas Frecuentes", href: "/preguntas-frecuentes" },
-                  { name: "¿Qué es el TEL?", href: "/programa-educativo#que-es-tel" },
+                  { name: "¿Qué es el TEL?", href: "/trastorno-especifico-lenguaje" },
                   { name: "Requisitos de Matrícula", href: "/admision#requisitos" },
                   { name: "Contacto", href: "/contacto" },
                 ].map((link) => (

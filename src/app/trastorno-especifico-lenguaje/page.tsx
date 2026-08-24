@@ -313,19 +313,19 @@ export default function TrastornoEspecificoLenguajePage() {
             {[
               {
                 title: "TEL no es discapacidad intelectual",
-                body: "Los niños con TEL tienen inteligencia típica. Aprenden, razonan y se relacionan como cualquier otro niño. Solo el lenguaje oral está afectado.",
+                body: "Una dificultad del lenguaje no permite inferir por sí sola la capacidad intelectual de un niño o niña. Cada perfil es diferente y debe evaluarse de manera integral.",
                 color: "bg-pastel-blue/20 border-pastel-blue/40",
                 icon: Brain,
               },
               {
                 title: "TEL no es autismo",
-                body: "El TEL no implica dificultades sociales ni conductas repetitivas. El niño con TEL quiere comunicarse y relacionarse: el problema es el instrumento, no el deseo.",
+                body: "TEL y autismo son condiciones diferentes, aunque algunas señales pueden parecerse y también pueden coexistir. Solo una evaluación profesional integral permite diferenciarlas.",
                 color: "bg-pastel-pink/20 border-pastel-pink/40",
                 icon: Heart,
               },
               {
                 title: "TEL no desaparece sin apoyo",
-                body: "Sin intervención especializada, el TEL puede persistir y afectar el aprendizaje de la lectura, la escritura y el desempeño escolar a largo plazo.",
+                body: "Las dificultades pueden evolucionar de maneras distintas. El apoyo oportuno busca favorecer la comunicación y reducir posibles impactos en el aprendizaje y la participación escolar.",
                 color: "bg-pastel-yellow/20 border-pastel-yellow/40",
                 icon: AlertCircle,
               },
@@ -400,7 +400,7 @@ export default function TrastornoEspecificoLenguajePage() {
             <p className="text-white/90 font-bold leading-relaxed">
               En Chile, las escuelas de lenguaje particular subvencionadas como
               Escuela Ruth funcionan con financiamiento estatal:{" "}
-              <strong className="text-secondary">
+              <strong className="text-secondary-light">
                 sin costo para las familias
               </strong>
               . No pagas matrícula, no pagas mensualidad.
@@ -490,7 +490,7 @@ export default function TrastornoEspecificoLenguajePage() {
             <div className="p-4 rounded-2xl bg-accent border border-border flex items-start gap-3">
               <Heart className="h-5 w-5 text-primary shrink-0 mt-0.5" />
               <p className="text-foreground/75 font-bold leading-relaxed text-sm">
-                {siteConfig.contact.address.label} —{" "}
+                2 Sedes en Conchalí (Vascongados 4314 · Gral. Gambino 4613) —{" "}
                 <a
                   href={siteConfig.contact.phone.href}
                   className="text-primary font-black underline hover:text-primary-dark transition-colors"

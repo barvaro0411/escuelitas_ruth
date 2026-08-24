@@ -134,7 +134,7 @@ export default function MatriculasSantiagoNortePage() {
               <div className="flex flex-col sm:flex-row sm:items-center gap-3 text-white/85 font-bold">
                 <span className="flex items-center gap-2">
                   <MapPin className="h-5 w-5 text-secondary" />
-                  {siteConfig.contact.address.label}
+                  2 Sedes en Conchalí: Vascongados 4314 · Gral. Gambino 4613
                 </span>
                 <span className="hidden sm:block text-white/40">|</span>
                 <span>{siteConfig.contact.hours}</span>

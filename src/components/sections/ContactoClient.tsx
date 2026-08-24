@@ -7,7 +7,7 @@ import { Clock, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
 import { toast } from "sonner";
 import { useSearchParams } from "next/navigation";
 import { buildContactWhatsAppMessage, buildWhatsAppUrl, createWhatsAppUrl, siteConfig } from "@/lib/site";
-import { campuses } from "@/content/school-data";
+import { admissionCutoff, birthdateInputBounds, campuses } from "@/content/school-data";
 
 type FormData = {
   nombreApoderado: string;
@@ -40,8 +40,8 @@ function isValidBirthdate(value: string | null): value is string {
     parsed.getUTCFullYear() === year &&
     parsed.getUTCMonth() === month - 1 &&
     parsed.getUTCDate() === day &&
-    value >= "2019-01-01" &&
-    value <= "2027-03-31"
+    value >= birthdateInputBounds.min &&
+    value <= birthdateInputBounds.max
   );
 }
 
@@ -83,7 +83,7 @@ function ContactoForm() {
     if (levelPrefill) {
       setValue(
         "mensaje",
-        `Hola, realicé el cálculo en su web y mi hijo(a) tiene edad para ${levelPrefill.label}. Quisiera consultar disponibilidad para 2027.`
+        `Hola, realicé el cálculo en su web y mi hijo(a) tiene edad para ${levelPrefill.label}. Quisiera consultar disponibilidad para ${admissionCutoff.year}.`
       );
     }
   }, [birthdateParam, levelPrefill, setValue, validBirthdate]);
@@ -214,7 +214,7 @@ function ContactoForm() {
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
                   <label htmlFor="fechaNacimiento" className="mb-2 block text-sm font-extrabold text-foreground">Fecha de nacimiento <span className="font-bold text-muted">(opcional)</span></label>
-                  <input id="fechaNacimiento" type="date" min="2019-01-01" max="2027-03-31" {...register("fechaNacimiento")} className="min-h-12 w-full rounded-xl border border-border bg-surface-raised px-4 py-3 text-base font-semibold text-foreground outline-none transition-colors focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10" />
+                  <input id="fechaNacimiento" type="date" min={birthdateInputBounds.min} max={birthdateInputBounds.max} {...register("fechaNacimiento")} className="min-h-12 w-full rounded-xl border border-border bg-surface-raised px-4 py-3 text-base font-semibold text-foreground outline-none transition-colors focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10" />
                 </div>
                 <div>
                   <label htmlFor="comuna" className="mb-2 block text-sm font-extrabold text-foreground">Comuna <span className="font-bold text-muted">(opcional)</span></label>

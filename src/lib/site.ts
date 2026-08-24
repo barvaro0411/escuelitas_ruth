@@ -1,12 +1,25 @@
-import { campuses, type CampusId } from "@/content/school-data";
+import { admissionCutoff, campuses, type CampusId } from "@/content/school-data";
+
+function resolveSiteUrl(value: string | undefined) {
+  const fallback = "https://escuelitas-ruth.vercel.app";
+  const candidate = value?.trim() || fallback;
+
+  try {
+    const url = new URL(candidate);
+    if (url.protocol !== "https:") throw new Error("protocol");
+    return url.origin;
+  } catch {
+    throw new Error("NEXT_PUBLIC_SITE_URL debe ser una URL HTTPS válida, sin ruta adicional.");
+  }
+}
 
 export const siteConfig = {
   name: "Escuela de Lenguaje Ruth",
   shortName: "Escuelitas Ruth",
   // Dominio público que hoy responde. Cambiar aquí cuando el dominio propio
   // tenga DNS y redirección HTTPS verificados en Vercel.
-  url: process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://escuelitas-ruth.vercel.app",
-  admissionYear: 2027,
+  url: resolveSiteUrl(process.env.NEXT_PUBLIC_SITE_URL),
+  admissionYear: admissionCutoff.year,
   description:
     "Escuela de lenguaje particular subvencionada con dos sedes en Conchalí, 100% gratuita para las familias, con evaluación fonoaudiológica sin costo y apoyo especializado para niños y niñas con TEL.",
   contact: {
@@ -162,7 +175,7 @@ export function buildContactWhatsAppMessage(data: ContactMessageData) {
   const mensaje = cleanContactField(data.mensaje, 500);
 
   const parts = [
-    "Hola, me gustaría recibir más información sobre cupos y matrículas 2027.",
+    `Hola, me gustaría recibir más información sobre cupos y matrículas ${siteConfig.admissionYear}.`,
     nombreApoderado ? `Apoderado/a: ${nombreApoderado}` : null,
     telefono ? `Teléfono: ${telefono}` : null,
     email ? `Correo: ${email}` : null,

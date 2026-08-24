@@ -13,7 +13,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { createWhatsAppUrl } from "@/lib/site";
-import { admissionCutoff, campuses, schoolLevels, type CampusId, type LevelId } from "@/content/school-data";
+import { admissionCutoff, birthdateInputBounds, campuses, schoolLevels, type CampusId, type LevelId } from "@/content/school-data";
 
 type CalculationResult = {
   status: "eligible" | "too_young" | "too_old";
@@ -69,7 +69,7 @@ export function calculateEligibility(dateStr: string): CalculationResult | null 
       journeys: level.journeys,
       icon: Baby,
       description:
-        "Cumple los requisitos para ingresar a Medio Mayor en 2027.",
+        `Cumple los requisitos para ingresar a Medio Mayor en ${admissionCutoff.year}.`,
       bulletPoints: [
         "Educación 100% gratuita para la familia.",
         "Evaluación fonoaudiológica inicial sin costo.",
@@ -88,7 +88,7 @@ export function calculateEligibility(dateStr: string): CalculationResult | null 
       journeys: level.journeys,
       icon: GraduationCap,
       description:
-        "Cumple los requisitos para ingresar a Pre-Kínder en 2027.",
+        `Cumple los requisitos para ingresar a Pre-Kínder en ${admissionCutoff.year}.`,
       bulletPoints: [
         "Educación 100% gratuita para la familia.",
         "Evaluación fonoaudiológica inicial sin costo.",
@@ -107,7 +107,7 @@ export function calculateEligibility(dateStr: string): CalculationResult | null 
       journeys: level.journeys,
       icon: GraduationCap,
       description:
-        "Cumple los requisitos para ingresar a Kínder en 2027.",
+        `Cumple los requisitos para ingresar a Kínder en ${admissionCutoff.year}.`,
       bulletPoints: [
         "Preparación para la transición a Educación Básica.",
         "Acompañamiento de educadoras y fonoaudiólogas.",
@@ -125,9 +125,9 @@ export function calculateEligibility(dateStr: string): CalculationResult | null 
       journeys: [],
       icon: Baby,
       description:
-        "Al 31 de marzo de 2027 tendrá menos de 3 años. Escríbenos para orientación.",
+        `Al ${admissionCutoff.label} tendrá menos de 3 años. Escríbenos para orientación.`,
       bulletPoints: [
-        "La edad mínima para Medio Mayor es 3 años cumplidos al 31 de marzo de 2027.",
+        `La edad mínima para Medio Mayor es 3 años cumplidos al ${admissionCutoff.label}.`,
         "Te invitamos a contactarnos para orientarte en estimulación temprana.",
       ],
     };
@@ -141,7 +141,7 @@ export function calculateEligibility(dateStr: string): CalculationResult | null 
     journeys: [],
     icon: GraduationCap,
     description:
-      "Al 31 de marzo de 2027 tendrá 6 años o más. Podemos orientarte.",
+      `Al ${admissionCutoff.label} tendrá 6 años o más. Podemos orientarte.`,
     bulletPoints: [
       "Las escuelas de lenguaje atienden hasta Kínder (5 años 11 meses).",
       "Te asesoramos en los pasos siguientes de postulación.",
@@ -230,8 +230,8 @@ export default function AgeCalculator() {
                 setBirthdate(event.target.value);
                 setHasCalculated(false);
               }}
-              max="2027-03-31"
-              min="2019-01-01"
+              max={birthdateInputBounds.max}
+              min={birthdateInputBounds.min}
               required
               aria-invalid={hasDateError}
               aria-describedby={hasDateError ? "birthdate-error" : "birthdate-help"}
@@ -244,7 +244,7 @@ export default function AgeCalculator() {
 
             {hasDateError ? (
               <p id="birthdate-error" role="alert" className="mt-3 text-xs font-extrabold leading-relaxed text-red-700">
-                Ingresa una fecha válida entre el 1 de enero de 2019 y el 31 de marzo de 2027.
+                Ingresa una fecha válida dentro del rango indicado para el proceso {admissionCutoff.year}.
               </p>
             ) : (
               <p id="birthdate-help" className="mt-3 text-xs font-bold leading-relaxed text-foreground/70">

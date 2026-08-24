@@ -100,7 +100,7 @@ export default function MatriculasRencaPage() {
                 Matrícula en escuela de lenguaje cerca de Renca.
               </h1>
               <p className="text-xl sm:text-2xl text-white/90 font-bold leading-snug max-w-2xl mb-8">
-                Accesible desde Renca, en Vascongados 4314, Conchalí. Educación gratuita con apoyo fonoaudiológico para niños y niñas con TEL de 3 a 5 años 11 meses.
+                Accesible desde Renca, con 2 sedes en Conchalí (Vascongados 4314 y Gral. Gambino 4613). Educación gratuita con apoyo fonoaudiológico para niños y niñas con TEL de 3 a 5 años 11 meses.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
@@ -125,7 +125,7 @@ export default function MatriculasRencaPage() {
               <div className="flex flex-col sm:flex-row sm:items-center gap-3 text-white/85 font-bold">
                 <span className="flex items-center gap-2">
                   <MapPin className="h-5 w-5 text-secondary" />
-                  Accesible desde Renca — {siteConfig.contact.address.label}
+                  2 Sedes en Conchalí: Vascongados 4314 · Gral. Gambino 4613
                 </span>
                 <span className="hidden sm:block text-white/40">|</span>
                 <span>{siteConfig.contact.hours}</span>
