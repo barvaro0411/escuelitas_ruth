@@ -81,7 +81,7 @@ export default function Header() {
             className="flex items-center gap-3"
             aria-label="Ir al inicio de Escuela de Lenguaje Ruth"
           >
-            <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg border border-brand-yellow/80 bg-white">
+            <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl border border-action/80 bg-surface">
               <Image
                 src="/logo.jpg"
                 alt="Logo Escuela de Lenguaje Ruth"
@@ -92,10 +92,14 @@ export default function Header() {
               />
             </div>
             <div className="flex flex-col leading-tight">
-              <span className={`font-display text-lg font-extrabold tracking-tight sm:text-xl ${isSolid ? "text-foreground" : "text-white"}`}>
+              <span
+                className={`font-display text-lg font-extrabold tracking-tight sm:text-xl ${isSolid ? "text-ink" : "text-white"}`}
+              >
                 Escuelitas Ruth
               </span>
-              <span className={`text-[10px] font-bold uppercase tracking-[0.1em] ${isSolid ? "text-primary" : "text-brand-yellow-light"}`}>
+              <span
+                className={`text-[10px] font-semibold uppercase tracking-[0.1em] ${isSolid ? "text-primary" : "text-accent-on-dark"}`}
+              >
                 Escuela de Lenguaje Gratuita
               </span>
             </div>
@@ -109,12 +113,12 @@ export default function Header() {
                   key={item.name}
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`border-b-2 px-3 py-2 text-sm font-bold transition-colors ${
+                  className={`border-b-2 px-3 py-2 text-sm font-semibold transition-colors ${
                     active
-                      ? "border-brand-yellow text-primary"
+                      ? "border-action text-primary"
                       : isSolid
-                        ? "border-transparent text-foreground/80 hover:border-brand-yellow/60 hover:text-primary"
-                        : "border-transparent text-white/85 hover:border-brand-yellow/60 hover:text-white"
+                        ? "border-transparent text-muted hover:border-action/60 hover:text-primary"
+                        : "border-transparent text-white/80 hover:border-action/60 hover:text-white"
                   }`}
                 >
                   {item.name}
@@ -127,7 +131,7 @@ export default function Header() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Abrir WhatsApp para consultar disponibilidad 2027"
-              className="ml-4 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-brand-yellow bg-brand-yellow px-4 py-2.5 text-sm font-extrabold text-primary-dark transition-colors hover:bg-brand-yellow-light"
+              className="ml-4 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-action bg-action px-4 py-2.5 text-sm font-extrabold text-primary-dark transition-colors hover:bg-action-hover"
             >
               <MessageCircle size={17} aria-hidden="true" />
               Consultar disponibilidad
@@ -137,10 +141,10 @@ export default function Header() {
           <button
             ref={menuButtonRef}
             type="button"
-            className={`flex h-11 w-11 items-center justify-center rounded-lg border transition-colors xl:hidden ${
+            className={`flex h-11 w-11 items-center justify-center rounded-xl border transition-colors xl:hidden ${
               isSolid
-                ? "border-border bg-white text-foreground/80 hover:border-primary hover:text-primary"
-                : "border-white/40 bg-transparent text-white hover:border-brand-yellow hover:text-brand-yellow"
+                ? "border-border bg-surface text-muted hover:border-primary hover:text-primary"
+                : "border-white/40 bg-transparent text-white hover:border-action hover:text-accent-on-dark"
             }`}
             onClick={() => setMobileMenuOpen((open) => !open)}
             aria-controls="mobile-navigation"
@@ -156,12 +160,14 @@ export default function Header() {
         id="mobile-navigation"
         aria-hidden={!mobileMenuOpen}
         inert={!mobileMenuOpen}
-        className={`max-h-[calc(100dvh-5rem)] overflow-y-auto border-b border-border bg-white transition-[max-height,opacity] duration-200 xl:hidden ${
-          mobileMenuOpen ? "max-h-[520px] opacity-100" : "pointer-events-none max-h-0 opacity-0"
+        className={`max-h-[calc(100dvh-5rem)] overflow-y-auto border-b border-border bg-surface transition-[max-height,opacity] duration-200 xl:hidden ${
+          mobileMenuOpen
+            ? "max-h-[520px] opacity-100"
+            : "pointer-events-none max-h-0 opacity-0"
         }`}
       >
         <div className="mx-auto max-w-7xl space-y-1.5 px-4 pb-6 pt-4">
-          <p className="border-l-2 border-brand-yellow px-3 py-1 text-xs font-extrabold uppercase tracking-[0.1em] text-primary">
+          <p className="border-l-2 border-action px-3 py-1 text-xs font-semibold uppercase tracking-[0.1em] text-primary">
             Consulta cupos 2027 en Conchalí
           </p>
           {navigation.map((item) => {
@@ -172,17 +178,21 @@ export default function Header() {
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
                 aria-current={active ? "page" : undefined}
-                className={`block rounded-lg border-l-2 px-4 py-3 text-base font-bold transition-colors ${
+                className={`block rounded-xl border-l-2 px-4 py-3 text-base font-semibold transition-colors ${
                   active
-                    ? "border-brand-yellow bg-surface-blue text-primary"
-                    : "border-transparent text-foreground/85 hover:border-brand-yellow/60 hover:bg-surface-blue hover:text-primary"
+                    ? "border-action bg-surface-sunk text-primary"
+                    : "border-transparent text-muted hover:border-action/60 hover:bg-surface-sunk hover:text-primary"
                 }`}
               >
                 {item.name}
               </Link>
             );
           })}
-          <Link href="/contacto" onClick={() => setMobileMenuOpen(false)} className="block rounded-lg border-l-2 border-transparent px-4 py-3 text-base font-bold text-foreground/85 transition-colors hover:border-brand-yellow/60 hover:bg-surface-blue hover:text-primary">
+          <Link
+            href="/contacto"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block rounded-xl border-l-2 border-transparent px-4 py-3 text-base font-semibold text-muted transition-colors hover:border-action/60 hover:bg-surface-sunk hover:text-primary"
+          >
             Contacto
           </Link>
           <a
@@ -191,7 +201,7 @@ export default function Header() {
             rel="noopener noreferrer"
             onClick={() => setMobileMenuOpen(false)}
             aria-label="Abrir WhatsApp para consultar disponibilidad 2027"
-            className="mt-3 flex min-h-14 w-full items-center justify-center gap-2 rounded-lg bg-primary px-5 py-4 text-base font-extrabold text-white transition-colors hover:bg-primary-dark"
+            className="mt-3 flex min-h-14 w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-4 text-base font-extrabold text-white transition-colors hover:bg-primary-dark"
           >
             <MessageCircle size={20} aria-hidden="true" />
             Consultar disponibilidad por WhatsApp

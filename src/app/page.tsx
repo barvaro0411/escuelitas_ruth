@@ -38,14 +38,16 @@ export default function Home() {
     <>
       <JsonLd data={faqJsonLd} />
       <Hero />
-      <EnrollmentPush />
+      {/* La calculadora es lo más distintivo del sitio y responde la primera
+          pregunta real de un apoderado: va inmediatamente después del hero. */}
       <AgeCalculator />
+      <EnrollmentPush />
       <HowWeWork />
       <FiestasPatriasMode>
         <FiestasPatriasSection />
       </FiestasPatriasMode>
-      <WeeklyUpdates />
-      <ImportantDates />
+      <WeeklyUpdates hideWhenEmpty />
+      <ImportantDates hideWhenEmpty />
       <SchoolLifePreview />
       <SedesSelector />
       <ProgramsSummary />

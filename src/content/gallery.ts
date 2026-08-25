@@ -1,4 +1,9 @@
-export type GalleryCategory = "Equipo" | "Instalaciones" | "Actividades" | "Celebraciones" | "Aprendiendo juntos";
+export type GalleryCategory =
+  | "Equipo"
+  | "Instalaciones"
+  | "Actividades"
+  | "Celebraciones"
+  | "Aprendiendo juntos";
 
 export type GalleryImage = {
   id: string;

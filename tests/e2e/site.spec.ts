@@ -24,22 +24,38 @@ const routes = [
   "/vida-escolar",
 ];
 
-test("todas las rutas públicas responden y tienen estructura semántica", async ({ page }) => {
+test("todas las rutas públicas responden y tienen estructura semántica", async ({
+  page,
+}) => {
   test.setTimeout(90_000);
   for (const route of routes) {
     const response = await page.goto(route);
     expect(response?.status(), route).toBe(200);
     await expect(page.locator("main#main-content"), route).toBeVisible();
     await expect(page.locator("h1"), route).toHaveCount(1);
-    await expect(page).toHaveTitle(/Escuela|Escuelitas|TEL|Familias|Términos|Privacidad/i);
+    await expect(page).toHaveTitle(
+      /Escuela|Escuelitas|TEL|Familias|Términos|Privacidad/i,
+    );
   }
 });
 
-test("los enlaces internos descubiertos no terminan en error", async ({ page, request }) => {
+test("los enlaces internos descubiertos no terminan en error", async ({
+  page,
+  request,
+}) => {
   await page.goto("/");
-  const hrefs = await page.locator('a[href^="/"]').evaluateAll((links) =>
-    [...new Set(links.map((link) => (link as HTMLAnchorElement).getAttribute("href")?.split("#")[0]).filter(Boolean))]
-  );
+  const hrefs = await page
+    .locator('a[href^="/"]')
+    .evaluateAll((links) => [
+      ...new Set(
+        links
+          .map(
+            (link) =>
+              (link as HTMLAnchorElement).getAttribute("href")?.split("#")[0],
+          )
+          .filter(Boolean),
+      ),
+    ]);
 
   for (const href of hrefs) {
     const response = await request.get(href!);
@@ -47,41 +63,73 @@ test("los enlaces internos descubiertos no terminan en error", async ({ page, re
   }
 });
 
-test("las páginas críticas no tienen infracciones serias de accesibilidad", async ({ page }) => {
+test("las páginas críticas no tienen infracciones serias de accesibilidad", async ({
+  page,
+}) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  for (const route of ["/", "/contacto", "/admision", "/trastorno-especifico-lenguaje"]) {
+  for (const route of [
+    "/",
+    "/contacto",
+    "/admision",
+    "/trastorno-especifico-lenguaje",
+  ]) {
     await page.goto(route);
     await page.waitForTimeout(50);
-    const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa"]).analyze();
-    const serious = results.violations.filter((violation) => violation.impact === "serious" || violation.impact === "critical");
-    expect(serious, `${route}: ${serious.map((item) => item.id).join(", ")}`).toEqual([]);
+    const results = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+      .analyze();
+    const serious = results.violations.filter(
+      (violation) =>
+        violation.impact === "serious" || violation.impact === "critical",
+    );
+    expect(
+      serious,
+      `${route}: ${serious.map((item) => item.id).join(", ")}`,
+    ).toEqual([]);
   }
 });
 
 test("la calculadora asigna el nivel esperado", async ({ page }) => {
   await page.goto("/");
-  await page.getByLabel("Fecha de nacimiento").fill("2024-03-31");
+  await page.getByLabel("Día").selectOption("31");
+  await page.getByLabel("Mes").selectOption("3");
+  await page.getByLabel("Año").selectOption("2024");
   await page.getByRole("button", { name: /Calcular nivel/ }).click();
-  await expect(page.getByText("Medio Mayor", { exact: true }).first()).toBeVisible();
+  await expect(
+    page.getByText("Medio Mayor", { exact: true }).first(),
+  ).toBeVisible();
 });
 
-test("el formulario informa los campos obligatorios sin enviar datos", async ({ page }) => {
+test("el formulario informa los campos obligatorios sin enviar datos", async ({
+  page,
+}) => {
   await page.goto("/contacto");
-  await page.getByRole("button", { name: "Abrir WhatsApp con mi consulta" }).click();
+  await page
+    .getByRole("button", { name: "Abrir WhatsApp con mi consulta" })
+    .click();
   await expect(page.locator("form [role='alert']")).toHaveCount(3);
 });
 
 test("la portada cumple el presupuesto de transferencia", async ({ page }) => {
   await page.goto("/");
   await page.waitForLoadState("networkidle");
-  const resources = await page.evaluate(() => performance
-    .getEntriesByType("resource")
-    .map((entry) => entry as PerformanceResourceTiming)
-    // Next.js precarga rutas enlazadas en segundo plano. El presupuesto mide
-    // los recursos necesarios para presentar la portada, no ese caché futuro.
-    .filter((entry) => entry.initiatorType !== "fetch")
-    .map((entry) => ({ name: entry.name, bytes: entry.encodedBodySize, type: entry.initiatorType }))
-    .sort((a, b) => b.bytes - a.bytes));
-  const compressedBodyBytes = resources.reduce((total, entry) => total + entry.bytes, 0);
+  const resources = await page.evaluate(() =>
+    performance
+      .getEntriesByType("resource")
+      .map((entry) => entry as PerformanceResourceTiming)
+      // Next.js precarga rutas enlazadas en segundo plano. El presupuesto mide
+      // los recursos necesarios para presentar la portada, no ese caché futuro.
+      .filter((entry) => entry.initiatorType !== "fetch")
+      .map((entry) => ({
+        name: entry.name,
+        bytes: entry.encodedBodySize,
+        type: entry.initiatorType,
+      }))
+      .sort((a, b) => b.bytes - a.bytes),
+  );
+  const compressedBodyBytes = resources.reduce(
+    (total, entry) => total + entry.bytes,
+    0,
+  );
   expect(compressedBodyBytes).toBeLessThan(2_500_000);
 });

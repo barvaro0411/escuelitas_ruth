@@ -24,7 +24,8 @@ export type SchoolLifeEvent = {
   id: string;
   title: string;
   date: string;
-  category: "Actividades" | "Celebraciones" | "Talleres" | "Proyectos" | "Comunidad";
+  category:
+    "Actividades" | "Celebraciones" | "Talleres" | "Proyectos" | "Comunidad";
   summary: string;
   campusIds: readonly CampusId[] | "all";
   images: readonly { src: string; alt: string }[];

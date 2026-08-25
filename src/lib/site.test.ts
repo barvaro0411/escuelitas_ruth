@@ -1,9 +1,16 @@
 import { describe, expect, it } from "vitest";
-import { buildContactWhatsAppMessage, buildWhatsAppUrl, createWhatsAppMessage, siteConfig } from "./site";
+import {
+  buildContactWhatsAppMessage,
+  buildWhatsAppUrl,
+  createWhatsAppMessage,
+  siteConfig,
+} from "./site";
 
 describe("mensajes de contacto", () => {
   it("usa el año centralizado en los mensajes", () => {
-    expect(createWhatsAppMessage({ source: "header" })).toContain(String(siteConfig.admissionYear));
+    expect(createWhatsAppMessage({ source: "header" })).toContain(
+      String(siteConfig.admissionYear),
+    );
   });
 
   it("elimina controles y limita campos entregados por el usuario", () => {
@@ -14,7 +21,10 @@ describe("mensajes de contacto", () => {
 
     expect(message).not.toContain("\u0000");
     expect(message).toContain("Ana Campo falso: valor");
-    expect(message.split("\n").find((line) => line.startsWith("Apoderado/a:"))?.length).toBeLessThanOrEqual(113);
+    expect(
+      message.split("\n").find((line) => line.startsWith("Apoderado/a:"))
+        ?.length,
+    ).toBeLessThanOrEqual(113);
   });
 
   it("genera una URL HTTPS de WhatsApp con texto codificado", () => {

@@ -26,17 +26,23 @@ export default function FAQPreview() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="border-b border-border bg-white py-16 sm:py-20">
+    <section className="border-b border-border bg-surface py-14">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:px-8">
         <div>
-          <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-primary">Preguntas frecuentes</p>
-          <h2 className="mt-2 font-display text-3xl font-extrabold leading-tight text-foreground sm:text-4xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+            Preguntas frecuentes
+          </p>
+          <h2 className="mt-2 font-display font-extrabold leading-tight text-ink text-3xl sm:text-4xl">
             Respuestas antes de comenzar
           </h2>
-          <p className="mt-4 max-w-xl text-base font-semibold leading-relaxed text-muted">
-            Revisa las dudas principales de nuestros apoderados y contáctanos si necesitas orientación para tu caso.
+          <p className="mt-4 max-w-xl text-base leading-relaxed text-muted">
+            Revisa las dudas principales de nuestros apoderados y contáctanos si
+            necesitas orientación para tu caso.
           </p>
-          <Link href="/preguntas-frecuentes" className="mt-6 inline-flex items-center gap-2 text-sm font-extrabold text-primary hover:text-primary-dark">
+          <Link
+            href="/preguntas-frecuentes"
+            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-dark"
+          >
             Ver todas las preguntas
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
@@ -49,20 +55,34 @@ export default function FAQPreview() {
             const panelId = `faq-preview-panel-${index}`;
 
             return (
-              <article key={faq.question} className={`overflow-hidden rounded-xl border bg-white transition-colors ${isOpen ? "border-primary" : "border-border"}`}>
+              <article
+                key={faq.question}
+                className={`overflow-hidden rounded-xl border bg-surface transition-colors ${isOpen ? "border-primary" : "border-border"}`}
+              >
                 <button
                   id={buttonId}
                   type="button"
-                  className="flex min-h-14 w-full items-center justify-between gap-4 px-5 py-4 text-left text-base font-extrabold text-foreground hover:bg-surface-blue/30 sm:px-6"
+                  className="flex min-h-14 w-full items-center justify-between gap-4 px-5 py-4 text-left text-base font-extrabold text-ink hover:bg-surface-sunk sm:px-6"
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                   aria-expanded={isOpen}
                   aria-controls={panelId}
                 >
                   <span>{faq.question}</span>
-                  <ChevronDown className={`h-5 w-5 shrink-0 text-primary transition-transform ${isOpen ? "rotate-180" : ""}`} aria-hidden="true" />
+                  <ChevronDown
+                    className={`h-5 w-5 shrink-0 text-primary transition-transform ${isOpen ? "rotate-180" : ""}`}
+                    aria-hidden="true"
+                  />
                 </button>
-                <div id={panelId} role="region" aria-labelledby={buttonId} hidden={!isOpen} className="border-t border-border bg-surface-blue/25 px-5 py-4 sm:px-6">
-                  <p className="text-sm font-semibold leading-relaxed text-muted sm:text-base">{faq.answer}</p>
+                <div
+                  id={panelId}
+                  role="region"
+                  aria-labelledby={buttonId}
+                  hidden={!isOpen}
+                  className="border-t border-border bg-surface-sunk px-5 py-4 sm:px-6"
+                >
+                  <p className="text-sm leading-relaxed text-muted sm:text-base">
+                    {faq.answer}
+                  </p>
                 </div>
               </article>
             );

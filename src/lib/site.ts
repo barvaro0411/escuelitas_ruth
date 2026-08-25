@@ -1,4 +1,8 @@
-import { admissionCutoff, campuses, type CampusId } from "@/content/school-data";
+import {
+  admissionCutoff,
+  campuses,
+  type CampusId,
+} from "@/content/school-data";
 
 function resolveSiteUrl(value: string | undefined) {
   const fallback = "https://escuelitas-ruth.vercel.app";
@@ -9,7 +13,9 @@ function resolveSiteUrl(value: string | undefined) {
     if (url.protocol !== "https:") throw new Error("protocol");
     return url.origin;
   } catch {
-    throw new Error("NEXT_PUBLIC_SITE_URL debe ser una URL HTTPS válida, sin ruta adicional.");
+    throw new Error(
+      "NEXT_PUBLIC_SITE_URL debe ser una URL HTTPS válida, sin ruta adicional.",
+    );
   }
 }
 
@@ -52,7 +58,8 @@ export const siteConfig = {
     get address() {
       return this.addresses[0];
     },
-    hours: "Lunes a viernes: mañana de 08:15 a 12:15 y tarde de 13:30 a 17:15 hrs.",
+    hours:
+      "Lunes a viernes: mañana de 08:15 a 12:15 y tarde de 13:30 a 17:15 hrs.",
   },
   social: {
     instagram: "https://www.instagram.com/escuelitas.ruth/",
@@ -124,7 +131,9 @@ export function createWhatsAppMessage(context: WhatsAppContext) {
     : undefined;
 
   if (context.source === "calculator" && context.level) {
-    const birthdate = context.birthdate ? ` Mi hijo/a nació el ${context.birthdate}.` : "";
+    const birthdate = context.birthdate
+      ? ` Mi hijo/a nació el ${context.birthdate}.`
+      : "";
     return `Hola, utilicé la calculadora de nivel y a mi hijo/a le correspondería ${context.level}.${birthdate} Quisiera consultar disponibilidad para ${year} y la evaluación fonoaudiológica sin costo.`;
   }
 
@@ -152,7 +161,10 @@ export function createWhatsAppMessage(context: WhatsAppContext) {
     contact: `Hola, quisiera consultar disponibilidad ${year} y agendar una evaluación fonoaudiológica sin costo.`,
   };
 
-  return messages[context.source] ?? `Hola, quisiera recibir información sobre matrícula ${year}.`;
+  return (
+    messages[context.source] ??
+    `Hola, quisiera recibir información sobre matrícula ${year}.`
+  );
 }
 
 export function createWhatsAppUrl(context: WhatsAppContext) {
@@ -162,7 +174,10 @@ export function createWhatsAppUrl(context: WhatsAppContext) {
 export function buildContactWhatsAppMessage(data: ContactMessageData) {
   // Aunque estos datos solo salen hacia WhatsApp, se acotan y se eliminan
   // controles/saltos de línea para evitar URLs gigantes o campos falsificados.
-  const nombreApoderado = cleanContactField(data.nombreApoderado || data.nombre, 100);
+  const nombreApoderado = cleanContactField(
+    data.nombreApoderado || data.nombre,
+    100,
+  );
   const telefono = cleanContactField(data.telefono, 30);
   const email = cleanContactField(data.email, 254);
   const nombreNino = cleanContactField(data.nombreNino, 100);
@@ -305,7 +320,9 @@ export function buildSchoolJsonLd() {
   };
 }
 
-export function buildFaqJsonLd(faqs: Array<{ q: string; a: string } | { question: string; answer: string }>) {
+export function buildFaqJsonLd(
+  faqs: Array<{ q: string; a: string } | { question: string; answer: string }>,
+) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -324,7 +341,9 @@ export function buildFaqJsonLd(faqs: Array<{ q: string; a: string } | { question
   };
 }
 
-export function buildBreadcrumbsJsonLd(items: Array<{ name: string; url: string }>) {
+export function buildBreadcrumbsJsonLd(
+  items: Array<{ name: string; url: string }>,
+) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",

@@ -56,13 +56,19 @@ export const campuses = [
     country: "CL",
     postalCode: "8540000",
     rbd: "10375-6",
-    mapHref: "https://www.google.com/maps/search/?api=1&query=Vascongados%204314%2C%20Conchal%C3%AD%2C%20Chile",
+    mapHref:
+      "https://www.google.com/maps/search/?api=1&query=Vascongados%204314%2C%20Conchal%C3%AD%2C%20Chile",
     geo: { latitude: -33.3934, longitude: -70.6695 },
     levelIds: ["medio-mayor", "prekinder", "kinder"],
     journeys: ["Mañana", "Tarde"],
-    description: "Sede de Escuela de Lenguaje Ruth ubicada en Vascongados 4314, Conchalí.",
+    description:
+      "Sede de Escuela de Lenguaje Ruth ubicada en Vascongados 4314, Conchalí.",
     gallery: [] as CampusGalleryImage[],
-    media: { videoUrl: null as string | null, virtualTourUrl: null as string | null, panoramas: [] as CampusGalleryImage[] },
+    media: {
+      videoUrl: null as string | null,
+      virtualTourUrl: null as string | null,
+      panoramas: [] as CampusGalleryImage[],
+    },
   },
   {
     id: "gambino",
@@ -76,13 +82,19 @@ export const campuses = [
     country: "CL",
     postalCode: "8540000",
     rbd: "26106-8",
-    mapHref: "https://www.google.com/maps/search/?api=1&query=Gral.%20Gambino%204613%2C%20Conchal%C3%AD%2C%20Chile",
+    mapHref:
+      "https://www.google.com/maps/search/?api=1&query=Gral.%20Gambino%204613%2C%20Conchal%C3%AD%2C%20Chile",
     geo: { latitude: -33.3906, longitude: -70.6723 },
     levelIds: ["medio-mayor", "prekinder", "kinder"],
     journeys: ["Mañana", "Tarde"],
-    description: "Sede de Escuela de Lenguaje Ruth ubicada en Gral. Gambino 4613, Conchalí.",
+    description:
+      "Sede de Escuela de Lenguaje Ruth ubicada en Gral. Gambino 4613, Conchalí.",
     gallery: [] as CampusGalleryImage[],
-    media: { videoUrl: null as string | null, virtualTourUrl: null as string | null, panoramas: [] as CampusGalleryImage[] },
+    media: {
+      videoUrl: null as string | null,
+      virtualTourUrl: null as string | null,
+      panoramas: [] as CampusGalleryImage[],
+    },
   },
 ] as const satisfies ReadonlyArray<{
   id: CampusId;
@@ -102,7 +114,11 @@ export const campuses = [
   journeys: readonly string[];
   description: string;
   gallery: readonly CampusGalleryImage[];
-  media: { videoUrl: string | null; virtualTourUrl: string | null; panoramas: readonly CampusGalleryImage[] };
+  media: {
+    videoUrl: string | null;
+    virtualTourUrl: string | null;
+    panoramas: readonly CampusGalleryImage[];
+  };
 }>;
 
 export function getCampusById(id: CampusId) {

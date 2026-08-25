@@ -6,7 +6,7 @@ type JsonLdProps = {
  * Único punto autorizado para insertar JSON-LD en HTML.
  *
  * Solo debe recibir datos controlados o previamente validados por la aplicación.
- * Escapar "<" impide que una cadena pueda cerrar el elemento <script>; los
+ * Escapar"<" impide que una cadena pueda cerrar el elemento <script>; los
  * separadores Unicode se escapan para mantener el resultado seguro y portable.
  */
 export default function JsonLd({ data }: JsonLdProps) {

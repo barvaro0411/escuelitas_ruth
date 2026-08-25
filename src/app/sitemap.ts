@@ -30,7 +30,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return routes.map((route) => ({
     url: `${siteConfig.url}${route === "/" ? "" : route}`,
-    changeFrequency: route === "/" || route.includes("matriculas") || route === "/admision" || route === "/contacto" ? "weekly" : "monthly",
+    changeFrequency:
+      route === "/" ||
+      route.includes("matriculas") ||
+      route === "/admision" ||
+      route === "/contacto"
+        ? "weekly"
+        : "monthly",
     priority: priorities[route] ?? 0.7,
   }));
 }

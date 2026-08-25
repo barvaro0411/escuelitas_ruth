@@ -35,10 +35,14 @@ function isDateInsideTheme(date: MonthDay, theme: SeasonalThemeDefinition) {
   const current = toComparableDate(date);
   const start = toComparableDate(theme.start);
   const end = toComparableDate(theme.end);
-  return start <= end ? current >= start && current <= end : current >= start || current <= end;
+  return start <= end
+    ? current >= start && current <= end
+    : current >= start || current <= end;
 }
 
-export function getActiveSeasonalTheme(date = new Date()): SeasonalThemeId | null {
+export function getActiveSeasonalTheme(
+  date = new Date(),
+): SeasonalThemeId | null {
   const config = seasonalThemeConfig;
   if (!config.enabled || config.mode === "off") return null;
 

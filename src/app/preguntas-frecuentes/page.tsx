@@ -17,9 +17,9 @@ export const metadata: Metadata = {
     url: "/preguntas-frecuentes",
     images: [
       {
-        url: "/hero-children.jpg",
-        width: 1024,
-        height: 1024,
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
         alt: "Preguntas Frecuentes Escuela de Lenguaje Ruth",
       },
     ],
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Preguntas Frecuentes | Escuela de Lenguaje Ruth",
     description: "Dudas sobre TEL, gratuidad y matrículas 2027 en Conchalí.",
-    images: ["/hero-children.jpg"],
+    images: ["/og-image.jpg"],
   },
 };
 
@@ -54,8 +54,8 @@ const faqsData: FAQCategory[] = [
   },
   {
     category: "Admisión y Costos",
-    bg: "bg-secondary",
-    color: "text-secondary",
+    bg: "bg-surface-sunk",
+    color: "text-accent",
     questions: [
       {
         q: "¿Cuál es el costo de la matrícula y mensualidad?",
@@ -73,8 +73,8 @@ const faqsData: FAQCategory[] = [
   },
   {
     category: "Funcionamiento",
-    bg: "bg-pastel-pink",
-    color: "text-pastel-pink",
+    bg: "bg-surface-sunk",
+    color: "text-accent",
     questions: [
       {
         q: "¿Cuál es el horario de clases?",

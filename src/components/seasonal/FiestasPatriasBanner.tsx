@@ -8,9 +8,20 @@ export default function FiestasPatriasBanner() {
         aria-hidden="true"
       />
       <p className="relative mx-auto flex min-h-8 max-w-7xl items-center justify-center gap-2 px-3 py-1.5 text-center text-[11px] font-extrabold leading-tight tracking-wide sm:text-xs">
-        <Sparkles className="hidden h-3.5 w-3.5 shrink-0 text-brand-yellow-light sm:block" aria-hidden="true" />
-        <span>Septiembre en Escuelitas Ruth · ¡Tiki Tiki Tiii! · Consulta cupos 2027</span>
-        <Sparkles className="hidden h-3.5 w-3.5 shrink-0 text-brand-yellow-light sm:block" aria-hidden="true" />
+        <Sparkles
+          className="hidden h-3.5 w-3.5 shrink-0 text-accent-on-dark sm:block"
+          aria-hidden="true"
+        />
+        <span className="sm:hidden">
+          ¡Tiki Tiki Tiii! · Consulta cupos 2027
+        </span>
+        <span className="hidden sm:inline">
+          Septiembre en Escuelitas Ruth · ¡Tiki Tiki Tiii! · Consulta cupos 2027
+        </span>
+        <Sparkles
+          className="hidden h-3.5 w-3.5 shrink-0 text-accent-on-dark sm:block"
+          aria-hidden="true"
+        />
       </p>
     </div>
   );
