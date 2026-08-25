@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import PageHero from "@/components/layout/PageHero";
 import {
   BookOpen,
@@ -93,7 +94,7 @@ const focusAreas = [
     description:
       "Aprendemos a través del juego libre, la música y la exploración sensorial.",
     icon: Baby,
-    bg: "bg-primary/10",
+    bg: "bg-blue-50 border border-blue-200/60",
     iconColor: "text-primary",
   },
   {
@@ -101,24 +102,24 @@ const focusAreas = [
     description:
       "Estimulamos la interacción y el desarrollo del lenguaje en un ambiente lúdico.",
     icon: MessageCircle,
-    bg: "bg-action/15",
-    iconColor: "text-primary-dark",
+    bg: "bg-amber-50 border border-amber-200/60",
+    iconColor: "text-amber-700",
   },
   {
     title: "Socialización",
     description:
       "Fomentamos la interacción social, las rutinas y las habilidades pre-académicas.",
     icon: Users2,
-    bg: "bg-primary",
-    iconColor: "text-primary",
+    bg: "bg-emerald-50 border border-emerald-200/60",
+    iconColor: "text-emerald-700",
   },
   {
     title: "Transición escolar",
     description:
       "Preparamos la entrada a la educación básica con conciencia fonológica.",
     icon: GraduationCap,
-    bg: "bg-surface-sunk",
-    iconColor: "text-primary-dark",
+    bg: "bg-indigo-50 border border-indigo-200/60",
+    iconColor: "text-indigo-700",
   },
 ];
 
@@ -204,29 +205,23 @@ export default function ProgramaPage() {
                   </div>
                 </div>
 
-                <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl border-4 border-white/15 bg-primary">
-                  <div
-                    className="absolute -top-10 -right-10 w-40 h-40 bg-white/5 rounded-full"
-                    aria-hidden="true"
+                <div className="relative aspect-square sm:aspect-[4/3] lg:aspect-square overflow-hidden rounded-2xl border-4 border-white/20 shadow-2xl">
+                  <Image
+                    src="/tel-fonoaudiologia.jpg"
+                    alt="Educadora y fonoaudióloga realizando estimulación del lenguaje a niños preescolares con juegos educativos"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 500px"
+                    className="object-cover"
+                    priority
                   />
-                  <div
-                    className="absolute -bottom-12 -left-12 w-48 h-48 bg-accent/20 rounded-full"
-                    aria-hidden="true"
-                  />
-                  <Speech
-                    size={140}
-                    className="text-accent opacity-80"
-                    strokeWidth={1}
-                  />
-                  <div
-                    className="absolute inset-0 bg-gradient-to-t from-primary-dark/80 to-transparent"
-                    aria-hidden="true"
-                  />
-                  <div className="absolute left-8 top-8 flex h-14 w-14 items-center justify-center rounded-xl bg-action/90">
-                    <Sparkles size={26} className="text-primary-dark" />
-                  </div>
-                  <div className="absolute bottom-8 right-8 flex h-12 w-12 items-center justify-center rounded-full bg-accent/90">
-                    <Speech size={22} className="text-primary-dark" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary-dark/85 via-primary-dark/20 to-transparent" />
+                  <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between gap-3 text-white">
+                    <span className="rounded-full border border-white/25 bg-primary-dark/85 px-3.5 py-1.5 text-xs font-extrabold backdrop-blur-sm">
+                      ✓ Estimulación y Juego
+                    </span>
+                    <span className="rounded-full bg-action px-3 py-1.5 text-xs font-extrabold text-primary-dark shadow-xs">
+                      Fonoaudiología $0
+                    </span>
                   </div>
                 </div>
               </div>

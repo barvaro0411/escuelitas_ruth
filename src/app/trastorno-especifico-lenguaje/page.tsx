@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import PageHero from "@/components/layout/PageHero";
 import Link from "next/link";
 import AgeCalculator from "@/components/sections/AgeCalculator";
@@ -372,20 +373,51 @@ export default function TrastornoEspecificoLenguajePage() {
         {/* ── WHAT DOES A LANGUAGE SCHOOL DO ── */}
         <section className="py-24 bg-primary text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-14">
-              <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/15 border border-white/20 text-white text-xs font-semibold uppercase tracking-widest mb-4">
-                <Sparkles className="mr-1.5 h-3.5 w-3.5" />
-                El rol del establecimiento
-              </span>
-              <h2 className="font-extrabold text-white tracking-tight leading-[1.1] mb-5 text-3xl sm:text-4xl">
-                ¿Qué hace una escuela de lenguaje?
-              </h2>
-              <p className="text-lg text-white/80 leading-relaxed">
-                Una escuela de lenguaje no es solo un jardín infantil. Es un
-                establecimiento especializado que combina educación parvularia
-                con intervención fonoaudiológica diaria, diseñado
-                específicamente para niños con TEL.
-              </p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+              <div>
+                <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/15 border border-white/20 text-white text-xs font-semibold uppercase tracking-widest mb-4">
+                  <Sparkles className="mr-1.5 h-3.5 w-3.5 text-action" />
+                  El rol del establecimiento
+                </span>
+                <h2 className="font-extrabold text-white tracking-tight leading-[1.1] mb-5 text-3xl sm:text-4xl">
+                  ¿Qué hace una escuela de lenguaje?
+                </h2>
+                <p className="text-lg text-white/80 leading-relaxed mb-6">
+                  Una escuela de lenguaje no es solo un jardín infantil. Es un
+                  establecimiento especializado que combina educación parvularia
+                  con intervención fonoaudiológica diaria, diseñado
+                  específicamente para niños con TEL.
+                </p>
+                <div className="p-5 rounded-2xl bg-white/10 border border-white/15 flex items-start gap-4">
+                  <CheckCircle2 className="h-6 w-6 text-action shrink-0 mt-0.5" />
+                  <p className="text-white/90 leading-relaxed text-sm">
+                    En Chile, las escuelas de lenguaje subvencionadas como Escuela Ruth funcionan con financiamiento estatal:{" "}
+                    <strong className="text-accent-on-dark font-extrabold">
+                      100% gratuita
+                    </strong>{" "}
+                    para las familias. No pagas matrícula ni mensualidad.
+                  </p>
+                </div>
+              </div>
+
+              <div className="relative aspect-[4/3] sm:aspect-[16/10] overflow-hidden rounded-2xl border-4 border-white/20 shadow-2xl">
+                <Image
+                  src="/tel-fonoaudiologia.jpg"
+                  alt="Sesión de estimulación del lenguaje con fonoaudióloga y niños preescolares"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 600px"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary-dark/80 via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white text-xs font-extrabold">
+                  <span className="rounded-full bg-primary-dark/85 px-3 py-1.5 backdrop-blur-sm border border-white/20">
+                    Acompañamiento especializado
+                  </span>
+                  <span className="rounded-full bg-action px-3 py-1.5 text-primary-dark shadow-xs">
+                    Subvención MINEDUC
+                  </span>
+                </div>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -405,18 +437,6 @@ export default function TrastornoEspecificoLenguajePage() {
                   </p>
                 </div>
               ))}
-            </div>
-
-            <div className="mt-12 max-w-3xl mx-auto bg-white/10 border border-white/15 rounded-2xl p-7 flex items-start gap-4">
-              <CheckCircle2 className="h-7 w-7 text-accent-on-dark shrink-0 mt-0.5" />
-              <p className="text-white/80 leading-relaxed">
-                En Chile, las escuelas de lenguaje particular subvencionadas
-                como Escuela Ruth funcionan con financiamiento estatal:{" "}
-                <strong className="text-accent-on-dark">
-                  sin costo para las familias
-                </strong>
-                . No pagas matrícula, no pagas mensualidad.
-              </p>
             </div>
           </div>
         </section>
