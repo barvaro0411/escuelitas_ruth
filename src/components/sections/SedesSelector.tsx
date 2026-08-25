@@ -40,7 +40,7 @@ export default function SedesSelector() {
                   <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary text-white">
                     <Building2 className="h-5 w-5" aria-hidden="true" />
                   </div>
-                  <span className="inline-flex items-center gap-1 rounded-full bg-primary px-3 py-1 text-xs font-extrabold text-primary">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-primary px-3 py-1 text-xs font-extrabold text-white">
                     <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
                     RBD {campus.rbd}
                   </span>

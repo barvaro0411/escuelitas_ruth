@@ -48,7 +48,7 @@ const activities = [
     title: "Nuestras tradiciones",
     description: "Conocer Chile desde la infancia.",
     icon: Flower2,
-    color: "bg-primary text-primary",
+    color: "bg-primary text-white",
   },
 ];
 

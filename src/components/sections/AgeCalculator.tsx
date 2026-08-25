@@ -461,7 +461,7 @@ export default function AgeCalculator() {
                   <span
                     className={`hidden sm:inline-flex rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider shrink-0 ${
                       result.status === "eligible"
-                        ? "bg-primary text-primary border border-primary"
+                        ? "bg-primary text-white border border-primary"
                         : "bg-surface-sunk text-accent border border-accent/40"
                     }`}
                   >
@@ -475,7 +475,7 @@ export default function AgeCalculator() {
                 <span
                   className={`sm:hidden inline-flex w-fit rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider mb-2.5 ${
                     result.status === "eligible"
-                      ? "bg-primary text-primary border border-primary"
+                      ? "bg-primary text-white border border-primary"
                       : "bg-surface-sunk text-accent border border-accent/40"
                   }`}
                 >
@@ -549,7 +549,7 @@ export default function AgeCalculator() {
                 </ul>
 
                 {result.status === "eligible" && (
-                  <div className="mb-4 flex items-center justify-between gap-3 rounded-xl bg-primary px-4 py-3 text-primary">
+                  <div className="mb-4 flex items-center justify-between gap-3 rounded-xl bg-primary px-4 py-3 text-white">
                     <span className="text-xs font-extrabold">
                       Evaluación fonoaudiológica
                     </span>
