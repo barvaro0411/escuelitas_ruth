@@ -1,3 +1,5 @@
+import { vascongadosGallery } from "@/content/school-data";
+
 export type GalleryCategory =
   | "Equipo"
   | "Instalaciones"
@@ -22,4 +24,10 @@ export const galleryImages: GalleryImage[] = [
     title: "Equipo educativo",
     category: "Equipo",
   },
+  ...vascongadosGallery.map((image, index) => ({
+    ...image,
+    id: `vascongados-instalacion-${index + 1}`,
+    category: "Instalaciones" as const,
+    campusId: "vascongados" as const,
+  })),
 ];

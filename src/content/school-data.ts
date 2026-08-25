@@ -2,6 +2,34 @@ export type CampusId = "vascongados" | "gambino";
 export type LevelId = "medio-mayor" | "prekinder" | "kinder";
 export type CampusGalleryImage = { src: string; alt: string; title: string };
 
+export const vascongadosGallery = [
+  {
+    src: "/vascongados-fachada.jpeg",
+    alt: "Fachada principal de la Escuela Vascongados en Conchalí",
+    title: "Fachada principal",
+  },
+  {
+    src: "/vascongados-acceso.jpeg",
+    alt: "Acceso de la Escuela Vascongados con su reja azul y amarilla",
+    title: "Acceso de la sede",
+  },
+  {
+    src: "/vascongados-casa-de-juegos.jpeg",
+    alt: "Casa de juegos infantil en el patio de la sede Vascongados",
+    title: "Casa de juegos",
+  },
+  {
+    src: "/vascongados-patio-juegos.jpeg",
+    alt: "Patio de juegos de la sede Vascongados con un trampolín infantil",
+    title: "Patio de juegos",
+  },
+  {
+    src: "/vascongados-patio-techado.jpeg",
+    alt: "Patio techado y espacios de juego de la sede Vascongados",
+    title: "Patio techado",
+  },
+] as const satisfies readonly CampusGalleryImage[];
+
 export const admissionCutoff = {
   year: 2027,
   isoDate: "2027-03-31",
@@ -63,7 +91,7 @@ export const campuses = [
     journeys: ["Mañana", "Tarde"],
     description:
       "Sede de Escuela de Lenguaje Ruth ubicada en Vascongados 4314, Conchalí.",
-    gallery: [] as CampusGalleryImage[],
+    gallery: vascongadosGallery,
     media: {
       videoUrl: null as string | null,
       virtualTourUrl: null as string | null,
