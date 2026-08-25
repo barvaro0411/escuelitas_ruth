@@ -196,6 +196,13 @@ export default function AgeCalculator() {
     setHasCalculated(true);
   };
 
+  const handleReset = () => {
+    setDay("");
+    setMonth("");
+    setYear("");
+    setHasCalculated(false);
+  };
+
   const selectClass = `block w-full min-w-0 cursor-pointer rounded-xl border-2 bg-surface-sunk px-3 py-3 text-sm font-semibold text-ink outline-none transition-colors focus:bg-surface focus:ring-4 ${
     hasDateError
       ? "border-red-500 focus:border-red-600 focus:ring-red-500/10"
@@ -226,19 +233,19 @@ export default function AgeCalculator() {
     <section className="relative w-full overflow-hidden border-b border-border bg-surface-sunk py-16 sm:py-24 lg:py-28">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Encabezado compacto en móvil */}
-        <div className="mb-5 sm:mb-8 lg:mb-10 max-w-3xl">
-          <div className="inline-flex items-center gap-2 rounded-full bg-surface px-3 py-1.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-accent mb-2 sm:mb-3">
-            <Sparkles size={14} className="shrink-0" />
+        <div className="mb-6 sm:mb-8 lg:mb-10 max-w-3xl">
+          <div className="inline-flex items-center gap-2 rounded-full bg-surface px-3.5 py-1.5 text-[11px] sm:text-xs font-bold uppercase tracking-wider text-accent border border-accent/20 shadow-xs mb-3">
+            <Sparkles size={14} className="shrink-0 text-action" />
             Calculadora de Nivel 2027
           </div>
 
-          <h2 className="mb-2 font-extrabold tracking-tight text-ink font-display leading-tight text-3xl sm:text-4xl">
+          <h2 className="mb-3 font-extrabold tracking-tight text-ink font-display leading-tight text-3xl sm:text-4xl">
             ¿Qué nivel le corresponde a tu hijo?
           </h2>
 
-          <p className="text-xs sm:text-sm lg:text-lg leading-relaxed text-muted">
-            Ingresa la fecha de nacimiento. El cálculo se realiza según la edad
-            al <strong>31 de marzo de 2027</strong>.
+          <p className="text-sm sm:text-base lg:text-lg leading-relaxed text-muted">
+            Ingresa la fecha de nacimiento para conocer el nivel educativo y
+            orientación según la edad al <strong>31 de marzo de 2027</strong>.
           </p>
 
           <VoiceContour
@@ -248,12 +255,12 @@ export default function AgeCalculator() {
         </div>
 
         {/* Grid: 1 columna en móvil, 2 en desktop */}
-        <div className="grid min-w-0 grid-cols-1 items-start gap-4 sm:gap-6 lg:grid-cols-12 lg:gap-8">
+        <div className="grid min-w-0 grid-cols-1 items-start gap-6 sm:gap-8 lg:grid-cols-12 lg:gap-8">
           {/* Panel de entrada */}
           <form
             noValidate
             onSubmit={handleSubmit}
-            className="min-w-0 w-full rounded-2xl border border-border/80 bg-surface p-4 sm:p-6 lg:col-span-5 lg:p-8"
+            className="min-w-0 w-full rounded-2xl border border-border/80 bg-surface p-5 sm:p-7 lg:col-span-5 lg:p-8 shadow-xs"
           >
             <fieldset
               aria-invalid={hasDateError}
@@ -272,7 +279,7 @@ export default function AgeCalculator() {
                     Fecha de nacimiento
                   </p>
                   <p className="text-[10px] font-semibold text-muted sm:text-xs">
-                    Edad al 31 de marzo de 2027
+                    Edad calculada al 31 de marzo de 2027
                   </p>
                 </div>
               </div>
@@ -359,7 +366,7 @@ export default function AgeCalculator() {
               <p
                 id="birthdate-error"
                 role="alert"
-                className="mt-3 text-xs font-extrabold leading-relaxed text-red-700"
+                className="mt-3 rounded-lg bg-red-50 p-2.5 text-xs font-extrabold leading-relaxed text-red-700 border border-red-200"
               >
                 Ingresa una fecha válida dentro del rango indicado para el
                 proceso {admissionCutoff.year}.
@@ -369,24 +376,36 @@ export default function AgeCalculator() {
                 id="birthdate-help"
                 className="mt-3 text-xs leading-relaxed text-muted"
               >
-                Necesitamos el día, mes y año exactos: el nivel puede cambiar si
-                el cumpleaños es antes o después del 31 de marzo.
+                El corte oficial MINEDUC es al <strong>31 de marzo</strong>: si
+                cumple años antes o después de esa fecha cambia el nivel asignado.
               </p>
             )}
 
-            <button
-              type="submit"
-              className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-extrabold text-white transition-colors hover:bg-primary-dark"
-            >
-              <Calendar className="h-4 w-4" aria-hidden="true" />
-              Calcular nivel para 2027
-            </button>
+            <div className="mt-5 flex gap-2">
+              <button
+                type="submit"
+                className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-extrabold text-white transition-all hover:bg-primary-dark active:scale-[0.98] shadow-xs cursor-pointer"
+              >
+                <Calendar className="h-4 w-4" aria-hidden="true" />
+                Calcular nivel para 2027
+              </button>
+              {hasCalculated && (
+                <button
+                  type="button"
+                  onClick={handleReset}
+                  className="inline-flex min-h-12 items-center justify-center rounded-xl border border-border bg-surface-sunk px-3 text-xs font-semibold text-muted hover:bg-surface hover:text-ink transition-colors cursor-pointer"
+                  title="Limpiar fecha"
+                >
+                  Limpiar
+                </button>
+              )}
+            </div>
 
-            <p className="mt-4 flex items-start gap-2 text-[10px] sm:text-xs leading-relaxed text-muted border-t border-border/50 pt-3">
-              <Lightbulb className="h-3.5 w-3.5 shrink-0 mt-0.5 text-accent" />
+            <p className="mt-4 flex items-start gap-2 text-[11px] sm:text-xs leading-relaxed text-muted border-t border-border/50 pt-3">
+              <Lightbulb className="h-4 w-4 shrink-0 mt-0.5 text-accent" />
               <span>
-                La vacante se oficializa con la evaluación fonoaudiológica
-                gratuita.
+                La vacante definitiva se oficializa con la evaluación
+                fonoaudiológica <strong>gratuita</strong>.
               </span>
             </p>
           </form>
@@ -394,46 +413,53 @@ export default function AgeCalculator() {
           {/* Panel de resultado */}
           <div aria-live="polite" className="min-w-0 w-full lg:col-span-7">
             {!result ? (
-              <div className="min-w-0 px-1 py-1 sm:px-2">
-                <h3 className="font-display text-xl font-extrabold leading-tight text-ink">
-                  Estos son los tres niveles
+              <div className="min-w-0 rounded-2xl border border-border/80 bg-surface p-6 sm:p-8 shadow-xs">
+                <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-primary mb-2">
+                  <span>Guía de Referencia</span>
+                </div>
+                <h3 className="font-display text-xl font-extrabold leading-tight text-ink sm:text-2xl">
+                  Niveles educativos según edad
                 </h3>
                 <p className="mt-1 text-sm leading-relaxed text-muted">
-                  Completa la fecha y te marcamos el que corresponde según la
-                  edad al {admissionCutoff.label}.
+                  Selecciona el año de nacimiento o ingresa la fecha exacta para
+                  ver el nivel asignado según la normativa oficial al {admissionCutoff.label}.
                 </p>
 
-                <ul className="mt-5 space-y-2.5">
+                <ul className="mt-5 space-y-3">
                   {schoolLevels.map((level) => (
                     <li
                       key={level.id}
-                      className="flex items-center gap-3 rounded-xl border border-border bg-surface px-4 py-3"
+                      className="flex items-center justify-between gap-4 rounded-xl border border-border bg-surface-sunk p-4 transition-all hover:border-primary/40 hover:bg-surface"
                     >
-                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                        {level.id === "medio-mayor" ? (
-                          <Baby className="h-4 w-4" aria-hidden="true" />
-                        ) : (
-                          <GraduationCap
-                            className="h-4 w-4"
-                            aria-hidden="true"
-                          />
-                        )}
+                      <div className="flex items-center gap-3.5">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                          {level.id === "medio-mayor" ? (
+                            <Baby className="h-5 w-5" aria-hidden="true" />
+                          ) : (
+                            <GraduationCap
+                              className="h-5 w-5"
+                              aria-hidden="true"
+                            />
+                          )}
+                        </div>
+                        <div className="min-w-0">
+                          <p className="font-display text-base font-extrabold leading-tight text-ink">
+                            {level.name}
+                          </p>
+                          <p className="text-xs text-muted">
+                            {level.ageYears} años cumplidos al {admissionCutoff.label}
+                          </p>
+                        </div>
                       </div>
-                      <div className="min-w-0">
-                        <p className="font-display text-base font-extrabold leading-tight text-ink">
-                          {level.name}
-                        </p>
-                        <p className="text-xs text-muted">
-                          {level.ageYears} años cumplidos al{" "}
-                          {admissionCutoff.label}
-                        </p>
-                      </div>
+                      <span className="rounded-full bg-primary/10 px-3 py-1 text-[11px] font-extrabold text-primary shrink-0">
+                        {level.journeys.join(" · ")}
+                      </span>
                     </li>
                   ))}
                 </ul>
               </div>
             ) : (
-              <div className="relative flex min-w-0 flex-col justify-between overflow-hidden rounded-2xl border-2 border-primary/15 bg-surface p-4 sm:p-6 lg:p-8">
+              <div className="animate-fade-up relative flex min-w-0 flex-col justify-between overflow-hidden rounded-2xl border-2 border-primary/20 bg-surface p-5 sm:p-7 lg:p-8 shadow-sm">
                 <VoiceContour
                   variant="arc"
                   className="pointer-events-none absolute right-5 top-6 h-9 w-24 text-accent/30"
@@ -441,105 +467,121 @@ export default function AgeCalculator() {
 
                 {/* Barra de estado superior */}
                 <div
-                  className={`absolute top-0 inset-x-0 h-1.5 sm:h-2 ${
+                  className={`absolute top-0 inset-x-0 h-2 ${
                     result.status === "eligible" ? "bg-primary" : "bg-accent"
                   }`}
                 />
 
                 {/* Header con icono y badge */}
-                <div className="mb-3 flex min-w-0 items-center justify-between gap-2 pt-1 sm:mb-4">
-                  <div className="flex min-w-0 items-center gap-2.5">
-                    <div className="flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-xl bg-primary/10 text-primary shrink-0">
-                      <result.icon className="h-5 w-5" />
+                <div className="mb-4 flex min-w-0 items-start justify-between gap-3 pt-1">
+                  <div className="flex min-w-0 items-center gap-3">
+                    <div
+                      className={`flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-xl shrink-0 ${
+                        result.status === "eligible"
+                          ? "bg-primary text-white"
+                          : "bg-accent/15 text-accent"
+                      }`}
+                    >
+                      <result.icon className="h-6 w-6" />
                     </div>
-                    <h3 className="min-w-0 font-extrabold leading-tight text-ink font-display text-xl">
-                      {result.status === "eligible"
-                        ? `Le correspondería ${result.levelName}`
-                        : result.levelName}
-                    </h3>
+                    <div className="min-w-0">
+                      <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-muted">
+                        Resultado del cálculo
+                      </p>
+                      <h3 className="min-w-0 font-extrabold leading-tight text-ink font-display text-xl sm:text-2xl">
+                        {result.status === "eligible"
+                          ? `Le corresponde ${result.levelName}`
+                          : result.levelName}
+                      </h3>
+                    </div>
                   </div>
                   <span
-                    className={`hidden sm:inline-flex rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider shrink-0 ${
+                    className={`hidden sm:inline-flex rounded-full px-3.5 py-1.5 text-xs font-extrabold uppercase tracking-wider shrink-0 ${
                       result.status === "eligible"
-                        ? "bg-primary text-white border border-primary"
-                        : "bg-surface-sunk text-accent border border-accent/40"
+                        ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
+                        : "bg-amber-100 text-amber-900 border border-amber-300"
                     }`}
                   >
                     {result.status === "eligible"
-                      ? "Cumple requisito de edad"
-                      : "Orientación"}
+                      ? "✓ Cumple requisito"
+                      : "ℹ Orientación"}
                   </span>
                 </div>
 
                 {/* Badge solo en móvil, debajo del título */}
                 <span
-                  className={`sm:hidden inline-flex w-fit rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider mb-2.5 ${
+                  className={`sm:hidden inline-flex w-fit rounded-full px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider mb-3 ${
                     result.status === "eligible"
-                      ? "bg-primary text-white border border-primary"
-                      : "bg-surface-sunk text-accent border border-accent/40"
+                      ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
+                      : "bg-amber-100 text-amber-900 border border-amber-300"
                   }`}
                 >
                   {result.status === "eligible"
                     ? "✓ Cumple requisito de edad"
-                    : "⚠ Requiere orientación"}
+                    : "ℹ Requiere orientación"}
                 </span>
 
-                <p className="mb-3 sm:mb-4 text-xs sm:text-sm leading-relaxed text-muted">
+                <p className="mb-4 text-sm sm:text-base leading-relaxed text-ink/90 font-medium">
                   {result.description}
                 </p>
 
-                <div className="mb-4 rounded-xl border border-primary/15 bg-surface-sunk p-4">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-primary">
-                    Edad al {admissionCutoff.label}
-                  </p>
-                  <p className="mt-1 font-display text-xl font-extrabold text-ink">
-                    {ageAtCutoffLabel}
-                  </p>
+                <div className="mb-4 rounded-xl border border-primary/15 bg-surface-sunk p-4 flex items-center justify-between">
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-primary">
+                      Edad calculada al {admissionCutoff.label}
+                    </p>
+                    <p className="mt-0.5 font-display text-xl font-extrabold text-ink">
+                      {ageAtCutoffLabel}
+                    </p>
+                  </div>
+                  <span className="rounded-lg bg-surface px-3 py-1 text-xs font-extrabold text-primary border border-border">
+                    {formattedDate}
+                  </span>
                 </div>
 
                 {result.status === "eligible" && (
                   <div className="mb-4 grid gap-3 sm:grid-cols-2">
-                    <div className="rounded-xl border border-border bg-surface p-4">
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-primary">
-                        Este nivel se imparte en
+                    <div className="rounded-xl border border-border bg-surface-sunk/60 p-4">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-primary">
+                        Sedes donde se imparte
                       </p>
                       <ul className="mt-2 space-y-1.5">
                         {resultCampuses.map((campus) => (
                           <li
                             key={campus.id}
-                            className="flex items-start gap-2 text-xs font-extrabold text-muted"
+                            className="flex items-start gap-2 text-xs font-extrabold text-ink"
                           >
                             <CheckCircle2
                               className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary"
                               aria-hidden="true"
                             />
-                            {campus.shortName}
+                            {campus.name}
                           </li>
                         ))}
                       </ul>
                     </div>
-                    <div className="rounded-xl border border-border bg-surface p-4">
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-primary">
-                        Jornadas que se imparten
+                    <div className="rounded-xl border border-border bg-surface-sunk/60 p-4">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-primary">
+                        Jornadas disponibles
                       </p>
-                      <p className="mt-2 text-xs font-extrabold text-muted">
-                        {result.journeys.join(" y")}
+                      <p className="mt-2 text-xs font-extrabold text-ink">
+                        {result.journeys.join(" y ")}
                       </p>
                       <p className="mt-1 text-[10px] leading-relaxed text-muted">
-                        La jornada y los cupos se confirman al consultar.
+                        Mañana 08:15–12:15 · Tarde 13:30–17:15
                       </p>
                     </div>
                   </div>
                 )}
 
-                <ul className="space-y-2 mb-4">
+                <ul className="space-y-2 mb-5">
                   {result.bulletPoints.map((point) => (
                     <li
                       key={point}
                       className="flex items-start gap-2 text-xs sm:text-sm font-semibold text-muted leading-snug"
                     >
                       {result.status === "eligible" ? (
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
                       ) : (
                         <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
                       )}
@@ -549,11 +591,18 @@ export default function AgeCalculator() {
                 </ul>
 
                 {result.status === "eligible" && (
-                  <div className="mb-4 flex items-center justify-between gap-3 rounded-xl bg-primary px-4 py-3 text-white">
-                    <span className="text-xs font-extrabold">
-                      Evaluación fonoaudiológica
-                    </span>
-                    <strong className="font-display text-lg">$0</strong>
+                  <div className="mb-5 flex items-center justify-between gap-3 rounded-xl bg-primary px-4 py-3 text-white shadow-xs">
+                    <div>
+                      <span className="text-xs font-extrabold block">
+                        Educación 100% Gratuita & Evaluación
+                      </span>
+                      <span className="text-[10px] text-white/80">
+                        Subvención MINEDUC · Sin mensualidad
+                      </span>
+                    </div>
+                    <strong className="font-display text-2xl text-action font-extrabold">
+                      $0
+                    </strong>
                   </div>
                 )}
 
@@ -561,21 +610,21 @@ export default function AgeCalculator() {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-action px-4 py-3 sm:py-3.5 text-xs sm:text-sm font-extrabold text-primary-dark transition-all hover:bg-action-hover active:scale-[0.97] text-center"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-action px-5 py-4 text-sm sm:text-base font-extrabold text-primary-dark transition-all hover:bg-action-hover active:scale-[0.98] shadow-md shadow-amber-500/10 text-center"
                 >
-                  <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5 shrink-0" />
+                  <MessageCircle className="h-5 w-5 shrink-0" />
                   <span>
                     {result.status === "eligible"
-                      ? `Consultar disponibilidad para ${result.levelName}`
+                      ? `Consultar cupos para ${result.levelName}`
                       : "Pedir Orientación por WhatsApp"}
                   </span>
                 </a>
                 {result.status === "eligible" && (
                   <Link
                     href="/sedes"
-                    className="mt-3 flex min-h-11 w-full items-center justify-center text-center text-xs font-semibold text-primary hover:text-primary-dark sm:text-sm"
+                    className="mt-3 flex min-h-11 w-full items-center justify-center text-center text-xs font-bold text-primary hover:text-primary-dark sm:text-sm"
                   >
-                    Conocer sedes, direcciones y jornadas
+                    Conocer fotos, direcciones y horarios de las sedes →
                   </Link>
                 )}
               </div>
