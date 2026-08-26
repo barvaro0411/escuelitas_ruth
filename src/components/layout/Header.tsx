@@ -81,13 +81,13 @@ export default function Header() {
             className="flex items-center gap-3"
             aria-label="Ir al inicio de Escuela de Lenguaje Ruth"
           >
-            <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl border border-action/80 bg-surface">
+            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-2xl border-2 border-action bg-white shadow-sm">
               <Image
                 src="/logo.jpg"
                 alt="Logo Escuela de Lenguaje Ruth"
                 fill
-                sizes="44px"
-                className="object-cover"
+                sizes="48px"
+                className="object-contain p-0.5"
                 priority
               />
             </div>

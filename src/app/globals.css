@@ -1,32 +1,30 @@
 @import "tailwindcss";
 
 :root {
-  /* ── Dirección visual «La voz visible» ──────────────────────────────
-     Trece tokens. Un azul institucional, un ocre de acento, el amarillo
-     de marca reservado exclusivamente a la acción, y neutros con sesgo
-     cálido para que el blanco no enfríe una escuela de 3 a 5 años. */
+  /* ── Dirección visual: Celeste & Amarillo Escuelitas Ruth ───────────
+     Identidad institucional basada en los delantales y estructura física:
+     Celeste luminoso y confiable, Amarillo alegre de acción y neutros limpios. */
 
   /* Neutros */
-  --paper: #faf8f5; /* fondo de página */
+  --paper: #f8fafc; /* fondo de página limpio y fresco */
   --surface: #ffffff; /* bloques sobre el fondo */
-  --surface-sunk: #f2efe9; /* bloque hundido: sustituye a las cuatro superficies tintadas */
-  --ink: #131a2b; /* texto principal */
-  --muted: #55606f; /* texto secundario, único */
-  --border: #e5e0d8; /* filete de 1px, cálido */
+  --surface-sunk: #e0f2fe; /* bloque celeste suave para destacar secciones */
+  --ink: #0f172a; /* texto principal de alto contraste */
+  --muted: #475569; /* texto secundario */
+  --border: #bae6fd; /* filetes celestes suaves */
 
-  /* Azul institucional */
-  --primary: #0f2b80;
-  --primary-dark: #081748;
+  /* Celeste & Azul institucional (Delantales y estructura) */
+  --primary: #0284c7; /* Celeste institucional vivo */
+  --primary-dark: #075985; /* Azul celeste profundo para encabezados y alto contraste */
 
-  /* Ocre de acento: filetes de énfasis, iconos, contorno de voz */
-  --accent: #a04a07;
+  /* Acento celeste vibrante */
+  --accent: #0284c7;
 
-  /* Amarillo de marca: SOLO acción. Si aparece, se puede pulsar. */
-  --action: #f59e0b;
-  --action-hover: #fbbf24;
-  --action-ink: #081748;
-  /* Sobre azul el ocre no alcanza AA: el acento cálido es este ámbar claro. */
-  --accent-on-dark: #fbbf24;
+  /* Amarillo de marca: Acción, calidez y alegría */
+  --action: #facc15; /* Amarillo escolar alegre */
+  --action-hover: #eab308; /* Amarillo dorado al interactuar */
+  --action-ink: #0f172a; /* Texto oscuro para legibilidad total */
+  --accent-on-dark: #fde047; /* Amarillo luminoso sobre fondos celestes/oscuros */
 
   /* Semántico */
   --danger: #b91c1c;
@@ -56,36 +54,57 @@
   --font-display: var(--font-familjen);
 }
 
-/* ===== Base & Scroll Experience ===== */
+/* ===== Base & Smooth Scroll Experience (Lenis & Custom Scrollbar) ===== */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
 }
 
-/* Custom Styled Scrollbar */
+/* Barra de scroll moderna y suave */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: var(--paper);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #93c5fd; /* Celeste suave */
   border-radius: 9999px;
-  border: 2px solid #f1f5f9;
-  transition: background-color 0.2s ease;
+  border: 2px solid var(--paper);
+  transition: background-color 0.25s ease, transform 0.2s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
+  background: var(--primary); /* Celeste vivo al interactuar */
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: #cbd5e1 #f1f5f9;
+  scrollbar-color: #93c5fd var(--paper);
 }
 
 body {
@@ -307,7 +326,7 @@ h6 {
 /* ===== Pattern background utilities ===== */
 .dot-pattern {
   background-image: radial-gradient(
-    rgba(15, 43, 128, 0.15) 1px,
+    rgba(2, 132, 199, 0.15) 1px,
     transparent 1px
   );
   background-size: 24px 24px;

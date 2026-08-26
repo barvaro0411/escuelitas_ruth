@@ -76,7 +76,7 @@ export const seasonalThemeConfig = {
     {
       id: "fiestas-patrias",
       label: "Fiestas Patrias",
-      enabled: true,
+      enabled: false,
       start: { month: 8, day: 21 },
       end: { month: 9, day: 30 },
       priority: 100,

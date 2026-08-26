@@ -15,13 +15,13 @@ export default function Footer() {
             {/* Marca */}
             <div className="space-y-5">
               <Link href="/" className="flex items-center gap-3 group">
-                <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-xl border border-action bg-surface">
+                <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-2xl border-2 border-action bg-white shadow-sm">
                   <Image
                     src="/logo.jpg"
                     alt="Escuela de Lenguaje Ruth Logo"
                     fill
-                    sizes="40px"
-                    className="object-cover"
+                    sizes="48px"
+                    className="object-contain p-0.5"
                   />
                 </div>
                 <span className="text-xl font-extrabold text-white leading-tight tracking-tight font-display">

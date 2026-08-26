@@ -36,13 +36,13 @@ export default function ScrollToTop() {
       aria-label="Volver arriba"
       aria-hidden={!isVisible}
       tabIndex={isVisible ? 0 : -1}
-      className={`group fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] left-4 z-40 hidden h-11 w-11 items-center justify-center rounded-full border border-primary/20 bg-white/95 text-primary-dark shadow-md shadow-black/10 backdrop-blur-md transition-all duration-200 hover:bg-primary hover:text-white sm:bottom-6 sm:left-6 sm:flex sm:h-12 sm:w-12 ${
+      className={`group fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] left-4 z-40 flex h-11 w-11 items-center justify-center rounded-full border-2 border-primary/30 bg-white/95 text-primary shadow-lg shadow-primary/15 backdrop-blur-md transition-all duration-300 hover:scale-110 hover:border-action hover:bg-action hover:text-action-ink sm:bottom-6 sm:left-6 sm:h-12 sm:w-12 ${
         isVisible
           ? "opacity-100 translate-y-0 pointer-events-auto"
           : "opacity-0 translate-y-4 pointer-events-none"
       }`}
     >
-      <ArrowUp className="h-5 w-5 sm:h-6 sm:w-6 transition-transform group-hover:-translate-y-0.5" />
+      <ArrowUp className="h-5 w-5 transition-transform duration-200 group-hover:-translate-y-1 sm:h-6 sm:w-6" />
     </button>
   );
 }

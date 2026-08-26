@@ -5,6 +5,8 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import ScrollToTop from "@/components/ui/ScrollToTop";
+import SmoothScroll from "@/components/ui/SmoothScroll";
+import ScrollProgressBar from "@/components/ui/ScrollProgressBar";
 import { Toaster } from "sonner";
 import JsonLd from "@/components/seo/JsonLd";
 import { buildSchoolJsonLd, siteConfig } from "@/lib/site";
@@ -112,6 +114,8 @@ export default function RootLayout({
           Saltar al contenido principal
         </a>
         <Toaster position="top-center" richColors />
+        <SmoothScroll />
+        <ScrollProgressBar />
         <Header />
         <FiestasPatriasMode>
           <FiestasPatriasFallingDecorations />
