@@ -7,6 +7,7 @@ import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import ScrollProgressBar from "@/components/ui/ScrollProgressBar";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import { Toaster } from "sonner";
 import JsonLd from "@/components/seo/JsonLd";
 import { buildSchoolJsonLd, siteConfig } from "@/lib/site";
@@ -116,6 +117,7 @@ export default function RootLayout({
         <Toaster position="top-center" richColors />
         <SmoothScroll />
         <ScrollProgressBar />
+        <ScrollReveal />
         <Header />
         <FiestasPatriasMode>
           <FiestasPatriasFallingDecorations />
