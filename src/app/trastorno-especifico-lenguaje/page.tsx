@@ -207,8 +207,8 @@ export default function TrastornoEspecificoLenguajePage() {
           </div>
         </PageHero>
 
-        {/* ── STATS STRIP ── */}
-        <section className="py-12 bg-primary text-white border-b border-primary-dark/30">
+        {/* ── QUICK SUMMARY BAR ── */}
+        <section className="py-12 bg-primary-dark text-white border-b border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               {telFacts.map((fact) => (
@@ -221,7 +221,7 @@ export default function TrastornoEspecificoLenguajePage() {
                   >
                     {fact.value}
                   </span>
-                  <p className="font-semibold text-white/80 leading-snug text-sm">
+                  <p className="font-semibold text-white leading-snug text-sm">
                     {fact.label}
                   </p>
                 </div>
@@ -371,7 +371,7 @@ export default function TrastornoEspecificoLenguajePage() {
         </section>
 
         {/* ── WHAT DOES A LANGUAGE SCHOOL DO ── */}
-        <section className="py-24 bg-primary text-white">
+        <section className="py-24 bg-primary-dark text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
               <div>
@@ -382,7 +382,7 @@ export default function TrastornoEspecificoLenguajePage() {
                 <h2 className="font-extrabold text-white tracking-tight leading-[1.1] mb-5 text-3xl sm:text-4xl">
                   ¿Qué hace una escuela de lenguaje?
                 </h2>
-                <p className="text-lg text-white/80 leading-relaxed mb-6">
+                <p className="text-lg text-white/90 leading-relaxed mb-6">
                   Una escuela de lenguaje no es solo un jardín infantil. Es un
                   establecimiento especializado que combina educación parvularia
                   con intervención fonoaudiológica diaria, diseñado
@@ -432,7 +432,7 @@ export default function TrastornoEspecificoLenguajePage() {
                   <h3 className="font-extrabold text-white mb-3 leading-tight text-xl">
                     {feature.title}
                   </h3>
-                  <p className="text-white/80 leading-relaxed text-sm">
+                  <p className="text-white/90 leading-relaxed text-sm">
                     {feature.description}
                   </p>
                 </div>

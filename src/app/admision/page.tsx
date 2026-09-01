@@ -184,7 +184,7 @@ export default function AdmisionPage() {
                 </p>
               </div>
 
-              <div className="relative p-8 rounded-2xl bg-primary text-white hover:-translate-y-1 transition-transform">
+              <div className="relative p-8 rounded-2xl bg-primary-dark text-white hover:-translate-y-1 transition-transform">
                 <h3 className="font-extrabold mb-3 text-xl">
                   Costo de Matrícula
                 </h3>

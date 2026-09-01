@@ -14,11 +14,11 @@
   --border: #bae6fd; /* filetes celestes suaves */
 
   /* Celeste & Azul institucional (Delantales y estructura) */
-  --primary: #0284c7; /* Celeste institucional vivo */
+  --primary: #0369a1; /* Azul celeste institucional con contraste accesible WCAG AA */
   --primary-dark: #075985; /* Azul celeste profundo para encabezados y alto contraste */
 
-  /* Acento celeste vibrante */
-  --accent: #0284c7;
+  /* Acento institucional con contraste accesible WCAG AA */
+  --accent: #0369a1;
 
   /* Amarillo de marca: Acción, calidez y alegría */
   --action: #facc15; /* Amarillo escolar alegre */
