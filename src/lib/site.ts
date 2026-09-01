@@ -38,8 +38,8 @@ export const siteConfig = {
       number: "56996606714",
     },
     email: {
-      label: "escuelaruth@gmail.com",
-      href: "mailto:escuelaruth@gmail.com",
+      label: "ruthvillaloboschile@gmail.com",
+      href: "mailto:ruthvillaloboschile@gmail.com",
     },
     addresses: campuses.map((campus) => ({
       id: campus.id,
