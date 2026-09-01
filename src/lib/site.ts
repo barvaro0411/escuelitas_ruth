@@ -62,7 +62,7 @@ export const siteConfig = {
       "Lunes a viernes: mañana de 08:15 a 12:15 y tarde de 13:30 a 17:15 hrs.",
   },
   social: {
-    instagram: "https://www.instagram.com/escuelitas.ruth/",
+    instagram: "https://www.instagram.com/escuelitasruthoficial_/",
   },
   routes: [
     "/",
