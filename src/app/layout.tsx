@@ -27,7 +27,7 @@ const nunito = Nunito({
 });
 
 // Familjen Grotesk: gestos abiertos y una «a» de doble piso que da carácter
-// sin perder el registro institucional. Ver docs/direccion-visual.md.
+// sin perder el registro institucional.
 const familjenGrotesk = Familjen_Grotesk({
   variable: "--font-familjen",
   subsets: ["latin"],
