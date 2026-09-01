@@ -35,7 +35,7 @@ export default function SedesSelector() {
 
         <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-2">
           {campuses.map((campus) => {
-            const hasImage = campus.id === "vascongados";
+            const coverImage = campus.gallery[0];
             const whatsappUrl = createWhatsAppUrl({
               source: "campus",
               campusId: campus.id,
@@ -48,10 +48,10 @@ export default function SedesSelector() {
               >
                 <div>
                   {/* Banner superior con foto o cabecera institucional */}
-                  {hasImage ? (
+                  {coverImage ? (
                     <div className="relative h-52 w-full overflow-hidden bg-primary-dark">
                       <Image
-                        src="/vascongados-fachada.jpeg"
+                        src={coverImage.src}
                         alt={`Fachada de ${campus.name}`}
                         fill
                         sizes="(max-width: 768px) 100vw, 500px"
@@ -69,7 +69,7 @@ export default function SedesSelector() {
                       </div>
                       <div className="absolute bottom-4 left-4 right-4 text-white">
                         <p className="text-xs font-semibold uppercase tracking-wider text-accent-on-dark">
-                          Sede Principal
+                          {campus.id === "vascongados" ? "Sede Principal" : "Sede Conchalí"}
                         </p>
                         <h3 className="font-display text-2xl font-extrabold leading-tight text-white">
                           {campus.name}

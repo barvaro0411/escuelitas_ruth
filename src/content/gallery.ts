@@ -1,4 +1,4 @@
-import { vascongadosGallery } from "@/content/school-data";
+import { gambinoGallery, vascongadosGallery } from "@/content/school-data";
 
 export type GalleryCategory =
   | "Equipo"
@@ -29,5 +29,11 @@ export const galleryImages: GalleryImage[] = [
     id: `vascongados-instalacion-${index + 1}`,
     category: "Instalaciones" as const,
     campusId: "vascongados" as const,
+  })),
+  ...gambinoGallery.map((image, index) => ({
+    ...image,
+    id: `gambino-instalacion-${index + 1}`,
+    category: "Instalaciones" as const,
+    campusId: "gambino" as const,
   })),
 ];

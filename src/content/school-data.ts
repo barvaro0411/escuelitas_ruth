@@ -30,6 +30,34 @@ export const vascongadosGallery = [
   },
 ] as const satisfies readonly CampusGalleryImage[];
 
+export const gambinoGallery = [
+  {
+    src: "/gambino-fachada.jpeg",
+    alt: "Fachada principal de la Escuela General Gambino en Conchalí",
+    title: "Fachada principal",
+  },
+  {
+    src: "/gambino-acceso.jpeg",
+    alt: "Acceso y frontis de la sede General Gambino con información de matrículas",
+    title: "Acceso y frontis",
+  },
+  {
+    src: "/gambino-casa-de-juegos.jpeg",
+    alt: "Casa de juegos infantil y patio techado en la sede General Gambino",
+    title: "Casa de juegos",
+  },
+  {
+    src: "/gambino-patio-techado.jpeg",
+    alt: "Patio techado y pasillo de juegos en la sede General Gambino",
+    title: "Patio techado",
+  },
+  {
+    src: "/gambino-exterior.jpeg",
+    alt: "Vista frontal exterior de la sede General Gambino",
+    title: "Frontis exterior",
+  },
+] as const satisfies readonly CampusGalleryImage[];
+
 export const admissionCutoff = {
   year: 2027,
   isoDate: "2027-03-31",
@@ -117,7 +145,7 @@ export const campuses = [
     journeys: ["Mañana", "Tarde"],
     description:
       "Sede de Escuela de Lenguaje Ruth ubicada en Gral. Gambino 4613, Conchalí.",
-    gallery: [] as CampusGalleryImage[],
+    gallery: gambinoGallery,
     media: {
       videoUrl: null as string | null,
       virtualTourUrl: null as string | null,
