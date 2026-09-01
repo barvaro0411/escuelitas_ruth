@@ -39,7 +39,7 @@ export default function PrivacidadPage() {
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <div className="space-y-5 text-base leading-relaxed text-muted">
             <p>
-              <strong>Última actualización:</strong> 24 de agosto de 2026.
+              <strong>Última actualización:</strong> 1 de septiembre de 2026.
             </p>
             <p>
               Escuela de Lenguaje Ruth es responsable de la atención de las
@@ -74,6 +74,16 @@ export default function PrivacidadPage() {
               No es necesario compartir un diagnóstico ni informes médicos
               completos en el primer mensaje. Evita incluir datos sensibles que
               no sean necesarios para tu consulta.
+            </p>
+            <p>
+              <strong>Métricas de uso.</strong> El sitio utiliza Vercel Web
+              Analytics y Speed Insights para medir de forma agregada y sin
+              cookies el número de visitas, la página de origen, el país, el tipo
+              de dispositivo y los clics en los botones de contacto (WhatsApp,
+              correo y teléfono). No se registran nombres, direcciones IP
+              completas ni datos que identifiquen a una persona, y la información
+              no se cruza con otros sitios. Su finalidad es entender qué
+              contenidos ayudan a las familias y mejorar el proceso de admisión.
             </p>
             <p>
               Puedes solicitar información, acceso, corrección o eliminación de

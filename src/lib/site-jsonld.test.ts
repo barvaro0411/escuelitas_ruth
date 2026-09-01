@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   buildBreadcrumbsJsonLd,
+  buildContactMailtoUrl,
   buildContactWhatsAppMessage,
   buildFaqJsonLd,
   buildSchoolJsonLd,
@@ -170,5 +171,35 @@ describe("buildContactWhatsAppMessage", () => {
   it("usa nombre como respaldo de nombreApoderado", () => {
     const message = buildContactWhatsAppMessage({ nombre: "Pedro" });
     expect(message).toContain("Apoderado/a: Pedro");
+  });
+});
+
+describe("buildContactMailtoUrl", () => {
+  it("apunta al correo oficial con asunto y cuerpo codificados", () => {
+    const url = buildContactMailtoUrl({
+      nombreApoderado: "Ana",
+      telefono: "+56 9 1234 5678",
+    });
+
+    expect(url.startsWith(`${siteConfig.contact.email.href}?`)).toBe(true);
+    const query = new URLSearchParams(url.split("?")[1]);
+    expect(query.get("subject")).toBe(
+      `Consulta de matrícula ${siteConfig.admissionYear}`,
+    );
+    expect(query.get("body")).toContain("Apoderado/a: Ana");
+    expect(query.get("body")).toContain("Teléfono: +56 9 1234 5678");
+  });
+
+  it("sanea los campos igual que el mensaje de WhatsApp", () => {
+    const url = buildContactMailtoUrl({
+      nombreApoderado: "Ana\nfalso",
+      mensaje: "x".repeat(900),
+    });
+    const body = new URLSearchParams(url.split("?")[1]).get("body")!;
+    expect(body).toContain("Apoderado/a: Ana falso");
+    const mensajeLine = body
+      .split("\n")
+      .find((line) => line.startsWith("Mensaje:"))!;
+    expect(mensajeLine.length).toBeLessThanOrEqual("Mensaje: ".length + 500);
   });
 });

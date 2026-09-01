@@ -9,6 +9,9 @@ import SmoothScroll from "@/components/ui/SmoothScroll";
 import ScrollProgressBar from "@/components/ui/ScrollProgressBar";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { Toaster } from "sonner";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import AnalyticsTracker from "@/components/analytics/AnalyticsTracker";
 import JsonLd from "@/components/seo/JsonLd";
 import { buildSchoolJsonLd, siteConfig } from "@/lib/site";
 import { getSeasonalThemeBootstrapScript } from "@/lib/seasonal-theme";
@@ -129,6 +132,9 @@ export default function RootLayout({
         <Footer />
         <ScrollToTop />
         <WhatsAppButton />
+        <AnalyticsTracker />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

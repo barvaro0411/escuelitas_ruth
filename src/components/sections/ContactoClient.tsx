@@ -2,11 +2,13 @@
 
 import { useEffect, Suspense } from "react";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { Clock, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
 import { toast } from "sonner";
+import { track } from "@vercel/analytics";
 import { useSearchParams } from "next/navigation";
 import {
+  buildContactMailtoUrl,
   buildContactWhatsAppMessage,
   buildWhatsAppUrl,
   createWhatsAppUrl,
@@ -84,8 +86,20 @@ function ContactoForm() {
     handleSubmit,
     formState: { errors },
     setValue,
+    control,
   } = useForm<FormData>({
     defaultValues: { consent: false },
+  });
+
+  const values = useWatch({ control });
+  const mailtoUrl = buildContactMailtoUrl({
+    nombreApoderado: values.nombreApoderado,
+    telefono: values.telefono,
+    fechaNacimiento: values.fechaNacimiento,
+    comuna: values.comuna,
+    sede: values.sede,
+    jornada: values.jornada,
+    mensaje: values.mensaje,
   });
 
   useEffect(() => {
@@ -112,10 +126,12 @@ function ContactoForm() {
     if (!whatsappWindow) {
       toast.error("No pudimos abrir WhatsApp", {
         description:
-          "Permite ventanas emergentes o usa el botón de WhatsApp directo.",
+          "Permite ventanas emergentes o escribe a nuestro correo con el botón de abajo.",
       });
       return;
     }
+
+    track("contact_form_submit", { channel: "whatsapp" });
 
     toast.success("WhatsApp está listo para tu consulta", {
       description: "Revisa el mensaje y decide si quieres enviarlo.",
@@ -451,6 +467,18 @@ function ContactoForm() {
                 <Send className="h-5 w-5" aria-hidden="true" />
                 Abrir WhatsApp con mi consulta
               </button>
+
+              <p className="text-center text-sm text-muted">
+                ¿No usas WhatsApp?{" "}
+                <a
+                  href={mailtoUrl}
+                  onClick={() => track("contact_form_submit", { channel: "email" })}
+                  className="font-extrabold text-primary underline underline-offset-2 hover:text-primary-dark"
+                >
+                  Envíanos estos datos por correo
+                </a>
+                . Se abrirá tu aplicación de email con el mensaje redactado.
+              </p>
             </form>
 
             <div className="mt-7 border-t border-border pt-6 text-center">
