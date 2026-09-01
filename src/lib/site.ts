@@ -67,8 +67,6 @@ export const siteConfig = {
   routes: [
     "/",
     "/matriculas-2027-conchali",
-    "/matriculas-2027-huechuraba",
-    "/matriculas-2027-renca",
     "/matriculas-2027-santiago-norte",
     "/trastorno-especifico-lenguaje",
     "/admision",
@@ -205,6 +203,18 @@ export function buildContactWhatsAppMessage(data: ContactMessageData) {
   ];
 
   return parts.filter(Boolean).join("\n");
+}
+
+export function buildContactMailtoUrl(data: ContactMessageData) {
+  // Alternativa para quien no usa WhatsApp: abre el cliente de correo con el
+  // asunto y el cuerpo ya redactados a partir del formulario. Reutiliza el
+  // mismo saneo de campos que el mensaje de WhatsApp.
+  const subject = `Consulta de matrícula ${siteConfig.admissionYear}`;
+  const body = buildContactWhatsAppMessage(data);
+
+  return `${siteConfig.contact.email.href}?subject=${encodeURIComponent(
+    subject,
+  )}&body=${encodeURIComponent(body)}`;
 }
 
 function cleanContactField(value: string | undefined, maxLength: number) {

@@ -11,8 +11,6 @@ const routes = [
   "/familias/cuando-consultar-fonoaudiologo",
   "/familias/conciencia-fonologica-en-casa",
   "/matriculas-2027-conchali",
-  "/matriculas-2027-huechuraba",
-  "/matriculas-2027-renca",
   "/matriculas-2027-santiago-norte",
   "/nosotros",
   "/preguntas-frecuentes",
@@ -35,6 +33,21 @@ test("todas las rutas públicas responden y tienen estructura semántica", async
     await expect(page.locator("h1"), route).toHaveCount(1);
     await expect(page).toHaveTitle(
       /Escuela|Escuelitas|TEL|Familias|Términos|Privacidad/i,
+    );
+  }
+});
+
+test("las páginas de comuna consolidadas redirigen a Santiago Norte", async ({
+  page,
+}) => {
+  for (const legacy of [
+    "/matriculas-2027-renca",
+    "/matriculas-2027-huechuraba",
+  ]) {
+    const response = await page.goto(legacy);
+    expect(response?.status(), legacy).toBe(200);
+    expect(new URL(page.url()).pathname, legacy).toBe(
+      "/matriculas-2027-santiago-norte",
     );
   }
 });

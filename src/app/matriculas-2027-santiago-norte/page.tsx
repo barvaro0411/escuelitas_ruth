@@ -76,13 +76,37 @@ const steps = [
   "Confirmamos documentos y matrícula.",
 ];
 
-const sectors = [
-  "Conchalí",
-  "Huechuraba",
-  "Renca",
-  "Independencia",
-  "Recoleta",
-  "Quilicura",
+const comunas = [
+  {
+    name: "Conchalí",
+    detail:
+      "Ambas sedes están en Conchalí: Vascongados 4314 y Gral. Gambino 4613. Cercanas a Av. Independencia, Dorsal y El Cortijo, con recorridos y colectivos por El Guanaco y Zapadores.",
+  },
+  {
+    name: "Huechuraba",
+    detail:
+      "Familias de La Pincoya, El Barrero y Pedro Fontova llegan por Av. Recoleta o El Salto y por Américo Vespucio Norte. El trayecto habitual a la sede es de 10 a 20 minutos.",
+  },
+  {
+    name: "Recoleta",
+    detail:
+      "Recoleta limita con Conchalí por Av. Recoleta y El Salto. Desde los sectores altos y Einstein el acceso es directo, sin cambios de eje.",
+  },
+  {
+    name: "Independencia",
+    detail:
+      "Desde Independencia se llega por Av. Independencia y Fermín Vivaceta, continuando hacia Dorsal. Es una de las zonas con conexión más corta a la sede Vascongados.",
+  },
+  {
+    name: "Renca",
+    detail:
+      "Las familias de Renca cruzan por Dorsal o por el puente sobre el Mapocho hacia El Salto e Independencia. Conviene coordinar la jornada (mañana o tarde) según el horario de transporte.",
+  },
+  {
+    name: "Quilicura",
+    detail:
+      "Desde Quilicura el acceso es por Américo Vespucio Norte y Manuel Antonio Matta. Recomendamos agendar la evaluación fonoaudiológica y la visita a la escuela el mismo día para un solo viaje.",
+  },
 ];
 
 export default function MatriculasSantiagoNortePage() {
@@ -173,30 +197,39 @@ export default function MatriculasSantiagoNortePage() {
           </div>
         </section>
 
-        <section className="py-16 bg-surface-sunk border-b border-border">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <span className="inline-block px-4 py-2 rounded-full bg-primary text-white font-semibold uppercase tracking-widest text-xs mb-5">
-              Cobertura norte de Santiago
-            </span>
-            <h2 className="font-extrabold text-ink tracking-tight mb-6 text-3xl sm:text-4xl">
-              Atendemos familias de toda la zona norte.
-            </h2>
-            <p className="text-lg text-muted font-semibold max-w-2xl mx-auto mb-8">
-              Nuestra ubicación en Conchalí nos permite atender a familias de
-              múltiples comunas del norte de Santiago con fácil acceso en
-              transporte público.
-            </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              {sectors.map((sector) => (
-                <span
-                  key={sector}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-surface border border-border text-ink font-extrabold text-sm"
+        <section className="py-20 bg-surface-sunk border-b border-border">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-2xl mb-10">
+              <span className="inline-block px-4 py-2 rounded-full bg-primary text-white font-semibold uppercase tracking-widest text-xs mb-5">
+                Cobertura norte de Santiago
+              </span>
+              <h2 className="font-extrabold text-ink tracking-tight mb-4 text-3xl sm:text-4xl">
+                Cómo llegar desde cada comuna
+              </h2>
+              <p className="text-lg text-muted font-semibold">
+                Las dos sedes están en Conchalí. Estas son las rutas y los
+                tiempos habituales de las familias que ya asisten desde otras
+                comunas del norte de Santiago.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {comunas.map((comuna) => (
+                <div
+                  key={comuna.name}
+                  className="rounded-2xl border border-border bg-surface p-6"
                 >
-                  <MapPin className="h-4 w-4 text-primary" />
-                  {sector}
-                </span>
+                  <h3 className="flex items-center gap-2 font-extrabold text-ink text-xl mb-2">
+                    <MapPin className="h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
+                    {comuna.name}
+                  </h3>
+                  <p className="text-muted leading-relaxed">{comuna.detail}</p>
+                </div>
               ))}
             </div>
+            <p className="mt-8 text-sm text-muted">
+              ¿Vienes de otra comuna del sector norte? Escríbenos por WhatsApp y
+              te indicamos la ruta y la jornada que mejor te acomoda.
+            </p>
           </div>
         </section>
 

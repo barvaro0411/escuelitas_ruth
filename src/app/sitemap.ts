@@ -8,8 +8,6 @@ const priorities: Record<string, number> = {
   "/admision": 0.9,
   "/contacto": 0.9,
   "/trastorno-especifico-lenguaje": 0.9,
-  "/matriculas-2027-huechuraba": 0.9,
-  "/matriculas-2027-renca": 0.9,
   "/matriculas-2027-santiago-norte": 0.9,
   "/programa-educativo": 0.85,
   "/nosotros": 0.8,

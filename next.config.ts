@@ -5,10 +5,15 @@ import type { NextConfig } from "next";
 // conviene migrar a nonces por respuesta y retirar 'unsafe-inline' de script-src.
 const isDevelopment = process.env.NODE_ENV === "development";
 
+// Vercel Web Analytics y Speed Insights se sirven como proxy desde el propio
+// dominio (`/_vercel/*`, cubierto por 'self'); `va.vercel-scripts.com` es el
+// host de respaldo que usan el script y el beacon fuera de ese proxy.
+const vercelAnalyticsHost = "https://va.vercel-scripts.com";
+
 const contentSecurityPolicy = [
   "default-src 'self'",
   "base-uri 'self'",
-  "connect-src 'self'",
+  `connect-src 'self' ${vercelAnalyticsHost}`,
   "font-src 'self' data:",
   "form-action 'self'",
   "frame-ancestors 'none'",
@@ -17,7 +22,7 @@ const contentSecurityPolicy = [
   "manifest-src 'self'",
   "media-src 'self'",
   "object-src 'none'",
-  `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ""}`,
+  `script-src 'self' 'unsafe-inline' ${vercelAnalyticsHost}${isDevelopment ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
   "worker-src 'self' blob:",
   "upgrade-insecure-requests",
@@ -32,6 +37,24 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/webp", "image/avif"],
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 días
+  },
+  async redirects() {
+    // Las páginas por comuna cercana se consolidaron en `santiago-norte`,
+    // que ahora describe cada comuna con contenido propio. 308 permanente:
+    // el sitio aún no está indexado, pero deja el patrón correcto por si
+    // alguien compartió el enlace antes del lanzamiento.
+    return [
+      {
+        source: "/matriculas-2027-renca",
+        destination: "/matriculas-2027-santiago-norte",
+        permanent: true,
+      },
+      {
+        source: "/matriculas-2027-huechuraba",
+        destination: "/matriculas-2027-santiago-norte",
+        permanent: true,
+      },
+    ];
   },
   async headers() {
     return [
