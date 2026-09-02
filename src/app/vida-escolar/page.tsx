@@ -6,6 +6,7 @@ import {
   CalendarDays,
   Camera,
   Images,
+  Instagram,
   Sparkles,
 } from "lucide-react";
 import CTASection from "@/components/sections/CTASection";
@@ -15,7 +16,7 @@ import WeeklyUpdates from "@/components/sections/WeeklyUpdates";
 import JsonLd from "@/components/seo/JsonLd";
 import { galleryImages } from "@/content/gallery";
 import { schoolLifeEvents } from "@/content/school-life";
-import { buildBreadcrumbsJsonLd } from "@/lib/site";
+import { buildBreadcrumbsJsonLd, siteConfig } from "@/lib/site";
 
 function formatSchoolDate(date: string) {
   return new Intl.DateTimeFormat("es-CL", {
@@ -175,13 +176,25 @@ export default function VidaEscolarPage() {
           <div className="mt-8">
             <PhotoGallery images={galleryImages} />
           </div>
-          <Link
-            href="/contacto"
-            className="mt-8 inline-flex min-h-12 items-center gap-2 rounded-xl border border-primary/25 bg-surface px-5 py-3 text-sm font-extrabold text-primary hover:border-primary"
-          >
-            Consultar por actividades o visitas{" "}
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
+          <div className="mt-8 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+            <Link
+              href="/contacto"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-primary/25 bg-surface px-5 py-3 text-sm font-extrabold text-primary hover:border-primary transition-colors cursor-pointer"
+            >
+              <span>Consultar por actividades o visitas</span>
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+            <a
+              href={siteConfig.social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Ver más fotos y actividades en Instagram"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-pink-200 bg-pink-50 px-5 py-3 text-sm font-extrabold text-pink-700 hover:bg-pink-100 transition-colors cursor-pointer"
+            >
+              <Instagram className="h-4 w-4 text-pink-600 shrink-0" aria-hidden="true" />
+              <span>Ver más fotos en @escuelitasruthoficial_</span>
+            </a>
+          </div>
         </div>
       </section>
 

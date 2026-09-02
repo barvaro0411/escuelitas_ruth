@@ -157,6 +157,18 @@ export default function Footer() {
                     {siteConfig.contact.email.label}
                   </a>
                 </li>
+                <li className="flex items-center gap-3">
+                  <Instagram size={16} className="shrink-0 text-accent-on-dark" />
+                  <a
+                    href={siteConfig.social.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram oficial @escuelitasruthoficial_"
+                    className="text-sm text-white/80 hover:text-pink-400 transition-colors font-semibold"
+                  >
+                    @escuelitasruthoficial_
+                  </a>
+                </li>
               </ul>
             </div>
           </div>

@@ -129,11 +129,26 @@ export default function Header() {
             })}
 
             <a
+              href={siteConfig.social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram oficial de Escuelitas Ruth"
+              title="Visitar Instagram oficial @escuelitasruthoficial_"
+              className={`ml-2 inline-flex h-11 w-11 items-center justify-center rounded-xl border transition-all hover:scale-105 active:scale-95 cursor-pointer ${
+                isSolid
+                  ? "border-border bg-surface text-pink-600 hover:border-pink-500 hover:bg-pink-50"
+                  : "border-white/30 bg-white/10 text-white hover:border-pink-400 hover:bg-white/20"
+              }`}
+            >
+              <Instagram size={19} aria-hidden="true" />
+            </a>
+
+            <a
               href={headerWhatsAppUrl}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Abrir WhatsApp para consultar disponibilidad 2027"
-              className="ml-4 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-action bg-action px-4 py-2.5 text-sm font-extrabold text-primary-dark transition-all hover:bg-action-hover btn-action-glow cursor-pointer"
+              className="ml-2 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-action bg-action px-4 py-2.5 text-sm font-extrabold text-primary-dark transition-all hover:bg-action-hover btn-action-glow cursor-pointer"
             >
               <MessageCircle size={17} aria-hidden="true" />
               Consultar disponibilidad
