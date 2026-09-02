@@ -179,8 +179,8 @@ export default function Header() {
         inert={!mobileMenuOpen}
         className={`max-h-[calc(100dvh-5rem)] overflow-y-auto border-b border-border bg-surface transition-[max-height,opacity] duration-200 xl:hidden ${
           mobileMenuOpen
-            ? "max-h-[520px] opacity-100"
-            : "pointer-events-none max-h-0 opacity-0"
+            ? "max-h-[520px] opacity-100 block"
+            : "pointer-events-none max-h-0 opacity-0 hidden"
         }`}
       >
         <div className="mx-auto max-w-7xl space-y-1.5 px-4 pb-6 pt-4">

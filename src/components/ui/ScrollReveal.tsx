@@ -9,6 +9,7 @@ export default function ScrollReveal() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    // Inmediatamente revelar todo si el usuario prefiere movimiento reducido
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       document.querySelectorAll(".reveal-on-scroll").forEach((el) => {
         el.classList.add("is-revealed");
@@ -30,24 +31,14 @@ export default function ScrollReveal() {
 
     const observer = new IntersectionObserver(observerCallback, {
       root: null,
-      rootMargin: "0px 0px -50px 0px",
-      threshold: 0.08,
+      rootMargin: "0px 0px 50px 0px",
+      threshold: 0.01,
     });
 
-    // Seleccionar secciones y tarjetas para el efecto de entrada suave
-    const elements = document.querySelectorAll(
-      ".reveal-on-scroll, section:not(.hero-section) > div",
-    );
+    const elements = document.querySelectorAll(".reveal-on-scroll");
 
     elements.forEach((el) => {
-      if (
-        !el.closest("header") &&
-        !el.closest("footer") &&
-        !el.closest(".fiestas-hero")
-      ) {
-        el.classList.add("reveal-on-scroll");
-        observer.observe(el);
-      }
+      observer.observe(el);
     });
 
     return () => {
