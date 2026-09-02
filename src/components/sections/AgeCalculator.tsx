@@ -4,6 +4,7 @@ import { useState, type ComponentType, type FormEvent } from "react";
 import Link from "next/link";
 import {
   AlertCircle,
+  ArrowRight,
   Baby,
   Calendar,
   CheckCircle2,
@@ -203,10 +204,10 @@ export default function AgeCalculator() {
     setHasCalculated(false);
   };
 
-  const selectClass = `block w-full min-w-0 cursor-pointer rounded-xl border-2 bg-surface-sunk px-3 py-3 text-sm font-semibold text-ink outline-none transition-colors focus:bg-surface focus:ring-4 ${
+  const selectClass = `block w-full min-w-0 cursor-pointer rounded-xl border-2 bg-surface-sunk px-3 py-3 text-sm font-semibold text-ink outline-none transition-all duration-200 focus:bg-surface focus:ring-4 ${
     hasDateError
-      ? "border-red-500 focus:border-red-600 focus:ring-red-500/10"
-      : "border-border/70 focus:border-primary focus:ring-primary/10"
+      ? "border-red-500 focus:border-red-600 focus:ring-red-500/15"
+      : "border-border/80 focus:border-primary focus:ring-primary/20 hover:border-primary/40"
   }`;
 
   const formattedDate = birthdate
@@ -384,7 +385,7 @@ export default function AgeCalculator() {
             <div className="mt-5 flex gap-2">
               <button
                 type="submit"
-                className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-extrabold text-white transition-all hover:bg-primary-dark active:scale-[0.98] shadow-xs cursor-pointer"
+                className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-extrabold text-white transition-all hover:bg-primary-dark active:scale-[0.98] btn-primary-glow cursor-pointer"
               >
                 <Calendar className="h-4 w-4" aria-hidden="true" />
                 Calcular nivel para 2027
@@ -610,7 +611,7 @@ export default function AgeCalculator() {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-action px-5 py-4 text-sm sm:text-base font-extrabold text-primary-dark transition-all hover:bg-action-hover active:scale-[0.98] shadow-md shadow-amber-500/10 text-center"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-action px-5 py-4 text-sm sm:text-base font-extrabold text-primary-dark transition-all hover:bg-action-hover active:scale-[0.98] btn-action-glow text-center cursor-pointer"
                 >
                   <MessageCircle className="h-5 w-5 shrink-0" />
                   <span>
@@ -622,9 +623,10 @@ export default function AgeCalculator() {
                 {result.status === "eligible" && (
                   <Link
                     href="/sedes"
-                    className="mt-3 flex min-h-11 w-full items-center justify-center text-center text-xs font-bold text-primary hover:text-primary-dark sm:text-sm"
+                    className="group mt-3 flex min-h-11 w-full items-center justify-center gap-1.5 text-center text-xs font-bold text-primary hover:text-primary-dark sm:text-sm"
                   >
-                    Conocer fotos, direcciones y horarios de las sedes →
+                    <span>Conocer fotos, direcciones y horarios de las sedes</span>
+                    <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
                   </Link>
                 )}
               </div>

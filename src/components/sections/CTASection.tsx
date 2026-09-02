@@ -30,26 +30,26 @@ export default function CTASection() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Abrir WhatsApp para consultar disponibilidad 2027"
-              className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl bg-action px-7 py-4 text-base font-extrabold text-primary-dark transition-colors hover:bg-action-hover focus-visible:ring-4 focus-visible:ring-white"
+              className="group inline-flex min-h-14 items-center justify-center gap-2 rounded-xl bg-action px-7 py-4 text-base font-extrabold text-primary-dark transition-all hover:bg-action-hover focus-visible:ring-4 focus-visible:ring-white btn-action-glow cursor-pointer"
             >
-              <MessageCircle className="h-5 w-5" aria-hidden="true" />
-              Consultar disponibilidad
+              <MessageCircle className="h-5 w-5 transition-transform duration-200 group-hover:scale-110" aria-hidden="true" />
+              <span>Consultar disponibilidad</span>
             </a>
             <a
               href={siteConfig.contact.phone.href}
-              className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl border border-white/40 px-6 py-4 text-base font-semibold text-white transition-colors hover:bg-white/10 focus-visible:ring-4 focus-visible:ring-white"
+              className="group inline-flex min-h-14 items-center justify-center gap-2 rounded-xl border border-white/40 bg-white/5 px-6 py-4 text-base font-semibold text-white transition-all hover:bg-white/15 hover:-translate-y-0.5 active:scale-[0.98] focus-visible:ring-4 focus-visible:ring-white cursor-pointer"
             >
-              <PhoneCall className="h-5 w-5" aria-hidden="true" />
-              {siteConfig.contact.phone.label}
+              <PhoneCall className="h-5 w-5 transition-transform duration-200 group-hover:scale-110" aria-hidden="true" />
+              <span>{siteConfig.contact.phone.label}</span>
             </a>
           </div>
 
           <Link
             href="/admision"
-            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white/80 hover:text-white"
+            className="group mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white/80 hover:text-white transition-colors"
           >
-            Revisar requisitos de admisión
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            <span>Revisar requisitos de admisión</span>
+            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
           </Link>
         </div>
       </div>

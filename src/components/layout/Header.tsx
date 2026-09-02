@@ -113,12 +113,14 @@ export default function Header() {
                   key={item.name}
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`border-b-2 px-3 py-2 text-sm font-semibold transition-colors ${
+                  className={`relative px-3.5 py-2 text-sm font-semibold transition-colors duration-200 after:absolute after:bottom-0 after:left-3.5 after:right-3.5 after:h-0.5 after:bg-action after:transition-transform after:duration-250 ${
                     active
-                      ? "border-action text-primary"
+                      ? isSolid
+                        ? "text-primary after:scale-x-100"
+                        : "text-white after:scale-x-100"
                       : isSolid
-                        ? "border-transparent text-muted hover:border-action/60 hover:text-primary"
-                        : "border-transparent text-white/80 hover:border-action/60 hover:text-white"
+                        ? "text-muted after:scale-x-0 hover:text-primary hover:after:scale-x-100"
+                        : "text-white/80 after:scale-x-0 hover:text-white hover:after:scale-x-100"
                   }`}
                 >
                   {item.name}
@@ -131,7 +133,7 @@ export default function Header() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Abrir WhatsApp para consultar disponibilidad 2027"
-              className="ml-4 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-action bg-action px-4 py-2.5 text-sm font-extrabold text-primary-dark transition-colors hover:bg-action-hover"
+              className="ml-4 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-action bg-action px-4 py-2.5 text-sm font-extrabold text-primary-dark transition-all hover:bg-action-hover btn-action-glow cursor-pointer"
             >
               <MessageCircle size={17} aria-hidden="true" />
               Consultar disponibilidad

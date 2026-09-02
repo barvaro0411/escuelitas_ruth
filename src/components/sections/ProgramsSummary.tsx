@@ -98,12 +98,12 @@ export default function ProgramsSummary() {
             return (
               <article
                 key={program.title}
-                className={`flex flex-col justify-between rounded-2xl border border-border bg-surface p-6 sm:p-7 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-primary/40 ${program.borderTop}`}
+                className={`group flex flex-col justify-between rounded-2xl border border-border bg-surface p-6 sm:p-7 shadow-xs card-interactive ${program.borderTop}`}
               >
                 <div>
                   {/* Top Bar: Icono + Categoría */}
                   <div className="flex items-start justify-between gap-3 mb-5">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary shadow-xs">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary shadow-xs transition-transform duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-white">
                       <program.icon className="h-6 w-6" aria-hidden="true" />
                     </div>
                     <span
@@ -151,7 +151,7 @@ export default function ProgramsSummary() {
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-action px-4 py-3 text-xs sm:text-sm font-extrabold text-primary-dark transition-all hover:bg-action-hover active:scale-[0.98] shadow-xs text-center"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-action px-4 py-3 text-xs sm:text-sm font-extrabold text-primary-dark transition-all hover:bg-action-hover active:scale-[0.98] btn-action-glow text-center cursor-pointer"
                   >
                     <MessageCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
                     <span>Consultar cupos {program.title}</span>
@@ -159,10 +159,10 @@ export default function ProgramsSummary() {
 
                   <Link
                     href="/programa-educativo"
-                    className="inline-flex w-full items-center justify-center gap-1.5 text-xs font-bold text-primary hover:text-primary-dark transition-colors py-1"
+                    className="group/link inline-flex w-full items-center justify-center gap-1.5 text-xs font-bold text-primary hover:text-primary-dark transition-colors py-1"
                   >
                     <span>Conocer este nivel en detalle</span>
-                    <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover/link:translate-x-1" aria-hidden="true" />
                   </Link>
                 </div>
               </article>

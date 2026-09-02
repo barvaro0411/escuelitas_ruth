@@ -44,7 +44,7 @@ export default function SedesSelector() {
             return (
               <article
                 key={campus.rbd}
-                className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-surface shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl"
+                className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-surface shadow-xs card-interactive"
               >
                 <div>
                   {/* Banner superior con foto o cabecera institucional */}
@@ -176,7 +176,7 @@ export default function SedesSelector() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Abrir WhatsApp para consultar cupos en ${campus.name}`}
-                    className="flex w-full min-h-12 items-center justify-center gap-2 rounded-xl bg-action px-4 py-3 text-sm font-extrabold text-primary-dark transition-all hover:bg-action-hover active:scale-[0.98] shadow-xs text-center"
+                    className="flex w-full min-h-12 items-center justify-center gap-2 rounded-xl bg-action px-4 py-3 text-sm font-extrabold text-primary-dark transition-all hover:bg-action-hover active:scale-[0.98] btn-action-glow text-center cursor-pointer"
                   >
                     <MessageCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
                     <span>Consultar cupos en {campus.shortName}</span>
@@ -186,19 +186,19 @@ export default function SedesSelector() {
                     <Link
                       href={`/sedes#${campus.id}`}
                       aria-label={`Conocer información completa de ${campus.name}`}
-                      className="flex-1 inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-3 py-2 text-xs font-bold text-ink transition-colors hover:border-primary hover:text-primary text-center"
+                      className="group/link flex-1 inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-3 py-2 text-xs font-bold text-ink transition-colors hover:border-primary hover:text-primary text-center"
                     >
                       <span>Ver detalles y fotos</span>
-                      <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                      <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover/link:translate-x-1" aria-hidden="true" />
                     </Link>
 
                     <a
                       href={campus.mapHref}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-3 py-2 text-xs font-bold text-muted transition-colors hover:border-primary hover:text-primary text-center"
+                      className="group/map inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-3 py-2 text-xs font-bold text-muted transition-colors hover:border-primary hover:text-primary text-center"
                     >
-                      <MapPin className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
+                      <MapPin className="h-3.5 w-3.5 text-primary transition-transform duration-200 group-hover/map:scale-110" aria-hidden="true" />
                       <span>Cómo llegar</span>
                       <ExternalLink className="h-3 w-3 text-muted/70" aria-hidden="true" />
                     </a>
