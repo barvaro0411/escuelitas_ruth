@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { CheckCircle2, MapPin, MessageCircle, Share2 } from "lucide-react";
+import { CheckCircle2, MapPin, MessageCircle } from "lucide-react";
 import { buildWhatsAppUrl, siteConfig } from "@/lib/site";
+import ShareActions from "@/app/compartir/ShareActions";
 
 export const metadata: Metadata = {
   title: "Comparte las matrículas 2027",
@@ -46,7 +47,7 @@ export default function CompartirPage() {
       <div className="w-full max-w-sm mx-auto flex flex-col items-center text-center gap-7">
         {/* Logo / Brand mark */}
         <div className="flex flex-col items-center gap-3">
-          <div className="w-20 h-20 rounded-2xl bg-accent flex items-center justify-center ring-4 ring-white/10">
+          <div className="w-20 h-20 rounded-2xl bg-action flex items-center justify-center ring-4 ring-white/10">
             <span className="text-primary-dark font-extrabold text-3xl leading-none select-none">
               R
             </span>
@@ -85,11 +86,14 @@ export default function CompartirPage() {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full inline-flex items-center justify-center gap-3 px-6 py-5 rounded-2xl bg-accent text-white font-extrabold text-xl hover:scale-[1.03] active:scale-95 transition-transform"
+          className="w-full inline-flex items-center justify-center gap-3 px-6 py-5 rounded-2xl bg-action text-primary-dark font-extrabold text-xl hover:scale-[1.03] active:scale-95 transition-transform"
         >
           <MessageCircle className="h-6 w-6 shrink-0" />
           Consultar cupo ahora
         </a>
+
+        {/* Share actions */}
+        <ShareActions />
 
         {/* Divider */}
         <div className="w-full h-px bg-white/10" />
@@ -99,14 +103,6 @@ export default function CompartirPage() {
           <MapPin className="h-4 w-4 text-accent-on-dark shrink-0" />
           <span>
             2 sedes en Conchalí: Vascongados 4314 · Gral. Gambino 4613
-          </span>
-        </div>
-
-        {/* Share note */}
-        <div className="flex items-start gap-2.5 px-5 py-4 rounded-2xl bg-white/8 border border-white/10 text-white/60 text-sm leading-relaxed text-left">
-          <Share2 className="h-4 w-4 shrink-0 mt-0.5 text-accent-on-dark/70" />
-          <span>
-            Comparte este link con otras familias que puedan necesitarlo.
           </span>
         </div>
       </div>
