@@ -3,7 +3,7 @@
 import { useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useForm, useWatch } from "react-hook-form";
-import { Clock, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
+import { Clock, Instagram, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
 import { toast } from "sonner";
 import { track } from "@vercel/analytics";
 import { useSearchParams } from "next/navigation";
@@ -207,6 +207,16 @@ function ContactoForm() {
                 >
                   <Mail className="h-5 w-5 text-primary" aria-hidden="true" />
                   {siteConfig.contact.email.label}
+                </a>
+                <a
+                  href={siteConfig.social.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram oficial de Escuelitas Ruth"
+                  className="flex items-center gap-3 hover:text-pink-600 transition-colors"
+                >
+                  <Instagram className="h-5 w-5 text-pink-600" aria-hidden="true" />
+                  <span>Instagram: @escuelitasruthoficial_</span>
                 </a>
                 <p className="flex items-start gap-3">
                   <Clock

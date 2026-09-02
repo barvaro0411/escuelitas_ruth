@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, MessageCircle, X } from "lucide-react";
-import { createWhatsAppUrl } from "@/lib/site";
+import { Instagram, Menu, MessageCircle, X } from "lucide-react";
+import { createWhatsAppUrl, siteConfig } from "@/lib/site";
 import FiestasPatriasBanner from "@/components/seasonal/FiestasPatriasBanner";
 import FiestasPatriasMode from "@/components/seasonal/FiestasPatriasMode";
 
@@ -207,6 +207,18 @@ export default function Header() {
           >
             <MessageCircle size={20} aria-hidden="true" />
             Consultar disponibilidad por WhatsApp
+          </a>
+
+          <a
+            href={siteConfig.social.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Instagram de Escuelitas Ruth"
+            className="mt-2 flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface-sunk px-4 py-2.5 text-xs font-bold text-muted hover:border-pink-400 hover:text-pink-600 transition-colors"
+          >
+            <Instagram size={16} className="text-pink-600" />
+            <span>Síguenos en Instagram @escuelitasruthoficial_</span>
           </a>
         </div>
       </div>
