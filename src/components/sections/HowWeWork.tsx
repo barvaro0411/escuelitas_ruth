@@ -52,36 +52,38 @@ export default function HowWeWork() {
           </p>
         </div>
 
-        <ol className="mt-10 grid gap-4 md:grid-cols-3">
+        <ol className="mt-10 grid gap-5 md:grid-cols-3">
           {steps.map((step, index) => (
             <li
               key={step.title}
-              className="rounded-2xl border border-border bg-surface p-6"
+              className="group flex flex-col justify-between rounded-2xl border border-border bg-surface p-6 shadow-xs card-interactive"
             >
-              <div className="flex items-center gap-3">
-                <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary text-white">
-                  <step.icon className="h-5 w-5" aria-hidden="true" />
-                  <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-action text-[11px] font-extrabold text-primary-dark">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-all duration-300 group-hover:scale-105 group-hover:bg-primary group-hover:text-white shadow-2xs">
+                    <step.icon className="h-6 w-6" aria-hidden="true" />
+                  </div>
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-action font-display text-xs font-extrabold text-primary-dark shadow-2xs">
                     {index + 1}
                   </span>
                 </div>
-                <h3 className="font-display font-extrabold leading-tight text-ink text-base">
+                <h3 className="font-display font-extrabold leading-snug text-ink text-lg">
                   {step.title}
                 </h3>
+                <p className="mt-2.5 text-sm leading-relaxed text-muted">
+                  {step.description}
+                </p>
               </div>
-              <p className="mt-3 text-sm leading-relaxed text-muted">
-                {step.description}
-              </p>
             </li>
           ))}
         </ol>
 
         <Link
           href="/nosotros"
-          className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-dark"
+          className="group mt-8 inline-flex items-center gap-2 text-sm font-extrabold text-primary hover:text-primary-dark transition-colors"
         >
-          Conocer al equipo y la escuela
-          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          <span>Conocer al equipo docente y la escuela</span>
+          <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
         </Link>
       </div>
     </section>

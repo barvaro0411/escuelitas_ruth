@@ -460,7 +460,7 @@ export default function AgeCalculator() {
                 </ul>
               </div>
             ) : (
-              <div className="animate-fade-up relative flex min-w-0 flex-col justify-between overflow-hidden rounded-2xl border-2 border-primary/20 bg-surface p-5 sm:p-7 lg:p-8 shadow-sm">
+              <div className="animate-fade-up relative flex min-w-0 flex-col justify-between overflow-hidden rounded-2xl border-2 border-primary/20 bg-surface p-5 sm:p-7 lg:p-8 shadow-md shadow-primary/10">
                 <VoiceContour
                   variant="arc"
                   className="pointer-events-none absolute right-5 top-6 h-9 w-24 text-accent/30"
@@ -468,8 +468,10 @@ export default function AgeCalculator() {
 
                 {/* Barra de estado superior */}
                 <div
-                  className={`absolute top-0 inset-x-0 h-2 ${
-                    result.status === "eligible" ? "bg-primary" : "bg-accent"
+                  className={`absolute top-0 inset-x-0 h-2.5 ${
+                    result.status === "eligible"
+                      ? "bg-gradient-to-r from-emerald-500 via-primary to-action"
+                      : "bg-gradient-to-r from-amber-400 to-amber-600"
                   }`}
                 />
 
