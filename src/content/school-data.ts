@@ -111,7 +111,7 @@ export const campuses = [
     region: "Región Metropolitana",
     country: "CL",
     postalCode: "8540000",
-    rbd: "10375-6",
+    rbd: "26106-8",
     mapHref:
       "https://www.google.com/maps/search/?api=1&query=Vascongados%204314%2C%20Conchal%C3%AD%2C%20Chile",
     geo: { latitude: -33.3934, longitude: -70.6695 },
@@ -137,7 +137,7 @@ export const campuses = [
     region: "Región Metropolitana",
     country: "CL",
     postalCode: "8540000",
-    rbd: "26106-8",
+    rbd: "10375-6",
     mapHref:
       "https://www.google.com/maps/search/?api=1&query=Gral.%20Gambino%204613%2C%20Conchal%C3%AD%2C%20Chile",
     geo: { latitude: -33.3906, longitude: -70.6723 },

@@ -21,9 +21,9 @@ export const metadata: Metadata = {
     url: "/nosotros",
     images: [
       {
-        url: "/equipo-escuela-ruth.jpg",
-        width: 1024,
-        height: 683,
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
         alt: "Equipo educativo de Escuela de Lenguaje Ruth",
       },
     ],

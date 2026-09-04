@@ -11,8 +11,8 @@ export default function SchoolLifePreview() {
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14 lg:px-8">
         <div className="relative min-h-[330px] overflow-hidden rounded-2xl bg-primary sm:min-h-[420px]">
           <Image
-            src="/equipo-escuela-ruth.jpg"
-            alt="Integrantes del equipo educativo de Escuela de Lenguaje Ruth"
+            src="/hero-kids.jpg"
+            alt="Párvulos aprendiendo y jugando en Escuela de Lenguaje Ruth"
             fill
             sizes="(min-width: 1024px) 45vw, 100vw"
             className="object-cover"

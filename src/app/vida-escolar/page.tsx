@@ -206,7 +206,7 @@ export default function VidaEscolarPage() {
           </div>
 
           {/* Gran tarjeta comunitaria hacia Instagram */}
-          <div className="mt-12 overflow-hidden rounded-3xl border-2 border-pink-200 bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 p-8 sm:p-10 text-white shadow-xl">
+          <div className="mt-12 overflow-hidden rounded-3xl border-2 border-pink-200 bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 p-6 sm:p-10 text-white shadow-xl">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-6 text-center lg:text-left">
               <div className="max-w-2xl">
                 <div className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-white backdrop-blur-sm mb-3">
@@ -221,12 +221,12 @@ export default function VidaEscolarPage() {
                 </p>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0 w-full sm:w-auto">
                 <a
                   href={siteConfig.social.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex min-h-13 items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-extrabold text-pink-700 shadow-md transition-all hover:bg-white/90 hover:scale-105 active:scale-95 cursor-pointer"
+                  className="inline-flex min-h-12 sm:min-h-13 items-center justify-center gap-2 rounded-xl bg-white px-5 sm:px-6 py-3.5 text-sm font-extrabold text-pink-700 shadow-md transition-all hover:bg-white/90 hover:scale-105 active:scale-95 cursor-pointer"
                 >
                   <Instagram className="h-5 w-5 text-pink-600" aria-hidden="true" />
                   <span>Seguir en Instagram</span>

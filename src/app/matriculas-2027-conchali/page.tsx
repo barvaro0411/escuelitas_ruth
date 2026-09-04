@@ -442,7 +442,7 @@ export default function MatriculasConchaliPage() {
                       Sede 1
                     </div>
                     <span className="text-xs font-semibold text-muted">
-                      RBD 10375-6
+                      RBD 26106-8
                     </span>
                   </div>
 
@@ -499,7 +499,7 @@ export default function MatriculasConchaliPage() {
                       Sede 2
                     </div>
                     <span className="text-xs font-semibold text-muted">
-                      RBD 26106-8
+                      RBD 10375-6
                     </span>
                   </div>
 

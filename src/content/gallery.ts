@@ -17,13 +17,6 @@ export type GalleryImage = {
 };
 
 export const galleryImages: GalleryImage[] = [
-  {
-    id: "equipo-escuela-ruth",
-    src: "/equipo-escuela-ruth.jpg",
-    alt: "Integrantes del equipo educativo de Escuela de Lenguaje Ruth",
-    title: "Equipo educativo",
-    category: "Equipo",
-  },
   ...vascongadosGallery.map((image, index) => ({
     ...image,
     id: `vascongados-instalacion-${index + 1}`,

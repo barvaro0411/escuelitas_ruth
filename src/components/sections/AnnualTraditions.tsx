@@ -1,166 +1,212 @@
+"use client";
+
+import { useState } from "react";
 import {
-  BookOpen,
+  Baby,
+  Calendar,
   CalendarDays,
-  Flag,
+  CheckCircle2,
   GraduationCap,
-  HeartHandshake,
-  Music,
-  PartyPopper,
   Sparkles,
-  TreePine,
-  Trophy,
+  Users2,
 } from "lucide-react";
+import { annualPlanUnits } from "@/content/school-life";
 
-type Milestone = {
-  month: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  icon: typeof CalendarDays;
-  badgeColor: string;
-};
-
-const annualMilestones: Milestone[] = [
-  {
-    month: "Marzo",
-    title: "Bienvenida y Período de Adaptación",
-    subtitle: "Acogida y diagnósticos",
-    description:
-      "Recepción amorosa a los párvulos, adaptación gradual a la jornada y realización de las evaluaciones fonoaudiológicas iniciales de diagnóstico sin costo.",
-    icon: Sparkles,
-    badgeColor: "bg-sky-100/70 text-sky-800 border-sky-200",
-  },
-  {
-    month: "Abril",
-    title: "Semana del Libro y la Literatura Infantil",
-    subtitle: "Estimulación lingüística",
-    description:
-      "Cuentacuentos interactivos, rincones de lectura compartida y creación de historias familiares para estimular la comprensión y el vocabulario expresivo.",
-    icon: BookOpen,
-    badgeColor: "bg-indigo-100/70 text-indigo-800 border-indigo-200",
-  },
-  {
-    month: "Mayo",
-    title: "Mes de la Familia y Parentalidad",
-    subtitle: "Comunidad y afecto",
-    description:
-      "Encuentros reflexivos con padres y apoderados, talleres prácticos de estimulación en el hogar y actividades conjuntas que fortalecen el lazo afectivo.",
-    icon: HeartHandshake,
-    badgeColor: "bg-pink-100/70 text-pink-800 border-pink-200",
-  },
-  {
-    month: "Junio",
-    title: "Medioambiente y Pueblos Originarios",
-    subtitle: "Cultura y naturaleza",
-    description:
-      "Conmemoración del We Tripantu (Año Nuevo Indígena), respeto por la diversidad cultural, conocimiento de nuestras raíces y actividades ecológicas.",
-    icon: TreePine,
-    badgeColor: "bg-emerald-100/70 text-emerald-800 border-emerald-200",
-  },
-  {
-    month: "Agosto",
-    title: "Mes de la Niñez y Juego Terapéutico",
-    subtitle: "Derechos y diversión",
-    description:
-      "Jornadas de juegos tradicionales, circuitos psicomotores, teatro de títeres y dinámicas donde el juego es el motor principal para desbloquear el habla.",
-    icon: Music,
-    badgeColor: "bg-amber-100/70 text-amber-900 border-amber-200",
-  },
-  {
-    month: "Septiembre",
-    title: "Fiestas Patrias y Tradición Chilena",
-    subtitle: "¡Tiki Tiki Tiii!",
-    description:
-      "Convivencia escolar con juegos criollos adaptados (emboque, rayuela infantil), trajes típicos, bailes tradicionales y vivencia del folclore en familia.",
-    icon: Flag,
-    badgeColor: "bg-red-100/70 text-red-800 border-red-200",
-  },
-  {
-    month: "Octubre",
-    title: "Semana de la Fonoaudiología y Lenguaje",
-    subtitle: "Comunidad abierta",
-    description:
-      "Talleres abiertos a las familias donde las fonoaudiólogas comparten estrategias para seguir estimulando la articulación y la estructuración de frases.",
-    icon: PartyPopper,
-    badgeColor: "bg-purple-100/70 text-purple-800 border-purple-200",
-  },
-  {
-    month: "Noviembre",
-    title: "Semana de la Educación Parvularia",
-    subtitle: "Muestra de aprendizajes",
-    description:
-      "Celebración del rol pedagógico en la primera infancia y exposición de los progresos comunicativos y proyectos desarrollados por cada nivel.",
-    icon: Trophy,
-    badgeColor: "bg-blue-100/70 text-blue-800 border-blue-200",
-  },
-  {
-    month: "Diciembre",
-    title: "Cierre de Año y Licenciatura de Kínder",
-    subtitle: "Paso a Enseñanza Básica",
-    description:
-      "Ceremonia de graduación para los niños y niñas que egresan preparados y con alta fonoaudiológica, listos para ingresar con seguridad a 1° Básico.",
-    icon: GraduationCap,
-    badgeColor: "bg-emerald-100/70 text-emerald-800 border-emerald-200",
-  },
-];
+type LevelFilter = "all" | "medioMayor" | "prekinder" | "kinder";
 
 export default function AnnualTraditions() {
+  const [selectedLevel, setSelectedLevel] = useState<LevelFilter>("all");
+
   return (
     <section
-      aria-labelledby="annual-traditions-title"
-      className="border-b border-border bg-surface py-16 sm:py-20"
+      aria-labelledby="annual-plan-title"
+      className="relative overflow-hidden border-b border-border bg-paper py-18 sm:py-24"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3.5 py-1.5 text-xs font-extrabold uppercase tracking-wider text-primary mb-3">
-            <CalendarDays className="h-3.5 w-3.5 text-action" aria-hidden="true" />
-            Tradición y comunidad
+        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end mb-12">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-action/40 bg-action/25 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-primary-dark shadow-xs mb-3">
+              <CalendarDays className="h-4 w-4 text-amber-500" aria-hidden="true" />
+              <span>Planificación Pedagógica y Fonoaudiológica</span>
+            </div>
+            <h2
+              id="annual-plan-title"
+              className="font-display font-extrabold text-ink text-3xl sm:text-4xl lg:text-5xl tracking-tight"
+            >
+              Plan Anual: 10 Unidades de Aprendizaje
+            </h2>
+            <p className="mt-3 text-base text-muted leading-relaxed sm:text-lg">
+              De marzo a diciembre, organizamos cada mes en torno a una unidad
+              temática con objetivos específicos de lenguaje para cada etapa del
+              desarrollo infantil.
+            </p>
           </div>
-          <h2
-            id="annual-traditions-title"
-            className="font-display font-extrabold text-ink text-3xl sm:text-4xl"
-          >
-            Hitos y celebraciones del año escolar
-          </h2>
-          <p className="mt-3 text-base text-muted leading-relaxed sm:text-lg">
-            A lo largo de todo el ciclo escolar, nuestras sedes viven momentos
-            significativos donde el aprendizaje, la fonoaudiología y la familia se
-            encuentran de forma cercana y coordinada.
-          </p>
+
+          {/* Selector interactivo de nivel */}
+          <div className="flex flex-wrap gap-1.5 rounded-2xl border border-border bg-surface p-1.5 shadow-xs">
+            <button
+              type="button"
+              onClick={() => setSelectedLevel("all")}
+              className={`rounded-xl px-3.5 py-2 text-xs font-extrabold transition-all cursor-pointer ${
+                selectedLevel === "all"
+                  ? "bg-primary text-white shadow-xs"
+                  : "text-muted hover:text-ink"
+              }`}
+            >
+              Ver todos
+            </button>
+            <button
+              type="button"
+              onClick={() => setSelectedLevel("medioMayor")}
+              className={`inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-extrabold transition-all cursor-pointer ${
+                selectedLevel === "medioMayor"
+                  ? "bg-primary text-white shadow-xs"
+                  : "text-muted hover:text-ink"
+              }`}
+            >
+              <Baby className="h-3.5 w-3.5" />
+              <span>Medio Mayor (3a)</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setSelectedLevel("prekinder")}
+              className={`inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-extrabold transition-all cursor-pointer ${
+                selectedLevel === "prekinder"
+                  ? "bg-primary text-white shadow-xs"
+                  : "text-muted hover:text-ink"
+              }`}
+            >
+              <Users2 className="h-3.5 w-3.5" />
+              <span>Pre-Kínder (4a)</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setSelectedLevel("kinder")}
+              className={`inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-extrabold transition-all cursor-pointer ${
+                selectedLevel === "kinder"
+                  ? "bg-primary text-white shadow-xs"
+                  : "text-muted hover:text-ink"
+              }`}
+            >
+              <GraduationCap className="h-3.5 w-3.5" />
+              <span>Kínder (5a)</span>
+            </button>
+          </div>
         </div>
 
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {annualMilestones.map((milestone) => {
-            const Icon = milestone.icon;
+        {/* Cuadrícula de las 10 Unidades Mensuales */}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {annualPlanUnits.map((unit, index) => {
             return (
               <article
-                key={milestone.month}
-                className="group flex flex-col justify-between rounded-2xl border border-border bg-paper p-6 shadow-xs card-interactive"
+                key={unit.id}
+                className={`group relative flex flex-col justify-between overflow-hidden rounded-3xl border-2 bg-surface shadow-xs transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${unit.accentColor.border}`}
               >
-                <div>
-                  <div className="flex items-center justify-between gap-3 mb-4">
-                    <span className="font-display text-lg font-extrabold text-primary">
-                      {milestone.month}
-                    </span>
-                    <span
-                      className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-extrabold ${milestone.badgeColor}`}
-                    >
-                      {milestone.subtitle}
-                    </span>
-                  </div>
+                {/* Cabecera decorativa superior */}
+                <div className={`h-2.5 w-full bg-gradient-to-r ${unit.accentColor.header}`} />
 
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-105">
-                      <Icon className="h-5 w-5" aria-hidden="true" />
+                <div className="p-6 sm:p-7">
+                  {/* Top Bar: Mes + Badge */}
+                  <div className="flex items-center justify-between gap-2 mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-xs font-extrabold text-primary">
+                        {index + 1}
+                      </span>
+                      <span className="font-display text-2xl font-extrabold text-ink">
+                        {unit.month}
+                      </span>
                     </div>
-                    <h3 className="font-display font-extrabold text-ink text-lg leading-snug">
-                      {milestone.title}
-                    </h3>
+                    <span
+                      className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-extrabold ${unit.accentColor.badge}`}
+                    >
+                      {unit.badge}
+                    </span>
                   </div>
 
-                  <p className="mt-3 text-sm leading-relaxed text-muted">
-                    {milestone.description}
+                  <p className="text-[11px] font-extrabold uppercase tracking-wider text-muted mb-1">
+                    Unidad Temática
                   </p>
+                  <h3 className="font-display font-extrabold text-ink text-xl leading-snug">
+                    “{unit.unitTitle}”
+                  </h3>
+
+                  <p className="mt-3 text-xs sm:text-sm leading-relaxed text-muted border-l-2 border-primary/30 pl-3 py-0.5">
+                    {unit.generalObjective}
+                  </p>
+
+                  {/* Objetivos por nivel */}
+                  <div className="mt-5 border-t border-border/60 pt-4 space-y-3">
+                    <p className="text-[11px] font-extrabold uppercase tracking-wider text-primary">
+                      Objetivos de Lenguaje:
+                    </p>
+
+                    {/* Medio Mayor */}
+                    {(selectedLevel === "all" || selectedLevel === "medioMayor") && (
+                      <div className="rounded-xl bg-surface-sunk/60 p-3">
+                        <div className="flex items-center gap-1.5 text-xs font-extrabold text-primary mb-1.5">
+                          <Baby className="h-3.5 w-3.5" />
+                          <span>Medio Mayor (3 años):</span>
+                        </div>
+                        <ul className="space-y-1 text-xs text-muted">
+                          {unit.objectivesByLevel.medioMayor.map((obj) => (
+                            <li key={obj} className="flex items-start gap-1.5">
+                              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                              <span>{obj}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Pre-Kínder */}
+                    {(selectedLevel === "all" || selectedLevel === "prekinder") && (
+                      <div className="rounded-xl bg-surface-sunk/60 p-3">
+                        <div className="flex items-center gap-1.5 text-xs font-extrabold text-indigo-700 mb-1.5">
+                          <Users2 className="h-3.5 w-3.5" />
+                          <span>Pre-Kínder (4 años):</span>
+                        </div>
+                        <ul className="space-y-1 text-xs text-muted">
+                          {unit.objectivesByLevel.prekinder.map((obj) => (
+                            <li key={obj} className="flex items-start gap-1.5">
+                              <CheckCircle2 className="h-3.5 w-3.5 text-indigo-600 shrink-0 mt-0.5" />
+                              <span>{obj}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Kínder */}
+                    {(selectedLevel === "all" || selectedLevel === "kinder") && (
+                      <div className="rounded-xl bg-surface-sunk/60 p-3">
+                        <div className="flex items-center gap-1.5 text-xs font-extrabold text-purple-700 mb-1.5">
+                          <GraduationCap className="h-3.5 w-3.5" />
+                          <span>Kínder (5 años):</span>
+                        </div>
+                        <ul className="space-y-1 text-xs text-muted">
+                          {unit.objectivesByLevel.kinder.map((obj) => (
+                            <li key={obj} className="flex items-start gap-1.5">
+                              <CheckCircle2 className="h-3.5 w-3.5 text-purple-600 shrink-0 mt-0.5" />
+                              <span>{obj}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Footer de la tarjeta con hitos y efemérides del mes */}
+                <div className="px-6 py-3.5 bg-paper border-t border-border/60 text-xs">
+                  <p className="font-extrabold text-ink text-[11px] mb-1 flex items-center gap-1">
+                    <Calendar className="h-3 w-3 text-primary" />
+                    <span>Hitos del mes:</span>
+                  </p>
+                  <ul className="space-y-0.5 text-[11px] text-muted">
+                    {unit.highlights.map((h) => (
+                      <li key={h}>• {h}</li>
+                    ))}
+                  </ul>
                 </div>
               </article>
             );
