@@ -20,7 +20,7 @@ const programs = [
       "Desarrollo temprano del habla, incremento de vocabulario y expresión mediante el juego guiado y estimulación sensorial.",
     features: [
       "Juego guiado y estimulación del habla",
-      "Intervención fonoaudiológica sin costo",
+      "Vocabulario, comprensión y expresión oral",
       "Jornadas Mañana (08:15–12:15) y Tarde (13:30–17:15)",
     ],
     icon: Baby,
@@ -75,8 +75,8 @@ export default function ProgramsSummary() {
               Acompañamiento especializado según la edad de tu hijo
             </h2>
             <p className="mt-2 text-base text-muted leading-relaxed">
-              Educación parvularia y apoyo fonoaudiológico 100% gratuito (sin
-              matrícula ni mensualidades) en Conchalí.
+              Revisa la edad de ingreso, el foco de aprendizaje y las jornadas
+              disponibles en cada nivel.
             </p>
           </div>
           <Link

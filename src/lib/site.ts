@@ -3,28 +3,15 @@ import {
   campuses,
   type CampusId,
 } from "@/content/school-data";
-
-function resolveSiteUrl(value: string | undefined) {
-  const fallback = "https://escuelitas-ruth.vercel.app";
-  const candidate = value?.trim() || fallback;
-
-  try {
-    const url = new URL(candidate);
-    if (url.protocol !== "https:") throw new Error("protocol");
-    return url.origin;
-  } catch {
-    throw new Error(
-      "NEXT_PUBLIC_SITE_URL debe ser una URL HTTPS válida, sin ruta adicional.",
-    );
-  }
-}
+import { CANONICAL_SITE_URL } from "../../site.constants";
 
 export const siteConfig = {
   name: "Escuela de Lenguaje Ruth",
   shortName: "Escuelitas Ruth",
-  // Dominio público que hoy responde. Cambiar aquí cuando el dominio propio
-  // tenga DNS y redirección HTTPS verificados en Vercel.
-  url: resolveSiteUrl(process.env.NEXT_PUBLIC_SITE_URL),
+  // Fuente única para canónicas, Open Graph, sitemap, robots y JSON-LD.
+  // Debe permanecer estable también en previews para consolidar la autoridad
+  // SEO en el dominio oficial de producción.
+  url: CANONICAL_SITE_URL,
   admissionYear: admissionCutoff.year,
   description:
     "Escuela de lenguaje particular subvencionada con dos sedes en Conchalí, 100% gratuita para las familias, con evaluación fonoaudiológica sin costo y apoyo especializado para niños y niñas con TEL.",

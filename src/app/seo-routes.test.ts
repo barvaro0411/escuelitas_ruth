@@ -7,6 +7,13 @@ import { familyResources } from "@/content/family-resources";
 describe("sitemap", () => {
   const entries = sitemap();
 
+  it("consolida todas las señales en el dominio oficial", () => {
+    expect(siteConfig.url).toBe("https://escuelitasruth.cl");
+    for (const entry of entries) {
+      expect(new URL(entry.url).origin).toBe(siteConfig.url);
+    }
+  });
+
   it("incluye todas las rutas declaradas y los recursos de familias", () => {
     const urls = entries.map((entry) => entry.url);
     for (const route of siteConfig.routes) {

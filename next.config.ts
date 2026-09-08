@@ -1,4 +1,8 @@
 import type { NextConfig } from "next";
+import {
+  ALTERNATE_SITE_HOSTS,
+  CANONICAL_SITE_URL,
+} from "./site.constants";
 
 // CSP compatible con páginas prerenderizadas. Next.js necesita scripts y estilos
 // inline para la hidratación estática; si el sitio incorpora backend/middleware,
@@ -39,11 +43,22 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 días
   },
   async redirects() {
-    // Las páginas por comuna cercana se consolidaron en `santiago-norte`,
-    // que ahora describe cada comuna con contenido propio. 308 permanente:
-    // el sitio aún no está indexado, pero deja el patrón correcto por si
-    // alguien compartió el enlace antes del lanzamiento.
     return [
+      // Todos los hosts alternativos consolidan autoridad en el dominio raíz.
+      // El comodín conserva tanto la ruta como los parámetros de consulta.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: ALTERNATE_SITE_HOSTS[0] }],
+        destination: `${CANONICAL_SITE_URL}/:path*`,
+        permanent: true,
+      },
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: ALTERNATE_SITE_HOSTS[1] }],
+        destination: `${CANONICAL_SITE_URL}/:path*`,
+        permanent: true,
+      },
+      // Las páginas por comuna cercana se consolidaron en `santiago-norte`.
       {
         source: "/matriculas-2027-renca",
         destination: "/matriculas-2027-santiago-norte",

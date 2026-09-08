@@ -4,16 +4,14 @@ import {
   ArrowRight,
   Building2,
   CalendarClock,
-  CheckCircle2,
   ExternalLink,
   MapPin,
   MessageCircle,
   ShieldCheck,
-  Sparkles,
 } from "lucide-react";
 import { createWhatsAppUrl } from "@/lib/site";
 import FiestasPatriasMode from "@/components/seasonal/FiestasPatriasMode";
-import { campuses, schoolLevels } from "@/content/school-data";
+import { campuses } from "@/content/school-data";
 
 export default function SedesSelector() {
   return (
@@ -28,8 +26,8 @@ export default function SedesSelector() {
             Elige la sede más cercana a tu hogar
           </h2>
           <p className="text-base leading-relaxed text-muted sm:text-lg">
-            Ambas escuelas cuentan con los mismos niveles educativos gratuitos,
-            evaluación fonoaudiológica sin costo y jornadas mañana y tarde.
+            Compara direcciones, jornadas y cómo llegar antes de consultar
+            disponibilidad.
           </p>
         </div>
 
@@ -130,21 +128,6 @@ export default function SedesSelector() {
                       </p>
                       <ul className="space-y-2 text-xs font-semibold text-ink/80">
                         <li className="flex items-center gap-2">
-                          <CheckCircle2
-                            className="h-4 w-4 shrink-0 text-emerald-600"
-                            aria-hidden="true"
-                          />
-                          <span>
-                            <strong>Niveles:</strong>{" "}
-                            {schoolLevels
-                              .filter((level) =>
-                                campus.levelIds.includes(level.id),
-                              )
-                              .map((level) => level.name)
-                              .join(", ")}
-                          </span>
-                        </li>
-                        <li className="flex items-center gap-2">
                           <CalendarClock
                             className="h-4 w-4 shrink-0 text-primary"
                             aria-hidden="true"
@@ -152,16 +135,6 @@ export default function SedesSelector() {
                           <span>
                             <strong>Jornadas:</strong> Mañana (08:15–12:15) y
                             Tarde (13:30–17:15)
-                          </span>
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <Sparkles
-                            className="h-4 w-4 shrink-0 text-action"
-                            aria-hidden="true"
-                          />
-                          <span>
-                            <strong>Costo:</strong> 100% Gratuita · Subvención
-                            MINEDUC
                           </span>
                         </li>
                       </ul>
@@ -216,7 +189,7 @@ export default function SedesSelector() {
           </p>
           <p className="mx-auto mt-2 max-w-3xl text-sm leading-relaxed text-muted sm:text-base">
             Si vives en <strong>Huechuraba, Renca, Recoleta, Independencia o Quilicura</strong>,
-            también te orientamos sobre vacantes y el proceso de admisión sin costo.
+            también te orientamos sobre vacantes y el proceso de admisión.
           </p>
           <Link
             href="/matriculas-2027-santiago-norte"

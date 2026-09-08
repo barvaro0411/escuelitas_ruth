@@ -1,7 +1,5 @@
 import Hero from "@/components/sections/Hero";
-import EnrollmentPush from "@/components/sections/EnrollmentPush";
 import AgeCalculator from "@/components/sections/AgeCalculator";
-import HowWeWork from "@/components/sections/HowWeWork";
 import ProgramsSummary from "@/components/sections/ProgramsSummary";
 import SedesSelector from "@/components/sections/SedesSelector";
 import FAQPreview from "@/components/sections/FAQPreview";
@@ -38,19 +36,16 @@ export default function Home() {
     <>
       <JsonLd data={faqJsonLd} />
       <Hero />
-      {/* La calculadora es lo más distintivo del sitio y responde la primera
-          pregunta real de un apoderado: va inmediatamente después del hero. */}
+      {/* Primero resolvemos las decisiones de matrícula: ubicación y nivel. */}
+      <SedesSelector />
+      <ProgramsSummary />
       <AgeCalculator />
-      <EnrollmentPush />
-      <HowWeWork />
       <FiestasPatriasMode>
         <FiestasPatriasSection />
       </FiestasPatriasMode>
       <WeeklyUpdates hideWhenEmpty />
       <ImportantDates hideWhenEmpty />
       <SchoolLifePreview />
-      <SedesSelector />
-      <ProgramsSummary />
       <FamilyResourcesPreview />
       <TestimonialsSection />
       <FAQPreview />

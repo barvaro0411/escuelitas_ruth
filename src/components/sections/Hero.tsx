@@ -3,8 +3,6 @@ import Link from "next/link";
 import {
   ArrowRight,
   CheckCircle2,
-  Clock3,
-  MapPin,
   MessageCircle,
   ShieldCheck,
 } from "lucide-react";
@@ -24,7 +22,7 @@ const proofPoints = [
 
 export default function Hero() {
   return (
-    <section className="fiestas-hero relative isolate flex min-h-[700px] items-center overflow-hidden bg-primary-dark pb-16 pt-32 sm:min-h-[720px] sm:pt-36 lg:min-h-[730px] lg:pb-20">
+    <section className="fiestas-hero relative isolate flex min-h-[620px] items-center overflow-hidden bg-primary-dark pb-14 pt-28 sm:min-h-[650px] sm:pt-32 lg:pb-16">
       <Image
         src="/hero-kids.jpg"
         alt="Niños aprendiendo en la Escuela de Lenguaje Ruth"
@@ -42,7 +40,7 @@ export default function Hero() {
         </>
       </FiestasPatriasMode>
 
-      <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-8">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
           {/* En móvil basta la marca de temporada: el relato completo vive en
  FiestasPatriasSection, más abajo en la misma página. */}
@@ -124,88 +122,7 @@ export default function Hero() {
             </Link>
           </div>
 
-          <div className="mt-6 flex flex-col gap-2 text-sm font-semibold text-white/80 sm:flex-row sm:items-center sm:gap-5">
-            <span className="inline-flex items-center gap-2">
-              <Clock3 className="h-4 w-4 text-accent-on-dark" aria-hidden="true" />
-              Mañana 08:15–12:15 · Tarde 13:30–17:15
-            </span>
-            <span
-              className="hidden h-1 w-1 rounded-full bg-white/50 sm:block"
-              aria-hidden="true"
-            />
-            <span className="inline-flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-accent-on-dark" aria-hidden="true" />
-              Dos sedes en Conchalí
-            </span>
-          </div>
         </div>
-
-        <aside
-          className="hidden lg:block"
-          aria-label="Información institucional"
-        >
-          <div className="rounded-2xl border border-white/35 bg-surface p-8 shadow-xl shadow-sky-950/20 card-interactive">
-            <p className="mb-2 text-sm font-extrabold uppercase tracking-[0.16em] text-primary">
-              Información para tu familia
-            </p>
-            <h2 className="mb-6 font-display font-extrabold leading-tight text-ink text-3xl sm:text-4xl">
-              Claridad desde el primer contacto
-            </h2>
-
-            <div className="space-y-4">
-              <div className="flex items-start gap-3 border-b border-border pb-4">
-                <ShieldCheck
-                  className="mt-0.5 h-5 w-5 shrink-0 text-primary"
-                  aria-hidden="true"
-                />
-                <div>
-                  <p className="font-extrabold text-ink">
-                    Escuela particular subvencionada
-                  </p>
-                  <p className="mt-1 text-sm leading-relaxed text-muted">
-                    Educación sin cobro de matrícula ni mensualidad para las
-                    familias.
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3 border-b border-border pb-4">
-                <MessageCircle
-                  className="mt-0.5 h-5 w-5 shrink-0 text-primary"
-                  aria-hidden="true"
-                />
-                <div>
-                  <p className="font-extrabold text-ink">Orientación directa</p>
-                  <p className="mt-1 text-sm leading-relaxed text-muted">
-                    Te explicamos edad, evaluación, jornada y próximos pasos por
-                    WhatsApp.
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <MapPin
-                  className="mt-0.5 h-5 w-5 shrink-0 text-accent"
-                  aria-hidden="true"
-                />
-                <div>
-                  <p className="font-extrabold text-ink">
-                    Dos sedes en Conchalí
-                  </p>
-                  <p className="mt-1 text-sm leading-relaxed text-muted">
-                    Vascongados 4314 y Gral. Gambino 4613.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <Link
-              href="/matriculas-2027-conchali"
-              className="group mt-7 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-dark"
-            >
-              <span>Conocer el proceso de admisión</span>
-              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
-            </Link>
-          </div>
-        </aside>
       </div>
     </section>
   );
