@@ -2,8 +2,6 @@ import { Metadata } from "next";
 import PageHero from "@/components/layout/PageHero";
 import {
   ClipboardCheck,
-  FileText,
-  Calendar,
   CheckCircle,
   Info,
   ArrowRight,
@@ -12,6 +10,7 @@ import {
 import Link from "next/link";
 import JsonLd from "@/components/seo/JsonLd";
 import { createWhatsAppUrl, buildBreadcrumbsJsonLd } from "@/lib/site";
+import StepByStepAdmission from "@/components/sections/StepByStepAdmission";
 
 export const metadata: Metadata = {
   title: "Admisión y Matrículas 2027",
@@ -41,36 +40,6 @@ export const metadata: Metadata = {
     images: ["/og-image.jpg"],
   },
 };
-
-const steps = [
-  {
-    title: "1. Contáctanos",
-    description:
-      "Escríbenos por WhatsApp o llámanos. Te orientaremos sobre los cupos y responderemos tus dudas de inmediato.",
-    icon: Calendar,
-    bg: "bg-surface-sunk",
-    color: "text-ink",
-    rotation: "-rotate-2",
-  },
-  {
-    title: "2. Evaluación Gratuita",
-    description:
-      "Te invitaremos a una evaluación diagnóstica. Si no tienes un informe fonoaudiológico previo, ¡nosotros lo hacemos gratis!",
-    icon: ClipboardCheck,
-    bg: "bg-surface-sunk",
-    color: "text-primary-dark",
-    rotation: "rotate-1",
-  },
-  {
-    title: "3. Bienvenida",
-    description:
-      "Con la evaluación lista y el cupo confirmado, te pediremos documentos básicos para oficializar la matrícula.",
-    icon: FileText,
-    bg: "bg-primary",
-    color: "text-white",
-    rotation: "-rotate-1",
-  },
-];
 
 const documents = [
   "Certificado de Nacimiento para todo trámite.",
@@ -106,31 +75,12 @@ export default function AdmisionPage() {
       <div className="pb-24 pt-16 overflow-hidden relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Steps */}
-          <div className="mb-32">
-            <h2 className="font-extrabold text-ink mb-12 text-center tracking-tight text-3xl sm:text-4xl">
-              ¿Cómo empezamos?
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {steps.map((step, index) => (
-                <div
-                  key={step.title}
-                  className={`relative rounded-2xl border border-border p-7 ${step.bg} transition-shadow duration-200 hover:shadow-md animate-fade-up`}
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div className="w-16 h-16 rounded-2xl bg-white/30 backdrop-blur-md flex items-center justify-center mb-8">
-                    <step.icon size={32} className={step.color} />
-                  </div>
-                  <h3
-                    className={`font-extrabold ${step.color} mb-4 leading-tight text-xl`}
-                  >
-                    {step.title}
-                  </h3>
-                  <p className={`${step.color} opacity-90 leading-relaxed`}>
-                    {step.description}
-                  </p>
-                </div>
-              ))}
-            </div>
+          <div className="mb-24">
+            <StepByStepAdmission
+              title="¿Cómo es el proceso de admisión?"
+              subtitle="En 3 etapas claras sabrás el nivel que le corresponde a tu hijo(a), agendarás su evaluación fonoaudiológica sin costo y asegurarás su cupo 2027."
+              className="border-b-0 bg-transparent py-0"
+            />
           </div>
 
           {/* Requirements and Info */}

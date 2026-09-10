@@ -1,5 +1,6 @@
 import Hero from "@/components/sections/Hero";
 import AgeCalculator from "@/components/sections/AgeCalculator";
+import StepByStepAdmission from "@/components/sections/StepByStepAdmission";
 import ProgramsSummary from "@/components/sections/ProgramsSummary";
 import SedesSelector from "@/components/sections/SedesSelector";
 import FAQPreview from "@/components/sections/FAQPreview";
@@ -40,6 +41,7 @@ export default function Home() {
       <SedesSelector />
       <ProgramsSummary />
       <AgeCalculator />
+      <StepByStepAdmission />
       <FiestasPatriasMode>
         <FiestasPatriasSection />
       </FiestasPatriasMode>
