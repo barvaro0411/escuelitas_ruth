@@ -29,6 +29,10 @@ describe("Integridad de Imágenes Públicas (Cero 404)", () => {
       "hero-children.jpg",
       "tel-fonoaudiologia.jpg",
       "family-support.jpg",
+      "celebracion-patio-techado.jpg",
+      "ambiente-festivo-patio.jpg",
+      "patio-fiestas-patrias.jpg",
+      "vista-cordillera-escuela.jpg",
     ];
 
     for (const filename of essentialAssets) {

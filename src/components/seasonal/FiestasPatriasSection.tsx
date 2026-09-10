@@ -141,19 +141,27 @@ export default function FiestasPatriasSection() {
             </div>
           </div>
 
-          <div className="relative overflow-hidden rounded-2xl border border-[#d9c9ad] bg-surface p-2">
-            <div className="relative aspect-[16/10] overflow-hidden rounded-2xl">
+          <div className="relative overflow-hidden rounded-3xl border-2 border-[#d9c9ad] bg-surface p-2.5 shadow-md">
+            <div className="relative aspect-[4/3] sm:aspect-[16/10] overflow-hidden rounded-2xl">
               <Image
-                src="/fiestas-patrias-ninos.webp"
-                alt="Niños y niñas celebrando Fiestas Patrias y bailando cueca en un patio escolar"
+                src="/patio-fiestas-patrias.jpg"
+                alt="Patio techado de Escuelitas Ruth ambientado para Fiestas Patrias con guirnaldas y banderas chilenas"
                 fill
                 sizes="(min-width: 1024px) 46vw, 100vw"
                 className="object-cover"
               />
+              <div className="absolute top-3 left-3 rounded-full bg-primary/85 px-3 py-1 text-[11px] font-bold text-white backdrop-blur-xs shadow-xs">
+                📸 Fotografía real de nuestra escuela
+              </div>
             </div>
-            <p className="px-3 py-3 text-center text-sm font-extrabold text-primary">
-              ¡Felices Fiestas Patrias!
-            </p>
+            <div className="px-3 py-3 text-center">
+              <p className="text-sm font-extrabold text-primary">
+                ¡Patio techado listo para celebrar en comunidad!
+              </p>
+              <p className="mt-0.5 text-xs text-muted">
+                Espacios amplios y protegidos para los juegos y tradiciones de septiembre
+              </p>
+            </div>
           </div>
         </div>
       </div>

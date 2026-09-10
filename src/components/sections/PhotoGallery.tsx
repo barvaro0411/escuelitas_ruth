@@ -1,16 +1,57 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, ImageIcon, X } from "lucide-react";
 import type { GalleryImage } from "@/content/gallery";
 
 export default function PhotoGallery({ images }: { images: GalleryImage[] }) {
+  const [activeFilter, setActiveFilter] = useState<string>("all");
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const openerRef = useRef<HTMLButtonElement | null>(null);
-  const selected = selectedIndex === null ? null : images[selectedIndex];
+
+  const counts = useMemo(
+    () => ({
+      all: images.length,
+      celebraciones: images.filter((img) => img.category === "Celebraciones").length,
+      vascongados: images.filter((img) => img.campusId === "vascongados").length,
+      gambino: images.filter((img) => img.campusId === "gambino").length,
+    }),
+    [images],
+  );
+
+  const filterTabs = useMemo(
+    () =>
+      [
+        { id: "all", label: "Todas las fotos", count: counts.all },
+        { id: "celebraciones", label: "🎉 Celebraciones y Vida Escolar", count: counts.celebraciones },
+        { id: "vascongados", label: "🏫 Sede Vascongados", count: counts.vascongados },
+        { id: "gambino", label: "🏫 Sede Gambino", count: counts.gambino },
+      ].filter((tab) => tab.count > 0),
+    [counts],
+  );
+
+  const filteredImages = useMemo(() => {
+    if (activeFilter === "celebraciones") {
+      return images.filter((img) => img.category === "Celebraciones");
+    }
+    if (activeFilter === "vascongados") {
+      return images.filter((img) => img.campusId === "vascongados");
+    }
+    if (activeFilter === "gambino") {
+      return images.filter((img) => img.campusId === "gambino");
+    }
+    return images;
+  }, [activeFilter, images]);
+
+  const selected = selectedIndex === null ? null : filteredImages[selectedIndex];
+
+  const handleFilterChange = (filterId: string) => {
+    setActiveFilter(filterId);
+    setSelectedIndex(null);
+  };
 
   const close = useCallback(() => {
     setSelectedIndex(null);
@@ -20,16 +61,16 @@ export default function PhotoGallery({ images }: { images: GalleryImage[] }) {
   const showPrevious = useCallback(
     () =>
       setSelectedIndex((index) =>
-        index === null ? null : (index - 1 + images.length) % images.length,
+        index === null ? null : (index - 1 + filteredImages.length) % filteredImages.length,
       ),
-    [images.length],
+    [filteredImages.length],
   );
   const showNext = useCallback(
     () =>
       setSelectedIndex((index) =>
-        index === null ? null : (index + 1) % images.length,
+        index === null ? null : (index + 1) % filteredImages.length,
       ),
-    [images.length],
+    [filteredImages.length],
   );
 
   useEffect(() => {
@@ -40,8 +81,8 @@ export default function PhotoGallery({ images }: { images: GalleryImage[] }) {
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") close();
-      if (event.key === "ArrowLeft" && images.length > 1) showPrevious();
-      if (event.key === "ArrowRight" && images.length > 1) showNext();
+      if (event.key === "ArrowLeft" && filteredImages.length > 1) showPrevious();
+      if (event.key === "ArrowRight" && filteredImages.length > 1) showNext();
       if (event.key === "Tab" && dialogRef.current) {
         const controls = [
           ...dialogRef.current.querySelectorAll<HTMLElement>(
@@ -64,7 +105,7 @@ export default function PhotoGallery({ images }: { images: GalleryImage[] }) {
       document.body.style.overflow = previousOverflow;
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [close, images.length, selectedIndex, showNext, showPrevious]);
+  }, [close, filteredImages.length, selectedIndex, showNext, showPrevious]);
 
   if (images.length === 0) {
     return (
@@ -86,8 +127,40 @@ export default function PhotoGallery({ images }: { images: GalleryImage[] }) {
 
   return (
     <>
+      {/* Selector interactivo de categorías */}
+      {filterTabs.length > 1 && (
+        <div className="mb-8 flex flex-wrap items-center gap-2">
+          {filterTabs.map((tab) => {
+            const isActive = activeFilter === tab.id;
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => handleFilterChange(tab.id)}
+                className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${
+                  isActive
+                    ? "bg-primary text-white shadow-sm ring-2 ring-primary/20"
+                    : "border border-border bg-surface text-ink hover:border-primary/40 hover:bg-surface-sunk"
+                }`}
+              >
+                <span>{tab.label}</span>
+                <span
+                  className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${
+                    isActive
+                      ? "bg-white/20 text-white"
+                      : "bg-surface-sunk text-muted"
+                  }`}
+                >
+                  {tab.count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {images.map((image, index) => (
+        {filteredImages.map((image, index) => (
           <button
             key={image.id}
             ref={(element) => {
@@ -99,7 +172,7 @@ export default function PhotoGallery({ images }: { images: GalleryImage[] }) {
               openerRef.current = event.currentTarget;
               setSelectedIndex(index);
             }}
-            className="group overflow-hidden rounded-2xl border border-border bg-surface text-left shadow-sm transition-[transform,box-shadow,border-color] hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md"
+            className="group overflow-hidden rounded-2xl border border-border bg-surface text-left shadow-xs transition-[transform,box-shadow,border-color] hover:-translate-y-1 hover:border-primary/40 hover:shadow-md cursor-pointer"
             aria-label={`Ampliar fotografía: ${image.title}`}
           >
             <div className="relative aspect-[4/3] overflow-hidden bg-surface-sunk">
@@ -110,18 +183,40 @@ export default function PhotoGallery({ images }: { images: GalleryImage[] }) {
                 sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
               />
+              <div className="absolute top-2.5 right-2.5 rounded-full bg-primary-dark/80 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-xs">
+                Foto real
+              </div>
             </div>
             <div className="p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">
-                {image.category}
-              </p>
-              <p className="mt-1 font-display text-lg font-extrabold text-ink">
+              <div className="flex items-center gap-2">
+                <span
+                  className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
+                    image.category === "Celebraciones"
+                      ? "bg-amber-100 text-amber-900 border border-amber-200"
+                      : image.campusId === "vascongados"
+                      ? "bg-blue-100 text-blue-900 border border-blue-200"
+                      : image.campusId === "gambino"
+                      ? "bg-emerald-100 text-emerald-900 border border-emerald-200"
+                      : "bg-surface-sunk text-primary border border-border"
+                  }`}
+                >
+                  {image.category === "Celebraciones"
+                    ? "Celebración"
+                    : image.campusId === "vascongados"
+                    ? "Sede Vascongados"
+                    : image.campusId === "gambino"
+                    ? "Sede Gambino"
+                    : image.category}
+                </span>
+              </div>
+              <p className="mt-2 font-display text-base font-extrabold text-ink sm:text-lg leading-snug">
                 {image.title}
               </p>
             </div>
           </button>
         ))}
       </div>
+
 
       {selected && (
         <div
@@ -165,7 +260,7 @@ export default function PhotoGallery({ images }: { images: GalleryImage[] }) {
                   {selected.category}
                 </p>
               </div>
-              {images.length > 1 && (
+              {filteredImages.length > 1 && (
                 <div className="flex gap-2">
                   <button
                     type="button"

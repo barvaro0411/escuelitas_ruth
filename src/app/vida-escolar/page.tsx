@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import PageHero from "@/components/layout/PageHero";
 import Link from "next/link";
 import {
-  ArrowRight,
   Camera,
   Heart,
   Images,
@@ -172,12 +171,10 @@ export default function VidaEscolarPage() {
                 id="gallery-title"
                 className="mt-2 font-display font-extrabold text-ink text-3xl sm:text-4xl"
               >
-                Espacios e instalaciones preparadas
+                Galería: Vida escolar, celebraciones y espacios
               </h2>
               <p className="mt-3 leading-relaxed text-muted">
-                Conoce las dependencias de nuestras dos sedes en Conchalí: salas
-                de fonoaudiología, patios techados de juegos y áreas de
-                aprendizaje diseñadas con alegría para el desarrollo infantil.
+                Conoce el ambiente cálido de nuestras celebraciones, momentos de convivencia y las dependencias preparadas en Conchalí: patios techados de juegos, salas de fonoaudiología y áreas de aprendizaje diseñadas para que cada niño crezca feliz.
               </p>
             </div>
             <div className="inline-flex items-center gap-2 text-sm font-extrabold text-muted shrink-0">

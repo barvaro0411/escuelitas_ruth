@@ -9,17 +9,23 @@ export default function SchoolLifePreview() {
       aria-labelledby="school-life-preview-title"
     >
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14 lg:px-8">
-        <div className="relative min-h-[330px] overflow-hidden rounded-2xl bg-primary sm:min-h-[420px]">
+        <div className="relative min-h-[360px] overflow-hidden rounded-3xl border border-white/15 bg-primary sm:min-h-[440px] shadow-xl">
           <Image
-            src="/hero-kids.jpg"
-            alt="Párvulos aprendiendo y jugando en Escuela de Lenguaje Ruth"
+            src="/celebracion-patio-techado.jpg"
+            alt="Mesa decorada y patio techado preparado para celebraciones en Escuelitas Ruth"
             fill
             sizes="(min-width: 1024px) 45vw, 100vw"
-            className="object-cover"
+            className="object-cover object-center"
           />
-          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-primary-dark/90 to-transparent px-6 pb-6 pt-20 text-white">
-            <p className="text-sm font-extrabold">
-              Una comunidad que acompaña cada aprendizaje
+          <div className="absolute top-4 left-4 rounded-full bg-primary-dark/85 px-3 py-1 text-xs font-bold text-white backdrop-blur-md shadow-xs">
+            📸 Patio techado en día de celebración
+          </div>
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-primary-dark/95 via-primary-dark/60 to-transparent px-6 pb-6 pt-24 text-white">
+            <p className="text-base font-extrabold sm:text-lg">
+              Celebraciones, convivencia y aprendizaje en comunidad
+            </p>
+            <p className="mt-1 text-xs text-white/80">
+              Espacios seguros y acogedores donde cada párvulo disfruta compartiendo
             </p>
           </div>
         </div>
