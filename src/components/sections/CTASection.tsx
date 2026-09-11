@@ -6,13 +6,16 @@ const ctaWhatsAppUrl = createWhatsAppUrl({ source: "hero" });
 
 export default function CTASection() {
   return (
-    <section className="relative isolate overflow-hidden bg-primary-dark py-20 sm:py-24">
+    <section
+      id="consulta-final"
+      className="relative isolate scroll-mt-24 overflow-hidden bg-primary-dark py-20 sm:py-24"
+    >
       <div
         className="absolute inset-0 opacity-25 [background-image:radial-gradient(circle_at_18%_18%,#f59e0b_0,transparent_26%),radial-gradient(circle_at_82%_75%,#2563eb_0,transparent_28%)]"
         aria-hidden="true"
       />
       <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
+        <div className="text-center" data-reveal>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-on-dark">
             Consulta cupos 2027
           </p>

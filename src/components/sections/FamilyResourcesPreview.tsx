@@ -10,7 +10,7 @@ export default function FamilyResourcesPreview() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-          <div className="max-w-3xl">
+          <div className="max-w-3xl" data-reveal>
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
               Acompañamiento en casa
             </p>
@@ -33,7 +33,7 @@ export default function FamilyResourcesPreview() {
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
         </div>
-        <div className="mt-8 grid gap-5 md:grid-cols-3">
+        <div className="mt-8 grid gap-5 md:grid-cols-3" data-reveal-group>
           {familyResources.slice(0, 3).map((resource) => (
             <article
               key={resource.slug}

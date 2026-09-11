@@ -95,6 +95,7 @@ export type WhatsAppContext = {
     | "header"
     | "hero"
     | "floating"
+    | "sticky"
     | "calculator"
     | "campus"
     | "level"
@@ -140,6 +141,7 @@ export function createWhatsAppMessage(context: WhatsAppContext) {
     header: `Hola, quisiera consultar disponibilidad de matrícula ${year} y conocer los requisitos.`,
     hero: `Hola, quisiera consultar disponibilidad ${year} y agendar una evaluación fonoaudiológica sin costo.`,
     floating: `Hola, estoy visitando la web de Escuelitas Ruth y quisiera consultar disponibilidad ${year}.`,
+    sticky: `Hola, quisiera consultar cupos de matrícula ${year} en Conchalí y los pasos para postular.`,
     admission: `Hola, quisiera orientación sobre los requisitos y el proceso de admisión ${year}.`,
     faq: `Hola, revisé las preguntas frecuentes y quisiera resolver una duda sobre matrícula ${year}.`,
     seasonal: `Hola, quisiera consultar cupos ${year}, sedes y evaluación fonoaudiológica sin costo.`,

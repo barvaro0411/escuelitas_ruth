@@ -234,7 +234,7 @@ export default function AgeCalculator() {
     <section className="relative w-full overflow-hidden border-b border-border bg-surface-sunk py-16 sm:py-24 lg:py-28">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Encabezado compacto en móvil */}
-        <div className="mb-6 sm:mb-8 lg:mb-10 max-w-3xl">
+        <div className="mb-6 sm:mb-8 lg:mb-10 max-w-3xl" data-reveal>
           <div className="inline-flex items-center gap-2 rounded-full bg-surface px-3.5 py-1.5 text-[11px] sm:text-xs font-bold uppercase tracking-wider text-accent border border-accent/20 shadow-xs mb-3">
             <Sparkles size={14} className="shrink-0 text-action" />
             Calculadora de Nivel 2027

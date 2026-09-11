@@ -11,7 +11,7 @@ export default function TestimonialsSection() {
       aria-labelledby="testimonials-title"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="mx-auto max-w-3xl text-center" data-reveal>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
             Comunidad
           </p>
@@ -22,7 +22,7 @@ export default function TestimonialsSection() {
             Lo que dicen nuestras familias
           </h2>
         </div>
-        <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4" data-reveal-group>
           {testimonials.map((testimonial) => (
             <figure
               key={testimonial.id}

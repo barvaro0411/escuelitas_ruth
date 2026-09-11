@@ -3,6 +3,7 @@ import Link from "next/link";
 import {
   ArrowRight,
   CheckCircle2,
+  ChevronDown,
   MessageCircle,
   ShieldCheck,
 } from "lucide-react";
@@ -22,13 +23,13 @@ const proofPoints = [
 
 export default function Hero() {
   return (
-    <section className="fiestas-hero relative isolate flex min-h-[620px] items-center overflow-hidden bg-primary-dark pb-14 pt-28 sm:min-h-[650px] sm:pt-32 lg:pb-16">
+    <section className="fiestas-hero relative isolate flex min-h-[620px] items-center overflow-hidden bg-primary-dark pb-24 pt-28 sm:min-h-[680px] sm:pb-28 sm:pt-32">
       <Image
         src="/hero-kids.jpg"
         alt="Niños aprendiendo en la Escuela de Lenguaje Ruth"
         fill
         sizes="100vw"
-        className="object-cover object-[62%_center] lg:object-[70%_center]"
+        className="hero-parallax object-cover object-[62%_center] lg:object-[70%_center]"
         priority
       />
       <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/94 via-primary-dark/86 to-primary-dark/78 lg:bg-gradient-to-r lg:from-primary-dark/94 lg:via-primary-dark/72 lg:to-primary-dark/35" />
@@ -124,6 +125,19 @@ export default function Hero() {
 
         </div>
       </div>
+
+      {/* Señal de continuidad. El hero ocupa la pantalla completa y nada
+          indicaba que más abajo estaban las sedes y los pasos de matrícula. */}
+      <a
+        href="#matricula"
+        className="group absolute inset-x-0 bottom-5 z-10 mx-auto flex w-fit items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-2.5 text-xs font-semibold text-white backdrop-blur-sm transition-colors hover:border-action hover:bg-white/20 sm:text-sm"
+      >
+        <span>Cómo matricular en 3 pasos</span>
+        <ChevronDown
+          className="h-4 w-4 text-accent-on-dark animate-scroll-cue"
+          aria-hidden="true"
+        />
+      </a>
     </section>
   );
 }

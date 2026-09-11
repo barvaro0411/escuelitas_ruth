@@ -38,7 +38,7 @@ export default function ImportantDates({
       aria-labelledby="important-dates-title"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl">
+        <div className="max-w-3xl" data-reveal>
           <div className="inline-flex items-center gap-2 rounded-full bg-surface px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-accent">
             <CalendarDays className="h-4 w-4" aria-hidden="true" />
             Agenda escolar
@@ -56,7 +56,7 @@ export default function ImportantDates({
         </div>
 
         {events.length > 0 ? (
-          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3" data-reveal-group>
             {events.map((event) => {
               const date = new Date(`${event.date}T12:00:00`);
               const day = new Intl.DateTimeFormat("es-CL", {

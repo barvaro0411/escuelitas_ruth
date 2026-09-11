@@ -25,6 +25,11 @@
   --action-hover: #eab308; /* Amarillo dorado al interactuar */
   --action-ink: #0f172a; /* Texto oscuro para legibilidad total */
   --accent-on-dark: #fde047; /* Amarillo luminoso sobre fondos celestes/oscuros */
+  /* Amarillos de superficie: reservados para la franja de matrícula, el único
+     bloque cálido del sitio. Si algo es amarillo, es matrícula. */
+  --action-tint: #fffdf2; /* crema muy claro, borde superior de la franja */
+  --action-soft: #fef3c7; /* ámbar suave, base de la franja */
+  --action-line: #fcd34d; /* filete ámbar para separar la franja del resto */
 
   /* Semántico */
   --danger: #b91c1c;
@@ -49,6 +54,9 @@
   --color-action-hover: var(--action-hover);
   --color-action-ink: var(--action-ink);
   --color-accent-on-dark: var(--accent-on-dark);
+  --color-action-tint: var(--action-tint);
+  --color-action-soft: var(--action-soft);
+  --color-action-line: var(--action-line);
   --color-danger: var(--danger);
   --font-sans: var(--font-nunito);
   --font-display: var(--font-familjen);
@@ -158,18 +166,64 @@ h6 {
   letter-spacing: -0.018em;
 }
 
-/* ===== Animaciones personalizadas & Scroll Reveal ===== */
-.reveal-on-scroll {
+/* ===== Animaciones personalizadas & Scroll Reveal =====
+
+   Un único observador (`ScrollReveal`) marca `is-revealed`. El estado inicial
+   se aplica solo bajo `html.js`: sin JavaScript el contenido se ve completo y
+   nunca queda una sección invisible.
+
+   - `data-reveal`            un elemento entra por sí solo.
+   - `data-reveal="left|right|zoom"` cambia la dirección.
+   - `data-reveal-group`      la rejilla entra escalonada; se observa el
+                              contenedor y los hijos heredan el retardo. */
+.js [data-reveal],
+.js [data-reveal-group] > * {
   opacity: 0;
-  transform: translateY(22px);
-  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translate3d(var(--reveal-x, 0), var(--reveal-y, 26px), 0)
+    scale(var(--reveal-scale, 1));
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
   will-change: opacity, transform;
 }
 
-.reveal-on-scroll.is-revealed {
+.js [data-reveal="left"] {
+  --reveal-x: -30px;
+  --reveal-y: 0;
+}
+
+.js [data-reveal="right"] {
+  --reveal-x: 30px;
+  --reveal-y: 0;
+}
+
+.js [data-reveal="zoom"] {
+  --reveal-y: 16px;
+  --reveal-scale: 0.96;
+}
+
+.js [data-reveal].is-revealed,
+.js [data-reveal-group].is-revealed > * {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0) scale(1);
+  will-change: auto;
+}
+
+/* Escalonado de rejillas: cada tarjeta entra 90 ms después de la anterior. */
+.js [data-reveal-group] > *:nth-child(2) {
+  --reveal-delay: 90ms;
+}
+.js [data-reveal-group] > *:nth-child(3) {
+  --reveal-delay: 180ms;
+}
+.js [data-reveal-group] > *:nth-child(4) {
+  --reveal-delay: 270ms;
+}
+.js [data-reveal-group] > *:nth-child(5) {
+  --reveal-delay: 360ms;
+}
+.js [data-reveal-group] > *:nth-child(n + 6) {
+  --reveal-delay: 420ms;
 }
 
 @keyframes fade-up {
@@ -421,3 +475,88 @@ h6 {
   }
 }
 
+
+/* ===== Franja de matrícula =====
+   Es el único bloque cálido de todo el sitio: si algo es amarillo, es
+   matrícula. El resto de la página se mantiene en celestes y blancos para que
+   esta franja destaque sola, sin subir el ruido general. */
+.matricula-band {
+  background: radial-gradient(
+    118% 78% at 50% -12%,
+    #ffffff 0%,
+    var(--action-tint) 32%,
+    var(--action-soft) 100%
+  );
+}
+
+.dot-pattern-amber {
+  background-image: radial-gradient(
+    rgba(180, 83, 9, 0.16) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}
+
+/* ===== Señal de scroll del hero =====
+   Indica que la página continúa: en móvil el hero ocupa toda la pantalla y
+   nada sugería que debajo estaban las sedes y la matrícula. */
+@keyframes scroll-cue {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(7px);
+    opacity: 1;
+  }
+}
+
+.animate-scroll-cue {
+  animation: scroll-cue 2.1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ===== Parallax del hero =====
+   Animación ligada al scroll, sin JavaScript ni listeners. Los navegadores que
+   no implementan `animation-timeline` simplemente muestran la foto fija. */
+@keyframes hero-parallax {
+  from {
+    transform: translate3d(0, -3.5%, 0) scale(1.1);
+  }
+  to {
+    transform: translate3d(0, 6.5%, 0) scale(1.1);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-parallax {
+      animation: hero-parallax linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+      will-change: transform;
+    }
+  }
+}
+
+/* La barra fija de matrícula no debe tapar el final del pie de página ni el
+   objetivo de un enlace interno o de un salto con teclado. */
+@media (max-width: 1023px) {
+  html {
+    scroll-padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
+  }
+
+  body {
+    padding-bottom: calc(4.75rem + env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-scroll-cue {
+    animation: none !important;
+  }
+
+  .hero-parallax {
+    animation: none !important;
+  }
+}

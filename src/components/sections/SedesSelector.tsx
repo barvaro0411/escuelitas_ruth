@@ -15,9 +15,9 @@ import { campuses } from "@/content/school-data";
 
 export default function SedesSelector() {
   return (
-    <section className="border-b border-border bg-paper py-16 sm:py-20">
+    <section className="border-b border-border bg-surface py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto mb-12 max-w-3xl text-center">
+        <div className="mx-auto mb-12 max-w-3xl text-center" data-reveal>
           <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-primary">
             <MapPin className="h-4 w-4 text-action" aria-hidden="true" />
             Dos Sedes en Conchalí
@@ -31,7 +31,7 @@ export default function SedesSelector() {
           </p>
         </div>
 
-        <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-2">
+        <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-2" data-reveal-group>
           {campuses.map((campus) => {
             const coverImage = campus.gallery[0];
             const whatsappUrl = createWhatsAppUrl({

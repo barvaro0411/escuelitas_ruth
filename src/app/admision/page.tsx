@@ -79,7 +79,8 @@ export default function AdmisionPage() {
             <StepByStepAdmission
               title="¿Cómo es el proceso de admisión?"
               subtitle="En 3 etapas claras sabrás el nivel que le corresponde a tu hijo(a), agendarás su evaluación fonoaudiológica sin costo y asegurarás su cupo 2027."
-              className="border-b-0 bg-transparent py-0"
+              variant="inline"
+              className="py-0"
             />
           </div>
 

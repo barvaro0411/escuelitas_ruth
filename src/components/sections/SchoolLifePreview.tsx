@@ -9,7 +9,10 @@ export default function SchoolLifePreview() {
       aria-labelledby="school-life-preview-title"
     >
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14 lg:px-8">
-        <div className="relative min-h-[360px] overflow-hidden rounded-3xl border border-white/15 bg-primary sm:min-h-[440px] shadow-xl">
+        <div
+          className="relative min-h-[360px] overflow-hidden rounded-3xl border border-white/15 bg-primary sm:min-h-[440px] shadow-xl"
+          data-reveal="left"
+        >
           <Image
             src="/celebracion-patio-techado.jpg"
             alt="Mesa decorada y patio techado preparado para celebraciones en Escuelitas Ruth"
@@ -30,7 +33,7 @@ export default function SchoolLifePreview() {
           </div>
         </div>
 
-        <div>
+        <div data-reveal="right">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-on-dark">
             Nuestra comunidad
           </p>

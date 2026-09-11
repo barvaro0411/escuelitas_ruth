@@ -3,47 +3,63 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
+/**
+ * Revelado al hacer scroll con un único IntersectionObserver para toda la
+ * página.
+ *
+ * Antes existían la clase `.reveal-on-scroll` y este observador, pero ninguna
+ * sección los usaba: la página bajaba 8.000 px sin un solo movimiento. Ahora el
+ * marcado se declara con `data-reveal` (un elemento) o `data-reveal-group`
+ * (una rejilla que entra escalonada) y los estilos viven en `globals.css`.
+ *
+ * El estado inicial oculto depende de `html.js`, que añade el script de
+ * arranque en `layout.tsx`. Si el JavaScript no llega, ese script retira la
+ * clase y el contenido se muestra completo: nunca queda una sección invisible.
+ */
+const REVEAL_SELECTOR = "[data-reveal], [data-reveal-group]";
+
 export default function ScrollReveal() {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    const root = document.documentElement;
+    // Confirma al script de arranque que el revelado ya tiene quien lo active.
+    root.setAttribute("data-reveal-ready", "");
 
-    // Inmediatamente revelar todo si el usuario prefiere movimiento reducido
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      document.querySelectorAll(".reveal-on-scroll").forEach((el) => {
-        el.classList.add("is-revealed");
-      });
+    const nodes = Array.from(
+      document.querySelectorAll<HTMLElement>(REVEAL_SELECTOR),
+    );
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+      nodes.forEach((node) => node.classList.add("is-revealed"));
       return;
     }
 
-    const observerCallback: IntersectionObserverCallback = (
-      entries,
-      observer,
-    ) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
+    const observer = new IntersectionObserver(
+      (entries, instance) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
           entry.target.classList.add("is-revealed");
-          observer.unobserve(entry.target);
-        }
-      });
-    };
+          // Una sola vez: al volver a subir el contenido no se esconde.
+          instance.unobserve(entry.target);
+        });
+      },
+      {
+        root: null,
+        // Se dispara un poco antes del borde inferior para que la entrada
+        // termine cuando el bloque ya está cómodo en pantalla.
+        rootMargin: "0px 0px -10% 0px",
+        threshold: 0.05,
+      },
+    );
 
-    const observer = new IntersectionObserver(observerCallback, {
-      root: null,
-      rootMargin: "0px 0px 50px 0px",
-      threshold: 0.01,
-    });
+    nodes.forEach((node) => observer.observe(node));
 
-    const elements = document.querySelectorAll(".reveal-on-scroll");
-
-    elements.forEach((el) => {
-      observer.observe(el);
-    });
-
-    return () => {
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, [pathname]);
 
   return null;

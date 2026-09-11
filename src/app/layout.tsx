@@ -8,6 +8,7 @@ import ScrollToTop from "@/components/ui/ScrollToTop";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import ScrollProgressBar from "@/components/ui/ScrollProgressBar";
 import ScrollReveal from "@/components/ui/ScrollReveal";
+import EnrollmentBar from "@/components/ui/EnrollmentBar";
 import { Toaster } from "sonner";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -85,6 +86,11 @@ export const metadata: Metadata = {
   },
 };
 
+// Marca que hay JavaScript para que el revelado al hacer scroll pueda partir
+// oculto. Si el bundle no llega, retira la clase y el contenido queda visible:
+// sin JS nunca hay secciones en blanco.
+const REVEAL_BOOTSTRAP = `(function(){var d=document.documentElement;d.classList.add("js");setTimeout(function(){if(!d.hasAttribute("data-reveal-ready"))d.classList.remove("js")},2500)})()`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -100,10 +106,14 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        {/* Un único script de arranque para lo que debe decidirse antes del
+            primer pintado: el tema de temporada y el revelado al hacer scroll.
+            Van juntos a propósito; dos etiquetas <script> duplicaban el aviso
+            de React en desarrollo sin ganar nada. */}
         <script
-          id="seasonal-theme"
+          id="app-bootstrap"
           dangerouslySetInnerHTML={{
-            __html: getSeasonalThemeBootstrapScript(),
+            __html: `${REVEAL_BOOTSTRAP};${getSeasonalThemeBootstrapScript()}`,
           }}
         />
       </head>
@@ -132,6 +142,7 @@ export default function RootLayout({
         <Footer />
         <ScrollToTop />
         <WhatsAppButton />
+        <EnrollmentBar />
         <AnalyticsTracker />
         <Analytics />
         <SpeedInsights />

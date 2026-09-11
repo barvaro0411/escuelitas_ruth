@@ -27,7 +27,7 @@ export default function FAQPreview() {
 
   return (
     <section className="border-b border-border bg-surface py-14">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:px-8">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:px-8" data-reveal-group>
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
             Preguntas frecuentes

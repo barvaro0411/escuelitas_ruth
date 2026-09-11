@@ -26,7 +26,7 @@ export default function WhatsAppButton() {
 
   return (
     <div
-      className={`pointer-events-none fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] right-4 z-40 flex items-center gap-3 transition-[opacity,transform] duration-300 sm:bottom-6 sm:right-6 ${
+      className={`pointer-events-none fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] right-4 z-40 hidden items-center gap-3 lg:flex transition-[opacity,transform] duration-300 sm:bottom-6 sm:right-6 ${
         isVisible
           ? "translate-y-0 opacity-100"
           : "translate-y-4 opacity-0"
