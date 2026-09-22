@@ -68,6 +68,7 @@ export default function EnrollmentBar() {
 
   return (
     <div
+      data-cta="barra-movil"
       inert={!isVisible}
       className={`fixed inset-x-0 bottom-0 z-40 border-t-2 border-action bg-primary-dark/98 backdrop-blur-md transition-[transform,opacity] duration-300 lg:hidden ${
         isVisible

@@ -7,6 +7,7 @@ import { Clock, Instagram, Mail, MapPin, MessageCircle, Phone, Send } from "luci
 import { toast } from "sonner";
 import { track } from "@vercel/analytics";
 import { useSearchParams } from "next/navigation";
+import ResponseNote from "@/components/ui/ResponseNote";
 import {
   buildContactMailtoUrl,
   buildContactWhatsAppMessage,
@@ -229,7 +230,7 @@ function ContactoForm() {
             </div>
           </aside>
 
-          <section className="rounded-2xl border border-border bg-surface p-6 sm:p-9">
+          <section data-cta="formulario-contacto" className="rounded-2xl border border-border bg-surface p-6 sm:p-9">
             <div className="mb-7">
               <h2 className="font-display font-extrabold text-ink text-3xl sm:text-4xl">
                 Cuéntanos cómo orientarte
@@ -477,6 +478,16 @@ function ContactoForm() {
                 <Send className="h-5 w-5" aria-hidden="true" />
                 Abrir WhatsApp con mi consulta
               </button>
+
+              {/* El botón abre WhatsApp en otra pestaña con el mensaje ya
+                  redactado. Sin avisarlo, en móvil parece que el formulario se
+                  perdió y la consulta se abandona a un paso del final. */}
+              <p className="text-center text-sm text-muted">
+                Se abrirá WhatsApp con tus datos ya escritos. Tú revisas el
+                mensaje y decides si lo envías.
+              </p>
+
+              <ResponseNote align="center" className="mx-auto max-w-md" />
 
               <p className="text-center text-sm text-muted">
                 ¿No usas WhatsApp?{" "}

@@ -63,11 +63,11 @@ const programs = [
 
 export default function ProgramsSummary() {
   return (
-    <section className="border-b border-border bg-paper py-16 sm:py-20">
+    <section data-cta="niveles" className="border-b border-border bg-surface-sunk py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl" data-reveal>
-            <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3.5 py-1.5 text-xs font-extrabold uppercase tracking-wider text-primary mb-3">
+            <div className="mb-3 inline-flex items-center gap-2 border-l-4 border-action pl-3 text-xs font-extrabold uppercase tracking-[0.16em] text-primary">
               <Sparkles className="h-3.5 w-3.5 text-action" aria-hidden="true" />
               Niveles educativos 2027
             </div>

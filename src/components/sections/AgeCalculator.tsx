@@ -79,7 +79,7 @@ export function calculateEligibility(
       campusIds: level.campusIds,
       journeys: level.journeys,
       icon: Baby,
-      description: `Cumple los requisitos para ingresar a Medio Mayor en ${admissionCutoff.year}.`,
+      description: `Por su edad le corresponde Medio Mayor en ${admissionCutoff.year}. El ingreso se confirma con la evaluación fonoaudiológica.`,
       bulletPoints: [
         "Educación 100% gratuita para la familia.",
         "Evaluación fonoaudiológica inicial sin costo.",
@@ -97,7 +97,7 @@ export function calculateEligibility(
       campusIds: level.campusIds,
       journeys: level.journeys,
       icon: GraduationCap,
-      description: `Cumple los requisitos para ingresar a Pre-Kínder en ${admissionCutoff.year}.`,
+      description: `Por su edad le corresponde Pre-Kínder en ${admissionCutoff.year}. El ingreso se confirma con la evaluación fonoaudiológica.`,
       bulletPoints: [
         "Educación 100% gratuita para la familia.",
         "Evaluación fonoaudiológica inicial sin costo.",
@@ -115,7 +115,7 @@ export function calculateEligibility(
       campusIds: level.campusIds,
       journeys: level.journeys,
       icon: GraduationCap,
-      description: `Cumple los requisitos para ingresar a Kínder en ${admissionCutoff.year}.`,
+      description: `Por su edad le corresponde Kínder en ${admissionCutoff.year}. El ingreso se confirma con la evaluación fonoaudiológica.`,
       bulletPoints: [
         "Preparación para la transición a Educación Básica.",
         "Acompañamiento de educadoras y fonoaudiólogas.",
@@ -231,11 +231,11 @@ export default function AgeCalculator() {
     : "";
 
   return (
-    <section className="relative w-full overflow-hidden border-b border-border bg-surface-sunk py-16 sm:py-24 lg:py-28">
+    <section data-cta="calculadora" className="relative w-full overflow-hidden border-b border-border bg-paper py-14 sm:py-20 lg:py-24">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Encabezado compacto en móvil */}
         <div className="mb-6 sm:mb-8 lg:mb-10 max-w-3xl" data-reveal>
-          <div className="inline-flex items-center gap-2 rounded-full bg-surface px-3.5 py-1.5 text-[11px] sm:text-xs font-bold uppercase tracking-wider text-accent border border-accent/20 shadow-xs mb-3">
+          <div className="inline-flex items-center gap-2 rounded-full bg-surface-sunk px-3.5 py-1.5 text-[11px] sm:text-xs font-bold uppercase tracking-wider text-accent border border-accent/20 shadow-xs mb-3">
             <Sparkles size={14} className="shrink-0 text-action" />
             Calculadora de Nivel 2027
           </div>

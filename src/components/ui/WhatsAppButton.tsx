@@ -26,6 +26,7 @@ export default function WhatsAppButton() {
 
   return (
     <div
+      data-cta="boton-flotante"
       className={`pointer-events-none fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] right-4 z-40 hidden items-center gap-3 lg:flex transition-[opacity,transform] duration-300 sm:bottom-6 sm:right-6 ${
         isVisible
           ? "translate-y-0 opacity-100"

@@ -15,7 +15,7 @@ import { campuses } from "@/content/school-data";
 
 export default function SedesSelector() {
   return (
-    <section className="border-b border-border bg-surface py-16 sm:py-20">
+    <section data-cta="sedes" className="border-b border-border bg-surface py-14 sm:py-18">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-12 max-w-3xl text-center" data-reveal>
           <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-primary">

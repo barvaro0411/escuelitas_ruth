@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { ArrowRight, MessageCircle, PhoneCall } from "lucide-react";
 import { createWhatsAppUrl, siteConfig } from "@/lib/site";
+import ResponseNote from "@/components/ui/ResponseNote";
 
 const ctaWhatsAppUrl = createWhatsAppUrl({ source: "hero" });
 
 export default function CTASection() {
   return (
     <section
+      data-cta="cierre"
       id="consulta-final"
       className="relative isolate scroll-mt-24 overflow-hidden bg-primary-dark py-20 sm:py-24"
     >
@@ -46,6 +48,12 @@ export default function CTASection() {
               <span>{siteConfig.contact.phone.label}</span>
             </a>
           </div>
+
+          <ResponseNote
+            tone="dark"
+            align="center"
+            className="mx-auto max-w-lg"
+          />
 
           <Link
             href="/admision"

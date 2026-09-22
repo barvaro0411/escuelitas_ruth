@@ -41,8 +41,8 @@ export default function StepByStepAdmission({
       description:
         "Indícanos la fecha de nacimiento de tu hijo(a) y la sede que te queda más cerca en Conchalí (Vascongados o Gambino).",
       details: [
-        "Respuesta rápida y orientación sin compromiso",
-        "Revisamos disponibilidad de cupos en minutos",
+        "Orientación sin compromiso en horario de atención",
+        "Revisamos contigo la disponibilidad por nivel y jornada",
         "Te explicamos los requisitos según su edad",
       ],
       icon: MessageCircle,
@@ -68,7 +68,7 @@ export default function StepByStepAdmission({
     },
     {
       number: "3",
-      badge: "Vacante asegurada",
+      badge: "Matrícula sin costo",
       title: "Matrícula $0 y Bienvenida",
       description:
         "Con la evaluación lista, formalizamos el ingreso con documentos sencillos (Certificado de Nacimiento para todo trámite).",
@@ -86,6 +86,7 @@ export default function StepByStepAdmission({
 
   return (
     <section
+      data-cta="pasos-admision"
       id={isBand ? "matricula" : undefined}
       aria-labelledby="step-by-step-admission-title"
       className={

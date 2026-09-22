@@ -8,6 +8,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import VoiceContour from "@/components/ui/VoiceContour";
+import ResponseNote from "@/components/ui/ResponseNote";
 import { createWhatsAppUrl } from "@/lib/site";
 import ChileanBunting from "@/components/seasonal/ChileanBunting";
 import FiestasPatriasDecorations from "@/components/seasonal/FiestasPatriasDecorations";
@@ -23,7 +24,7 @@ const proofPoints = [
 
 export default function Hero() {
   return (
-    <section className="fiestas-hero relative isolate flex min-h-[620px] items-center overflow-hidden bg-primary-dark pb-24 pt-28 sm:min-h-[680px] sm:pb-28 sm:pt-32">
+    <section data-cta="hero" className="fiestas-hero relative isolate flex min-h-[620px] items-center overflow-hidden bg-primary-dark pb-24 pt-28 sm:min-h-[680px] sm:pb-28 sm:pt-32">
       <Image
         src="/hero-kids.jpg"
         alt="Niños aprendiendo en la Escuela de Lenguaje Ruth"
@@ -32,7 +33,7 @@ export default function Hero() {
         className="hero-parallax object-cover object-[62%_center] lg:object-[70%_center]"
         priority
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/94 via-primary-dark/86 to-primary-dark/78 lg:bg-gradient-to-r lg:from-primary-dark/94 lg:via-primary-dark/72 lg:to-primary-dark/35" />
+      <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/90 via-primary-dark/80 to-primary-dark/70 lg:bg-gradient-to-r lg:from-primary-dark/92 lg:from-0% lg:via-primary-dark/76 lg:via-55% lg:to-primary-dark/15" />
 
       <FiestasPatriasMode>
         <>
@@ -71,9 +72,11 @@ export default function Hero() {
             Consulta cupos 2027 en Conchalí
           </div>
 
-          <h1 className="max-w-2xl font-display font-extrabold leading-[1.08] tracking-tight text-white text-4xl sm:text-5xl">
+          <h1 className="max-w-2xl text-balance font-display font-extrabold leading-[1.08] tracking-tight text-white text-4xl drop-shadow-hero sm:text-5xl">
             Acompañamos a tu hijo a descubrir el poder de su{" "}
-            <span className="text-accent-on-dark">propia voz</span>
+            <span className="whitespace-nowrap text-accent-on-dark">
+              propia voz
+            </span>
           </h1>
 
           {/* El contorno de la voz: el único recurso gráfico del sitio. */}
@@ -82,7 +85,7 @@ export default function Hero() {
             className="-mt-3 mb-7 h-8 w-56 text-accent-on-dark/70 sm:w-72"
           />
 
-          <p className="mb-8 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg">
+          <p className="mb-8 max-w-xl text-base leading-relaxed text-white/90 drop-shadow-hero-soft sm:text-lg">
             Educación parvularia y apoyo fonoaudiológico para niños y niñas de 3
             a 5 años 11 meses. Te orientamos desde la primera consulta.
           </p>
@@ -91,7 +94,7 @@ export default function Hero() {
             {proofPoints.map((point) => (
               <li
                 key={point}
-                className="flex items-start gap-3 text-sm font-semibold text-white sm:text-base"
+                className="flex items-start gap-3 text-sm font-semibold text-white drop-shadow-hero-soft sm:text-base"
               >
                 <CheckCircle2
                   className="mt-0.5 h-5 w-5 shrink-0 text-accent-on-dark"
@@ -122,6 +125,8 @@ export default function Hero() {
               <ArrowRight className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
             </Link>
           </div>
+
+          <ResponseNote tone="dark" className="max-w-xl" />
 
         </div>
       </div>

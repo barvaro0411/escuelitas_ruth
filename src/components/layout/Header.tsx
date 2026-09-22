@@ -63,7 +63,7 @@ export default function Header() {
   const isSolid = scrolled || !isHome;
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
+    <header data-cta="cabecera" className="fixed inset-x-0 top-0 z-50">
       <FiestasPatriasMode>
         <FiestasPatriasBanner />
       </FiestasPatriasMode>

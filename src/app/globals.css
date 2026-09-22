@@ -560,3 +560,19 @@ h6 {
     animation: none !important;
   }
 }
+
+/* ===== Legibilidad del hero sobre fotografía =====
+   El velo azul del hero se redujo para que la fotografía del equipo con los
+   niños sea visible: es la prueba emocional que la familia necesita ver antes
+   de leer nada. Con menos velo, el texto queda parcialmente sobre zonas claras
+   de la imagen, así que la sombra sostiene el contraste sin volver a taparla.
+   Se usa sombra y no un bloque opaco para no reintroducir el problema. */
+.drop-shadow-hero {
+  text-shadow:
+    0 2px 12px rgb(7 89 133 / 0.55),
+    0 1px 3px rgb(7 89 133 / 0.4);
+}
+
+.drop-shadow-hero-soft {
+  text-shadow: 0 1px 8px rgb(7 89 133 / 0.5);
+}
