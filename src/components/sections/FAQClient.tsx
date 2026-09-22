@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
+import FaqItem from "@/components/ui/FaqItem";
 import { createWhatsAppUrl } from "@/lib/site";
 
 export type FAQCategory = {
@@ -44,58 +45,32 @@ export default function FAQClient({ faqs }: FAQClientProps) {
         </div>
 
         <div className="space-y-10">
-          {faqs.map((category) => (
+          {/* El id se arma con el índice y no con el nombre de la categoría:
+              "Sobre el TEL" y "Admisión y Costos" llevan espacios, y un id con
+              espacios hace que aria-controls se lea como una lista de varios
+              ids, de modo que el botón no anuncia el panel que controla. */}
+          {faqs.map((category, categoryIndex) => (
             <section
               key={category.category}
-              aria-labelledby={`faq-category-${category.category}`}
+              aria-labelledby={`faq-category-${categoryIndex}`}
             >
               <h2
-                id={`faq-category-${category.category}`}
+                id={`faq-category-${categoryIndex}`}
                 className="mb-4 font-display font-extrabold text-ink text-3xl sm:text-4xl"
               >
                 {category.category}
               </h2>
-              <div className="space-y-3">
-                {category.questions.map((faq, index) => {
-                  const isOpen = activeIndices[category.category] === index;
-                  const buttonId = `faq-button-${category.category}-${index}`;
-                  const panelId = `faq-panel-${category.category}-${index}`;
-
-                  return (
-                    <article
-                      key={faq.q}
-                      className={`overflow-hidden rounded-xl border bg-surface transition-colors ${isOpen ? "border-primary" : "border-border"}`}
-                    >
-                      <button
-                        id={buttonId}
-                        type="button"
-                        className="flex min-h-14 w-full items-center justify-between gap-4 px-5 py-4 text-left text-base font-extrabold text-ink hover:bg-surface-sunk sm:px-6"
-                        onClick={() =>
-                          toggleAccordion(category.category, index)
-                        }
-                        aria-expanded={isOpen}
-                        aria-controls={panelId}
-                      >
-                        <span>{faq.q}</span>
-                        <ChevronDown
-                          className={`h-5 w-5 shrink-0 text-primary transition-transform ${isOpen ? "rotate-180" : ""}`}
-                          aria-hidden="true"
-                        />
-                      </button>
-                      <div
-                        id={panelId}
-                        role="region"
-                        aria-labelledby={buttonId}
-                        hidden={!isOpen}
-                        className="border-t border-border bg-surface-sunk px-5 py-4 sm:px-6"
-                      >
-                        <p className="text-sm leading-relaxed text-muted sm:text-base">
-                          {faq.a}
-                        </p>
-                      </div>
-                    </article>
-                  );
-                })}
+              <div className="space-y-3" data-reveal-group>
+                {category.questions.map((faq, index) => (
+                  <FaqItem
+                    key={faq.q}
+                    idPrefix={`faq-${categoryIndex}-${index}`}
+                    question={faq.q}
+                    answer={faq.a}
+                    isOpen={activeIndices[category.category] === index}
+                    onToggle={() => toggleAccordion(category.category, index)}
+                  />
+                ))}
               </div>
             </section>
           ))}

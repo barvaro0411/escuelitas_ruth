@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import FaqItem from "@/components/ui/FaqItem";
 
 const faqs = [
   {
@@ -27,8 +28,8 @@ export default function FAQPreview() {
 
   return (
     <section data-cta="faq" className="border-b border-border bg-surface py-14">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:px-8" data-reveal-group>
-        <div>
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:px-8">
+        <div data-reveal="left">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
             Preguntas frecuentes
           </p>
@@ -48,45 +49,19 @@ export default function FAQPreview() {
           </Link>
         </div>
 
-        <div className="space-y-3">
-          {faqs.map((faq, index) => {
-            const isOpen = openIndex === index;
-            const buttonId = `faq-preview-button-${index}`;
-            const panelId = `faq-preview-panel-${index}`;
-
-            return (
-              <article
-                key={faq.question}
-                className={`overflow-hidden rounded-xl border bg-surface transition-colors ${isOpen ? "border-primary" : "border-border"}`}
-              >
-                <button
-                  id={buttonId}
-                  type="button"
-                  className="flex min-h-14 w-full items-center justify-between gap-4 px-5 py-4 text-left text-base font-extrabold text-ink hover:bg-surface-sunk sm:px-6"
-                  onClick={() => setOpenIndex(isOpen ? null : index)}
-                  aria-expanded={isOpen}
-                  aria-controls={panelId}
-                >
-                  <span>{faq.question}</span>
-                  <ChevronDown
-                    className={`h-5 w-5 shrink-0 text-primary transition-transform ${isOpen ? "rotate-180" : ""}`}
-                    aria-hidden="true"
-                  />
-                </button>
-                <div
-                  id={panelId}
-                  role="region"
-                  aria-labelledby={buttonId}
-                  hidden={!isOpen}
-                  className="border-t border-border bg-surface-sunk px-5 py-4 sm:px-6"
-                >
-                  <p className="text-sm leading-relaxed text-muted sm:text-base">
-                    {faq.answer}
-                  </p>
-                </div>
-              </article>
-            );
-          })}
+        {/* El grupo va en la lista y no en la rejilla de dos columnas: así
+            escalona pregunta por pregunta en vez de columna contra columna. */}
+        <div className="space-y-3" data-reveal-group>
+          {faqs.map((faq, index) => (
+            <FaqItem
+              key={faq.question}
+              idPrefix={`faq-preview-${index}`}
+              question={faq.question}
+              answer={faq.answer}
+              isOpen={openIndex === index}
+              onToggle={() => setOpenIndex(openIndex === index ? null : index)}
+            />
+          ))}
         </div>
       </div>
     </section>
