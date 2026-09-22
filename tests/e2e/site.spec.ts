@@ -113,6 +113,49 @@ test("la calculadora asigna el nivel esperado", async ({ page }) => {
   ).toBeVisible();
 });
 
+test("tras calcular, la consulta de cupos queda a la vista", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByLabel("Día").selectOption("15");
+  await page.getByLabel("Mes").selectOption("6");
+  await page.getByLabel("Año").selectOption("2022");
+
+  // El botón queda recién asomado sobre la barra fija, como cuando una familia
+  // baja justo hasta encontrarlo: en móvil el resultado nace fuera de pantalla.
+  const calculate = page.getByRole("button", { name: /Calcular nivel/ });
+  await calculate.evaluate((button) => {
+    const covered =
+      parseFloat(
+        getComputedStyle(document.documentElement).scrollPaddingBottom,
+      ) || 0;
+    window.scrollBy({
+      top: button.getBoundingClientRect().bottom - (window.innerHeight - covered),
+      behavior: "instant",
+    });
+  });
+  await calculate.click();
+
+  const action = page.getByRole("link", {
+    name: /Consultar cupos para Pre-Kínder/,
+  });
+  await expect(action).toBeInViewport({ ratio: 1 });
+  // Estar dentro del viewport no basta: la cabecera o la barra fija podrían
+  // taparlo.
+  await expect
+    .poll(() =>
+      action.evaluate((link) => {
+        const box = link.getBoundingClientRect();
+        const hit = document.elementFromPoint(
+          box.left + box.width / 2,
+          box.top + box.height / 2,
+        );
+        return hit !== null && link.contains(hit);
+      }),
+    )
+    .toBe(true);
+});
+
 test("el formulario informa los campos obligatorios sin enviar datos", async ({
   page,
 }) => {

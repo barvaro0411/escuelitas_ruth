@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, type ComponentType, type FormEvent } from "react";
+import { useRef, useState, type ComponentType, type FormEvent } from "react";
+import { flushSync } from "react-dom";
 import Link from "next/link";
 import {
   AlertCircle,
@@ -177,6 +178,37 @@ const ANIOS = Array.from(
   (_, index) => admissionCutoff.year - 8 + index,
 );
 
+/**
+ * Trae el resultado a la vista cuando queda fuera de ella.
+ *
+ * En móvil el formulario y el resultado van apilados: al tocar «Calcular» el
+ * resultado aparecía bajo el borde inferior y en pantalla solo cambiaba el
+ * botón «Limpiar». En escritorio van lado a lado y casi siempre ya se ve, así
+ * que primero se comprueba y solo se desplaza si hace falta.
+ */
+function revealResult(region: HTMLElement, action: HTMLElement) {
+  // Lo que tapan la cabecera y la barra fija de matrícula ya está declarado
+  // como `scroll-padding` en globals.css: se reutiliza en vez de medirlas.
+  const root = getComputedStyle(document.documentElement);
+  const visibleTop = parseFloat(root.scrollPaddingTop) || 0;
+  const visibleBottom =
+    window.innerHeight - (parseFloat(root.scrollPaddingBottom) || 0);
+
+  const isVisible =
+    region.getBoundingClientRect().top >= visibleTop &&
+    action.getBoundingClientRect().bottom <= visibleBottom;
+  if (isVisible) return;
+
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+  region.scrollIntoView({
+    // «auto» sigue al CSS, que con movimiento reducido ya anula el scroll suave.
+    behavior: prefersReducedMotion ? "auto" : "smooth",
+    block: "start",
+  });
+}
+
 export default function AgeCalculator() {
   // Tres selectores en vez de <input type="date">: el formato del campo nativo
   // depende del idioma del navegador y llegaba a mostrarse como mm/dd/yyyy.
@@ -184,6 +216,8 @@ export default function AgeCalculator() {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
   const [hasCalculated, setHasCalculated] = useState(false);
+  const resultRegionRef = useRef<HTMLDivElement>(null);
+  const resultActionRef = useRef<HTMLAnchorElement>(null);
 
   const birthdate =
     day && month && year
@@ -194,7 +228,13 @@ export default function AgeCalculator() {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setHasCalculated(true);
+    // El resultado se pinta antes de medir dónde quedó.
+    flushSync(() => setHasCalculated(true));
+    // Sin la acción no hay resultado: la fecha no es válida y el aviso de error
+    // ya se ve junto al botón.
+    if (resultRegionRef.current && resultActionRef.current) {
+      revealResult(resultRegionRef.current, resultActionRef.current);
+    }
   };
 
   const handleReset = () => {
@@ -411,8 +451,14 @@ export default function AgeCalculator() {
             </p>
           </form>
 
-          {/* Panel de resultado */}
-          <div aria-live="polite" className="min-w-0 w-full lg:col-span-7">
+          {/* Panel de resultado. Al calcular se desplaza este contenedor y no
+              el panel: el panel entra con `animate-fade-up` y, mientras anima,
+              su posición está corrida hacia abajo. */}
+          <div
+            ref={resultRegionRef}
+            aria-live="polite"
+            className="min-w-0 w-full scroll-mt-4 lg:col-span-7"
+          >
             {!result ? (
               <div className="min-w-0 rounded-2xl border border-border/80 bg-surface p-6 sm:p-8 shadow-xs">
                 <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-primary mb-2">
@@ -528,6 +574,24 @@ export default function AgeCalculator() {
                   {result.description}
                 </p>
 
+                {/* La acción va junto a la respuesta y no al final: en móvil el
+                    panel mide más que la pantalla y, abajo, el botón quedaba
+                    fuera de ella aun con el resultado a la vista. */}
+                <a
+                  ref={resultActionRef}
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mb-5 flex w-full items-center justify-center gap-2 rounded-xl bg-action px-5 py-4 text-sm sm:text-base font-extrabold text-primary-dark transition-all hover:bg-action-hover active:scale-[0.98] btn-action-glow text-center cursor-pointer"
+                >
+                  <MessageCircle className="h-5 w-5 shrink-0" />
+                  <span>
+                    {result.status === "eligible"
+                      ? `Consultar cupos para ${result.levelName}`
+                      : "Pedir Orientación por WhatsApp"}
+                  </span>
+                </a>
+
                 <div className="mb-4 rounded-xl border border-primary/15 bg-surface-sunk p-4 flex items-center justify-between">
                   <div>
                     <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-primary">
@@ -577,7 +641,7 @@ export default function AgeCalculator() {
                   </div>
                 )}
 
-                <ul className="space-y-2 mb-5">
+                <ul className="space-y-2">
                   {result.bulletPoints.map((point) => (
                     <li
                       key={point}
@@ -594,7 +658,7 @@ export default function AgeCalculator() {
                 </ul>
 
                 {result.status === "eligible" && (
-                  <div className="mb-5 flex items-center justify-between gap-3 rounded-xl bg-primary px-4 py-3 text-white shadow-xs">
+                  <div className="mt-5 flex items-center justify-between gap-3 rounded-xl bg-primary px-4 py-3 text-white shadow-xs">
                     <div>
                       <span className="text-xs font-extrabold block">
                         Educación 100% Gratuita & Evaluación
@@ -609,19 +673,6 @@ export default function AgeCalculator() {
                   </div>
                 )}
 
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-action px-5 py-4 text-sm sm:text-base font-extrabold text-primary-dark transition-all hover:bg-action-hover active:scale-[0.98] btn-action-glow text-center cursor-pointer"
-                >
-                  <MessageCircle className="h-5 w-5 shrink-0" />
-                  <span>
-                    {result.status === "eligible"
-                      ? `Consultar cupos para ${result.levelName}`
-                      : "Pedir Orientación por WhatsApp"}
-                  </span>
-                </a>
                 {result.status === "eligible" && (
                   <Link
                     href="/sedes"
