@@ -37,6 +37,21 @@ test("todas las rutas públicas responden y tienen estructura semántica", async
   }
 });
 
+test("ninguna página es más ancha que la pantalla", async ({ page }) => {
+  test.setTimeout(90_000);
+  // En móvil el desborde no se ve como una barra de scroll: el navegador aleja
+  // la página para que quepa y el documento crece con él. Por eso se compara
+  // con el ancho del dispositivo y no con el del propio documento.
+  const { width } = page.viewportSize()!;
+  for (const route of routes) {
+    await page.goto(route);
+    const scrollWidth = await page.evaluate(
+      () => document.documentElement.scrollWidth,
+    );
+    expect(scrollWidth, route).toBeLessThanOrEqual(width);
+  }
+});
+
 test("las páginas de comuna consolidadas redirigen a Santiago Norte", async ({
   page,
 }) => {
