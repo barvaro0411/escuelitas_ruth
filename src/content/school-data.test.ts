@@ -51,6 +51,11 @@ describe("Datos Institucionales de Sedes y RBDs", () => {
     }
   });
 
+  it("define el año y fecha de corte reglamentaria", () => {
+    expect(admissionCutoff.year).toBe(2027);
+    expect(admissionCutoff.isoDate).toBe("2027-03-31");
+  });
+
   it("define los 3 niveles educativos con sus edades reglamentarias", () => {
     expect(schoolLevels).toHaveLength(3);
     const mm = schoolLevels.find((l) => l.id === "medio-mayor");

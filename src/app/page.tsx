@@ -11,8 +11,7 @@ import FiestasPatriasMode from "@/components/seasonal/FiestasPatriasMode";
 import FiestasPatriasSection from "@/components/seasonal/FiestasPatriasSection";
 import WeeklyUpdates from "@/components/sections/WeeklyUpdates";
 import ImportantDates from "@/components/sections/ImportantDates";
-import SchoolLifePreview from "@/components/sections/SchoolLifePreview";
-import FamilyResourcesPreview from "@/components/sections/FamilyResourcesPreview";
+import CommunityPreview from "@/components/sections/CommunityPreview";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 
 const homeFaqs = [
@@ -41,14 +40,13 @@ export default function Home() {
       <SedesSelector />
       <ProgramsSummary />
       <AgeCalculator />
-      <StepByStepAdmission />
+      <StepByStepAdmission compact />
       <FiestasPatriasMode>
         <FiestasPatriasSection />
       </FiestasPatriasMode>
       <WeeklyUpdates hideWhenEmpty />
-      <ImportantDates hideWhenEmpty />
-      <SchoolLifePreview />
-      <FamilyResourcesPreview />
+      <ImportantDates hideWhenEmpty compact />
+      <CommunityPreview />
       <TestimonialsSection />
       <FAQPreview />
       <CTASection />

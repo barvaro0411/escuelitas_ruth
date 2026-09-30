@@ -18,13 +18,12 @@ const heroWhatsAppUrl = createWhatsAppUrl({ source: "hero" });
 
 const proofPoints = [
   "Evaluación fonoaudiológica sin costo",
-  "Educación gratuita, sin matrícula ni mensualidad",
-  "Atención de 3 a 5 años 11 meses en Conchalí",
+  "Sin matrícula ni mensualidad",
 ];
 
 export default function Hero() {
   return (
-    <section data-cta="hero" className="fiestas-hero relative isolate flex min-h-[620px] items-center overflow-hidden bg-primary-dark pb-24 pt-28 sm:min-h-[680px] sm:pb-28 sm:pt-32">
+    <section data-cta="hero" className="fiestas-hero relative isolate flex items-center overflow-hidden bg-primary-dark pb-20 pt-28 sm:pb-20 sm:pt-28">
       <Image
         src="/hero-kids.jpg"
         alt="Niños aprendiendo en la Escuela de Lenguaje Ruth"
@@ -67,30 +66,28 @@ export default function Hero() {
             </div>
           </FiestasPatriasMode>
 
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-action/30 bg-action px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-primary-dark">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-action/30 bg-action px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-primary-dark">
             <ShieldCheck className="h-4 w-4" aria-hidden="true" />
-            Consulta cupos 2027 en Conchalí
+            Consulta cupos 2027
           </div>
 
           <h1 className="max-w-2xl text-balance font-display font-extrabold leading-[1.08] tracking-tight text-white text-4xl drop-shadow-hero sm:text-5xl">
-            Acompañamos a tu hijo a descubrir el poder de su{" "}
-            <span className="whitespace-nowrap text-accent-on-dark">
-              propia voz
-            </span>
+            Escuela de lenguaje{" "}
+            <span className="text-accent-on-dark">gratuita en Conchalí</span>
           </h1>
 
           {/* El contorno de la voz: el único recurso gráfico del sitio. */}
           <VoiceContour
             variant="signature"
-            className="-mt-3 mb-7 h-8 w-56 text-accent-on-dark/70 sm:w-72"
+            className="mt-1 mb-3 h-5 w-48 text-accent-on-dark/70 sm:w-56"
           />
 
-          <p className="mb-8 max-w-xl text-base leading-relaxed text-white/90 drop-shadow-hero-soft sm:text-lg">
-            Educación parvularia y apoyo fonoaudiológico para niños y niñas de 3
-            a 5 años 11 meses. Te orientamos desde la primera consulta.
+          <p className="mb-4 max-w-xl text-base leading-relaxed text-white/90 drop-shadow-hero-soft sm:text-lg">
+            Educación parvularia y apoyo fonoaudiológico de 3 a 5 años 11 meses.
+            Acompañamos a tu hijo a descubrir su propia voz.
           </p>
 
-          <ul className="mb-8 space-y-3" aria-label="Beneficios principales">
+          <ul className="mb-5 space-y-2" aria-label="Beneficios principales">
             {proofPoints.map((point) => (
               <li
                 key={point}
@@ -114,7 +111,7 @@ export default function Hero() {
               className="group inline-flex min-h-14 items-center justify-center gap-2 rounded-xl bg-action px-6 py-4 text-center text-base font-extrabold text-primary-dark transition-all hover:bg-action-hover focus-visible:ring-4 focus-visible:ring-white sm:px-7 btn-action-glow cursor-pointer"
             >
               <MessageCircle className="h-5 w-5 transition-transform duration-200 group-hover:scale-110" aria-hidden="true" />
-              <span>Consultar disponibilidad</span>
+              <span>Consultar cupos por WhatsApp</span>
             </a>
 
             <Link

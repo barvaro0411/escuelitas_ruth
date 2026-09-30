@@ -37,6 +37,21 @@ test("todas las rutas públicas responden y tienen estructura semántica", async
   }
 });
 
+test("ninguna página es más ancha que la pantalla", async ({ page }) => {
+  test.setTimeout(90_000);
+  // En móvil el desborde no se ve como una barra de scroll: el navegador aleja
+  // la página para que quepa y el documento crece con él. Por eso se compara
+  // con el ancho del dispositivo y no con el del propio documento.
+  const { width } = page.viewportSize()!;
+  for (const route of routes) {
+    await page.goto(route);
+    const scrollWidth = await page.evaluate(
+      () => document.documentElement.scrollWidth,
+    );
+    expect(scrollWidth, route).toBeLessThanOrEqual(width);
+  }
+});
+
 test("las páginas de comuna consolidadas redirigen a Santiago Norte", async ({
   page,
 }) => {
@@ -113,6 +128,49 @@ test("la calculadora asigna el nivel esperado", async ({ page }) => {
   ).toBeVisible();
 });
 
+test("tras calcular, la consulta de cupos queda a la vista", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByLabel("Día").selectOption("15");
+  await page.getByLabel("Mes").selectOption("6");
+  await page.getByLabel("Año").selectOption("2022");
+
+  // El botón queda recién asomado sobre la barra fija, como cuando una familia
+  // baja justo hasta encontrarlo: en móvil el resultado nace fuera de pantalla.
+  const calculate = page.getByRole("button", { name: /Calcular nivel/ });
+  await calculate.evaluate((button) => {
+    const covered =
+      parseFloat(
+        getComputedStyle(document.documentElement).scrollPaddingBottom,
+      ) || 0;
+    window.scrollBy({
+      top: button.getBoundingClientRect().bottom - (window.innerHeight - covered),
+      behavior: "instant",
+    });
+  });
+  await calculate.click();
+
+  const action = page.getByRole("link", {
+    name: /Consultar cupos para Pre-Kínder/,
+  });
+  await expect(action).toBeInViewport({ ratio: 1 });
+  // Estar dentro del viewport no basta: la cabecera o la barra fija podrían
+  // taparlo.
+  await expect
+    .poll(() =>
+      action.evaluate((link) => {
+        const box = link.getBoundingClientRect();
+        const hit = document.elementFromPoint(
+          box.left + box.width / 2,
+          box.top + box.height / 2,
+        );
+        return hit !== null && link.contains(hit);
+      }),
+    )
+    .toBe(true);
+});
+
 test("el formulario informa los campos obligatorios sin enviar datos", async ({
   page,
 }) => {
@@ -121,6 +179,51 @@ test("el formulario informa los campos obligatorios sin enviar datos", async ({
     .getByRole("button", { name: "Abrir WhatsApp con mi consulta" })
     .click();
   await expect(page.locator("form [role='alert']")).toHaveCount(3);
+});
+
+test("la consulta principal se ve completa sin desplazarse", async ({ page }, testInfo) => {
+  await page.setViewportSize(
+    testInfo.project.name.includes("mobile")
+      ? { width: 390, height: 844 }
+      : { width: 1280, height: 633 },
+  );
+  await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
+  const action = page.getByRole("link", {
+    name: "Abrir WhatsApp para consultar disponibilidad y agendar evaluación",
+  });
+  await expect(action).toBeInViewport({ ratio: 1 });
+  const uncovered = await action.evaluate((link) => {
+    const box = link.getBoundingClientRect();
+    const hit = document.elementFromPoint(
+      box.left + box.width / 2,
+      box.top + box.height / 2,
+    );
+    return hit !== null && link.contains(hit);
+  });
+  expect(uncovered).toBe(true);
+});
+
+test("en celular el formulario se encuentra antes de las sedes", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/contacto");
+  await page.evaluate(() => document.fonts.ready);
+  await expect(page.getByLabel("Nombre del apoderado/a", { exact: false })).toBeInViewport({ ratio: 1 });
+  const order = await page.evaluate(() => {
+    const form = document.querySelector("form")!.getBoundingClientRect();
+    const campuses = document.querySelector("aside")!.getBoundingClientRect();
+    return form.top < campuses.top;
+  });
+  expect(order).toBe(true);
+});
+
+test("sedes tiene imagen disponible para compartir", async ({ page, request }) => {
+  await page.goto("/sedes");
+  const image = page.locator('meta[property="og:image"]');
+  await expect(image).toHaveAttribute("content", "https://escuelitasruth.cl/og-image.jpg");
+  const response = await request.get("/og-image.jpg");
+  expect(response.ok()).toBe(true);
+  expect(response.headers()["content-type"]).toContain("image/");
 });
 
 test("la portada cumple el presupuesto de transferencia", async ({ page }) => {

@@ -173,7 +173,8 @@ h6 {
    nunca queda una sección invisible.
 
    - `data-reveal`            un elemento entra por sí solo.
-   - `data-reveal="left|right|zoom"` cambia la dirección.
+   - `data-reveal="left|right|zoom"` cambia la dirección; `left` y `right`
+                              solo desde `lg`, con las columnas lado a lado.
    - `data-reveal-group`      la rejilla entra escalonada; se observa el
                               contenedor y los hijos heredan el retardo. */
 .js [data-reveal],
@@ -187,14 +188,24 @@ h6 {
   will-change: opacity, transform;
 }
 
+/* Las entradas laterales esperan a `lg`, donde las rejillas pasan a dos
+   columnas. En una sola columna el bloque ocupa todo el ancho y los 30 px lo
+   sacaban de la pantalla: la portada medía 405 px en un celular de 390 y el
+   navegador la alejaba para que cupiera. Por debajo entran como las demás.
+   Se usa la variante de Tailwind y no 1024px porque `lg` está en rem: con la
+   letra del navegador agrandada, el cambio de columnas llega más tarde. */
 .js [data-reveal="left"] {
-  --reveal-x: -30px;
-  --reveal-y: 0;
+  @variant lg {
+    --reveal-x: -30px;
+    --reveal-y: 0;
+  }
 }
 
 .js [data-reveal="right"] {
-  --reveal-x: 30px;
-  --reveal-y: 0;
+  @variant lg {
+    --reveal-x: 30px;
+    --reveal-y: 0;
+  }
 }
 
 .js [data-reveal="zoom"] {

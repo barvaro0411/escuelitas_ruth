@@ -28,6 +28,14 @@ export const metadata: Metadata = {
     description:
       "Información de las sedes Vascongados y Gral. Gambino en Conchalí.",
     url: "/sedes",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Las sedes de Escuela de Lenguaje Ruth en Conchalí",
+      },
+    ],
   },
 };
 

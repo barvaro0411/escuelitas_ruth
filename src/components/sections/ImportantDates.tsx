@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo } from "react";
-import { CalendarDays, MapPin } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 import { calendarEvents } from "@/content/school-life";
 import { campuses } from "@/content/school-data";
 
@@ -17,8 +18,10 @@ function getTodayInChile() {
 // Ver la nota de `hideWhenEmpty` en WeeklyUpdates.
 export default function ImportantDates({
   hideWhenEmpty = false,
+  compact = false,
 }: {
   hideWhenEmpty?: boolean;
+  compact?: boolean;
 }) {
   const events = useMemo(() => {
     const today = getTodayInChile();
@@ -27,13 +30,14 @@ export default function ImportantDates({
         (event) => event.published && (event.endDate ?? event.date) >= today,
       )
       .sort((a, b) => a.date.localeCompare(b.date))
-      .slice(0, 6);
-  }, []);
+      .slice(0, compact ? 2 : 6);
+  }, [compact]);
 
   if (events.length === 0 && hideWhenEmpty) return null;
 
   return (
     <section
+      id="agenda"
       className="border-b border-border bg-surface-sunk py-14 sm:py-18"
       aria-labelledby="important-dates-title"
     >
@@ -56,7 +60,7 @@ export default function ImportantDates({
         </div>
 
         {events.length > 0 ? (
-          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3" data-reveal-group>
+          <div className={`mt-6 grid gap-4 md:grid-cols-2 ${compact ? "" : "lg:grid-cols-3"}`} data-reveal-group>
             {events.map((event) => {
               const date = new Date(`${event.date}T12:00:00`);
               const day = new Intl.DateTimeFormat("es-CL", {
@@ -101,7 +105,7 @@ export default function ImportantDates({
                     <h3 className="font-display font-extrabold leading-tight text-ink text-base">
                       {event.title}
                     </h3>
-                    {event.description && (
+                    {!compact && event.description && (
                       <p className="mt-1 text-sm leading-relaxed text-muted">
                         {event.description}
                       </p>
@@ -125,6 +129,12 @@ export default function ImportantDates({
               actividades.
             </p>
           </div>
+        )}
+        {compact && (
+          <Link href="/vida-escolar#agenda" className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-primary hover:text-primary-dark">
+            Ver agenda y actividades
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
         )}
       </div>
     </section>

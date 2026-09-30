@@ -3,7 +3,6 @@
 import { useState } from "react";
 import {
   Apple,
-  Clock,
   Heart,
   MessageCircle,
   Moon,
@@ -12,7 +11,6 @@ import {
   Sparkles,
   Star,
   Sun,
-  Users,
 } from "lucide-react";
 
 type RoutineStep = {

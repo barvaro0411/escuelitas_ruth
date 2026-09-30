@@ -23,6 +23,7 @@ export interface StepByStepAdmissionProps {
    * propio ritmo de color.
    */
   variant?: "band" | "inline";
+  compact?: boolean;
 }
 
 export default function StepByStepAdmission({
@@ -30,6 +31,7 @@ export default function StepByStepAdmission({
   subtitle = "Te acompañamos desde la primera consulta hasta el primer día de clases. Sin trámites difíciles ni cobros sorpresa.",
   className = "",
   variant = "band",
+  compact = false,
 }: StepByStepAdmissionProps) {
   const isBand = variant === "band";
 
@@ -83,6 +85,41 @@ export default function StepByStepAdmission({
       isExternal: false,
     },
   ];
+
+  if (compact) {
+    return (
+      <section id="matricula" data-cta="pasos-admision" className={`matricula-band scroll-mt-24 border-y border-action-line py-12 sm:py-16 ${className}`} aria-labelledby="step-by-step-admission-title">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 id="step-by-step-admission-title" className="font-display text-3xl font-extrabold text-ink sm:text-4xl" data-reveal>
+            {title}
+          </h2>
+          <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
+            Primero consultamos cupos y requisitos contigo. El ingreso se confirma tras la evaluación y la revisión de documentos.
+          </p>
+          <ol className="mt-6 grid gap-4 md:grid-cols-3" data-reveal-group>
+            {steps.map((step) => (
+              <li key={step.number} className="flex flex-col rounded-2xl border border-action-line bg-surface p-5 sm:p-6">
+                <div className="flex items-start gap-3">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-dark font-extrabold text-accent-on-dark" aria-hidden="true">{step.number}</span>
+                  <h3 className="font-display text-xl font-extrabold text-ink">{step.title}</h3>
+                </div>
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">{step.description}</p>
+                {step.isExternal ? (
+                  <a href={step.actionHref} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-primary hover:text-primary-dark">
+                    {step.actionText}<ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  </a>
+                ) : (
+                  <Link href={step.actionHref} className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-primary hover:text-primary-dark">
+                    {step.actionText}<ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  </Link>
+                )}
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
