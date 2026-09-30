@@ -2,8 +2,6 @@ import {
   Compass,
   Heart,
   Music,
-  Palette,
-  PartyPopper,
   Sparkles,
   Smile,
   Utensils,

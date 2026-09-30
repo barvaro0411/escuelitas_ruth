@@ -7,7 +7,6 @@ import {
   CalendarDays,
   CheckCircle2,
   GraduationCap,
-  Sparkles,
   Users2,
 } from "lucide-react";
 import { annualPlanUnits } from "@/content/school-life";

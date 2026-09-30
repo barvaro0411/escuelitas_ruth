@@ -2,7 +2,7 @@
 
 import { useEffect, Suspense } from "react";
 import Link from "next/link";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Clock, Instagram, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
 import { toast } from "sonner";
 import { track } from "@vercel/analytics";
@@ -87,20 +87,8 @@ function ContactoForm() {
     handleSubmit,
     formState: { errors },
     setValue,
-    control,
   } = useForm<FormData>({
     defaultValues: { consent: false },
-  });
-
-  const values = useWatch({ control });
-  const mailtoUrl = buildContactMailtoUrl({
-    nombreApoderado: values.nombreApoderado,
-    telefono: values.telefono,
-    fechaNacimiento: values.fechaNacimiento,
-    comuna: values.comuna,
-    sede: values.sede,
-    jornada: values.jornada,
-    mensaje: values.mensaje,
   });
 
   useEffect(() => {
@@ -118,118 +106,52 @@ function ContactoForm() {
 
   const onSubmit = (data: FormData) => {
     const whatsappUrl = buildWhatsAppUrl(buildContactWhatsAppMessage(data));
-    const whatsappWindow = window.open(
-      whatsappUrl,
-      "_blank",
-      "noopener,noreferrer",
-    );
-
-    if (!whatsappWindow) {
-      toast.error("No pudimos abrir WhatsApp", {
-        description:
-          "Permite ventanas emergentes o escribe a nuestro correo con el botón de abajo.",
-      });
-      return;
-    }
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
 
     track("contact_form_submit", { channel: "whatsapp" });
 
-    toast.success("WhatsApp está listo para tu consulta", {
-      description: "Revisa el mensaje y decide si quieres enviarlo.",
+    toast.success("WhatsApp está listo con tu consulta", {
+      description: "Revisa el mensaje en WhatsApp y envíalo cuando gustes.",
+      action: {
+        label: "Reabrir",
+        onClick: () => window.open(whatsappUrl, "_blank", "noopener,noreferrer"),
+      },
     });
+  };
+
+  const onEmailSubmit = (data: FormData) => {
+    const targetUrl = buildContactMailtoUrl(data);
+    track("contact_form_submit", { channel: "email" });
+    window.location.assign(targetUrl);
   };
 
   return (
     <div className="relative overflow-hidden bg-paper pt-32 pb-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto mb-12 max-w-3xl">
+        <div className="mx-auto mb-8 max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
             Contacto y admisión
           </p>
           <h1 className="mt-2 font-display font-extrabold leading-tight text-ink text-4xl sm:text-5xl">
-            Consulta disponibilidad y agenda tu evaluación
+            Consulta cupos y agenda tu evaluación
           </h1>
           <p className="mt-4 text-base leading-relaxed text-muted sm:text-lg">
             Completa solo los datos necesarios. Se abrirá WhatsApp para que
             revises la consulta antes de enviarla.
           </p>
+          <a
+            href={quickWhatsAppUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cta="contacto-directo"
+            className="mt-5 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-action px-5 py-3 text-sm font-extrabold text-action-ink transition-colors hover:bg-action-hover"
+          >
+            <MessageCircle className="h-5 w-5" aria-hidden="true" />
+            Consultar por WhatsApp sin formulario
+          </a>
         </div>
 
-        <div className="grid items-start gap-8 lg:grid-cols-[0.8fr_1.2fr]">
-          <aside className="space-y-4">
-            <div className="rounded-2xl bg-primary-dark p-7 text-white">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-accent-on-dark">
-                Dónde encontrarnos
-              </p>
-              <h2 className="mt-2 font-display font-extrabold text-2xl">
-                Dos sedes en Conchalí
-              </h2>
-              <div className="mt-6 space-y-5">
-                {siteConfig.contact.addresses.map((address) => (
-                  <div key={address.id}>
-                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent-on-dark">
-                      {address.name}
-                    </p>
-                    <p className="mt-1 text-xs font-semibold text-white/80">
-                      RBD {address.rbd}
-                    </p>
-                    <a
-                      href={address.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-1 inline-flex items-start gap-2 text-sm font-semibold text-white/80 hover:text-white"
-                    >
-                      <MapPin
-                        className="mt-0.5 h-4 w-4 shrink-0 text-accent-on-dark"
-                        aria-hidden="true"
-                      />
-                      {address.label}
-                    </a>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-2xl border border-border bg-surface p-6">
-              <h2 className="font-display font-extrabold text-ink text-2xl">
-                Canales directos
-              </h2>
-              <div className="mt-5 space-y-4 text-sm font-semibold text-muted">
-                <a
-                  href={siteConfig.contact.phone.href}
-                  className="flex items-center gap-3 hover:text-primary"
-                >
-                  <Phone className="h-5 w-5 text-primary" aria-hidden="true" />
-                  {siteConfig.contact.phone.label}
-                </a>
-                <a
-                  href={siteConfig.contact.email.href}
-                  className="flex items-center gap-3 break-all hover:text-primary"
-                >
-                  <Mail className="h-5 w-5 text-primary" aria-hidden="true" />
-                  {siteConfig.contact.email.label}
-                </a>
-                <a
-                  href={siteConfig.social.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Instagram oficial de Escuelitas Ruth"
-                  className="flex items-center gap-3 hover:text-pink-600 transition-colors"
-                >
-                  <Instagram className="h-5 w-5 text-pink-600" aria-hidden="true" />
-                  <span>Instagram: @escuelitasruthoficial_</span>
-                </a>
-                <p className="flex items-start gap-3">
-                  <Clock
-                    className="mt-0.5 h-5 w-5 shrink-0 text-primary"
-                    aria-hidden="true"
-                  />
-                  {siteConfig.contact.hours}
-                </p>
-              </div>
-            </div>
-          </aside>
-
+        <div className="grid items-start gap-8 lg:grid-cols-[1.2fr_0.8fr]">
           <section data-cta="formulario-contacto" className="rounded-2xl border border-border bg-surface p-6 sm:p-9">
             <div className="mb-7">
               <h2 className="font-display font-extrabold text-ink text-3xl sm:text-4xl">
@@ -320,6 +242,13 @@ function ContactoForm() {
                     pattern: {
                       value: /^[+()\d\s-]{8,30}$/,
                       message: "Ingresa un teléfono válido.",
+                    },
+                    validate: (value) => {
+                      const digits = value.replace(/\D/g, "");
+                      return (
+                        digits.length >= 8 ||
+                        "Ingresa un número de teléfono con al menos 8 dígitos."
+                      );
                     },
                   })}
                   className="min-h-12 w-full rounded-xl border border-border bg-surface px-4 py-3 text-base font-semibold text-ink outline-none transition-colors focus:border-primary focus:bg-surface focus:ring-4 focus:ring-primary/10"
@@ -491,13 +420,13 @@ function ContactoForm() {
 
               <p className="text-center text-sm text-muted">
                 ¿No usas WhatsApp?{" "}
-                <a
-                  href={mailtoUrl}
-                  onClick={() => track("contact_form_submit", { channel: "email" })}
-                  className="font-extrabold text-primary underline underline-offset-2 hover:text-primary-dark"
+                <button
+                  type="button"
+                  onClick={handleSubmit(onEmailSubmit)}
+                  className="font-extrabold text-primary underline underline-offset-2 hover:text-primary-dark cursor-pointer inline p-0 bg-transparent border-none text-inherit text-sm"
                 >
                   Envíanos estos datos por correo
-                </a>
+                </button>
                 . Se abrirá tu aplicación de email con el mensaje redactado.
               </p>
             </form>
@@ -518,6 +447,80 @@ function ContactoForm() {
               </a>
             </div>
           </section>
+
+          <aside className="space-y-4">
+            <div className="rounded-2xl bg-primary-dark p-7 text-white">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-accent-on-dark">
+                Dónde encontrarnos
+              </p>
+              <h2 className="mt-2 font-display font-extrabold text-2xl">
+                Dos sedes en Conchalí
+              </h2>
+              <div className="mt-6 space-y-5">
+                {siteConfig.contact.addresses.map((address) => (
+                  <div key={address.id}>
+                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent-on-dark">
+                      {address.name}
+                    </p>
+                    <p className="mt-1 text-xs font-semibold text-white/80">
+                      RBD {address.rbd}
+                    </p>
+                    <a
+                      href={address.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-1 inline-flex items-start gap-2 text-sm font-semibold text-white/80 hover:text-white"
+                    >
+                      <MapPin
+                        className="mt-0.5 h-4 w-4 shrink-0 text-accent-on-dark"
+                        aria-hidden="true"
+                      />
+                      {address.label}
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-border bg-surface p-6">
+              <h2 className="font-display font-extrabold text-ink text-2xl">
+                Canales directos
+              </h2>
+              <div className="mt-5 space-y-4 text-sm font-semibold text-muted">
+                <a
+                  href={siteConfig.contact.phone.href}
+                  className="flex items-center gap-3 hover:text-primary"
+                >
+                  <Phone className="h-5 w-5 text-primary" aria-hidden="true" />
+                  {siteConfig.contact.phone.label}
+                </a>
+                <a
+                  href={siteConfig.contact.email.href}
+                  className="flex items-center gap-3 break-all hover:text-primary"
+                >
+                  <Mail className="h-5 w-5 text-primary" aria-hidden="true" />
+                  {siteConfig.contact.email.label}
+                </a>
+                <a
+                  href={siteConfig.social.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram oficial de Escuelitas Ruth"
+                  className="flex items-center gap-3 hover:text-pink-600 transition-colors"
+                >
+                  <Instagram className="h-5 w-5 text-pink-600" aria-hidden="true" />
+                  <span>Instagram: @escuelitasruthoficial_</span>
+                </a>
+                <p className="flex items-start gap-3">
+                  <Clock
+                    className="mt-0.5 h-5 w-5 shrink-0 text-primary"
+                    aria-hidden="true"
+                  />
+                  {siteConfig.contact.hours}
+                </p>
+              </div>
+            </div>
+          </aside>
         </div>
       </div>
     </div>

@@ -181,6 +181,51 @@ test("el formulario informa los campos obligatorios sin enviar datos", async ({
   await expect(page.locator("form [role='alert']")).toHaveCount(3);
 });
 
+test("la consulta principal se ve completa sin desplazarse", async ({ page }, testInfo) => {
+  await page.setViewportSize(
+    testInfo.project.name.includes("mobile")
+      ? { width: 390, height: 844 }
+      : { width: 1280, height: 633 },
+  );
+  await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
+  const action = page.getByRole("link", {
+    name: "Abrir WhatsApp para consultar disponibilidad y agendar evaluación",
+  });
+  await expect(action).toBeInViewport({ ratio: 1 });
+  const uncovered = await action.evaluate((link) => {
+    const box = link.getBoundingClientRect();
+    const hit = document.elementFromPoint(
+      box.left + box.width / 2,
+      box.top + box.height / 2,
+    );
+    return hit !== null && link.contains(hit);
+  });
+  expect(uncovered).toBe(true);
+});
+
+test("en celular el formulario se encuentra antes de las sedes", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/contacto");
+  await page.evaluate(() => document.fonts.ready);
+  await expect(page.getByLabel("Nombre del apoderado/a", { exact: false })).toBeInViewport({ ratio: 1 });
+  const order = await page.evaluate(() => {
+    const form = document.querySelector("form")!.getBoundingClientRect();
+    const campuses = document.querySelector("aside")!.getBoundingClientRect();
+    return form.top < campuses.top;
+  });
+  expect(order).toBe(true);
+});
+
+test("sedes tiene imagen disponible para compartir", async ({ page, request }) => {
+  await page.goto("/sedes");
+  const image = page.locator('meta[property="og:image"]');
+  await expect(image).toHaveAttribute("content", "https://escuelitasruth.cl/og-image.jpg");
+  const response = await request.get("/og-image.jpg");
+  expect(response.ok()).toBe(true);
+  expect(response.headers()["content-type"]).toContain("image/");
+});
+
 test("la portada cumple el presupuesto de transferencia", async ({ page }) => {
   await page.goto("/");
   await page.waitForLoadState("networkidle");
