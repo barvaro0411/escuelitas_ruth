@@ -43,7 +43,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Visitar perfil de Instagram de Escuelitas Ruth"
-                  className="inline-flex items-center gap-2.5 rounded-xl border border-white/20 bg-white/10 px-3.5 py-2.5 text-xs font-bold text-white transition-all hover:border-pink-400/60 hover:bg-gradient-to-r hover:from-purple-600/40 hover:via-pink-600/40 hover:to-amber-500/30 hover:text-white cursor-pointer active:scale-95 shadow-xs"
+                  className="btn-instagram inline-flex items-center gap-2.5 rounded-xl border border-white/20 bg-white/10 px-3.5 py-2.5 text-xs font-bold text-white cursor-pointer active:scale-95 shadow-xs"
                 >
                   <Instagram size={17} className="text-pink-400 shrink-0" />
                   <span>@escuelitasruthoficial_</span>

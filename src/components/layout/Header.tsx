@@ -71,17 +71,17 @@ export default function Header() {
         aria-label="Navegación principal"
         className={`border-b transition-[background-color,border-color,box-shadow,padding] duration-300 ${
           isSolid
-            ? "border-border bg-white/95 py-3 shadow-sm shadow-primary/10 backdrop-blur-sm"
-            : "border-transparent bg-primary-dark/90 py-4"
+            ? "border-border bg-white/92 py-3 shadow-[0_8px_30px_rgb(3,105,161,0.08)] backdrop-blur-md"
+            : "border-transparent bg-primary-dark/90 py-4 backdrop-blur-xs"
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <Link
             href="/"
-            className="flex items-center gap-3"
+            className="group flex items-center gap-3"
             aria-label="Ir al inicio de Escuela de Lenguaje Ruth"
           >
-            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-2xl border-2 border-action bg-white shadow-sm">
+            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-2xl border-2 border-action bg-white shadow-sm transition-transform duration-200 group-hover:scale-105">
               <Image
                 src="/logo.jpg"
                 alt="Logo Escuela de Lenguaje Ruth"
@@ -113,14 +113,14 @@ export default function Header() {
                   key={item.name}
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`relative px-3.5 py-2 text-sm font-semibold transition-colors duration-200 after:absolute after:bottom-0 after:left-3.5 after:right-3.5 after:h-0.5 after:bg-action after:transition-transform after:duration-250 ${
+                  className={`relative rounded-xl px-3.5 py-2 text-sm font-semibold transition-all duration-200 after:absolute after:bottom-0.5 after:left-3.5 after:right-3.5 after:h-0.5 after:rounded-full after:bg-action after:transition-transform after:duration-250 ${
                     active
                       ? isSolid
-                        ? "text-primary after:scale-x-100"
-                        : "text-white after:scale-x-100"
+                        ? "bg-surface-sunk/80 text-primary after:scale-x-100"
+                        : "bg-white/10 text-white after:scale-x-100"
                       : isSolid
-                        ? "text-muted after:scale-x-0 hover:text-primary hover:after:scale-x-100"
-                        : "text-white/80 after:scale-x-0 hover:text-white hover:after:scale-x-100"
+                        ? "text-muted after:scale-x-0 hover:bg-surface-sunk/50 hover:text-primary hover:after:scale-x-100"
+                        : "text-white/80 after:scale-x-0 hover:bg-white/10 hover:text-white hover:after:scale-x-100"
                   }`}
                 >
                   {item.name}
@@ -134,10 +134,10 @@ export default function Header() {
               rel="noopener noreferrer"
               aria-label="Instagram oficial de Escuelitas Ruth"
               title="Visitar Instagram oficial @escuelitasruthoficial_"
-              className={`ml-2 inline-flex h-11 w-11 items-center justify-center rounded-xl border transition-all hover:scale-105 active:scale-95 cursor-pointer ${
+              className={`btn-instagram ml-2 inline-flex h-11 w-11 items-center justify-center rounded-xl border active:scale-95 cursor-pointer ${
                 isSolid
-                  ? "border-border bg-surface text-pink-600 hover:border-pink-500 hover:bg-pink-50"
-                  : "border-white/30 bg-white/10 text-white hover:border-pink-400 hover:bg-white/20"
+                  ? "border-border bg-surface text-pink-600"
+                  : "border-white/30 bg-white/10 text-white"
               }`}
             >
               <Instagram size={19} aria-hidden="true" />
@@ -150,8 +150,12 @@ export default function Header() {
               aria-label="Abrir WhatsApp para consultar disponibilidad 2027"
               className="ml-2 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-action bg-action px-4 py-2.5 text-sm font-extrabold text-primary-dark transition-all hover:bg-action-hover btn-action-glow cursor-pointer"
             >
+              <span className="relative flex h-2 w-2 shrink-0" aria-hidden="true">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-600 animate-radar-pulse" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-600" />
+              </span>
               <MessageCircle size={17} aria-hidden="true" />
-              Consultar disponibilidad
+              <span>Consultar disponibilidad</span>
             </a>
           </div>
 
@@ -218,7 +222,7 @@ export default function Header() {
             rel="noopener noreferrer"
             onClick={() => setMobileMenuOpen(false)}
             aria-label="Abrir WhatsApp para consultar disponibilidad 2027"
-            className="mt-3 flex min-h-14 w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-4 text-base font-extrabold text-white transition-colors hover:bg-primary-dark"
+            className="mt-3 flex min-h-14 w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-4 text-base font-extrabold text-white transition-all hover:bg-primary-dark btn-primary-glow"
           >
             <MessageCircle size={20} aria-hidden="true" />
             Consultar disponibilidad por WhatsApp
@@ -230,7 +234,7 @@ export default function Header() {
             rel="noopener noreferrer"
             onClick={() => setMobileMenuOpen(false)}
             aria-label="Instagram de Escuelitas Ruth"
-            className="mt-2 flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface-sunk px-4 py-2.5 text-xs font-bold text-muted hover:border-pink-400 hover:text-pink-600 transition-colors"
+            className="btn-instagram mt-2 flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface-sunk px-4 py-2.5 text-xs font-bold text-muted"
           >
             <Instagram size={16} className="text-pink-600" />
             <span>Síguenos en Instagram @escuelitasruthoficial_</span>

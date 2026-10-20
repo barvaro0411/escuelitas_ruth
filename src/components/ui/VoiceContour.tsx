@@ -42,11 +42,13 @@ export default function VoiceContour({
     >
       <path
         d={PATHS[variant]}
+        pathLength={1}
         stroke="currentColor"
         strokeWidth={variant === "rule" ? 1.5 : 2.5}
         strokeLinecap="round"
         strokeLinejoin="round"
         vectorEffect="non-scaling-stroke"
+        className={variant === "signature" ? "voice-contour-draw" : undefined}
       />
     </svg>
   );

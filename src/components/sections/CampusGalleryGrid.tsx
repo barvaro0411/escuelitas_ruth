@@ -88,7 +88,7 @@ export default function CampusGalleryGrid({
               setSelectedIndex(index);
             }}
             aria-label={`Ampliar fotografía de ${campusName}: ${image.title}`}
-            className="group overflow-hidden rounded-xl border border-border bg-surface text-left transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-sm cursor-pointer"
+            className="group overflow-hidden rounded-xl border border-border bg-surface text-left transition-all duration-200 hover:-translate-y-1 hover:border-primary/50 hover:shadow-md cursor-pointer"
           >
             <div className="relative aspect-[4/3] overflow-hidden bg-surface-sunk">
               <Image
@@ -96,13 +96,18 @@ export default function CampusGalleryGrid({
                 alt={image.alt}
                 fill
                 sizes="(min-width: 1024px) 20vw, 50vw"
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <div
+                className="absolute inset-0 bg-gradient-to-t from-primary-dark/60 via-transparent to-transparent opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+                aria-hidden="true"
               />
               <span
-                className="absolute bottom-2 right-2 flex h-7 w-7 items-center justify-center rounded-lg bg-primary-dark/80 text-white opacity-85 transition-opacity group-hover:opacity-100"
+                className="absolute bottom-2 right-2 inline-flex items-center gap-1 rounded-lg bg-primary-dark/85 px-2 py-1 text-[11px] font-extrabold text-white shadow-xs backdrop-blur-xs transition-transform duration-200 group-hover:scale-105 group-hover:bg-action group-hover:text-primary-dark"
                 aria-hidden="true"
               >
-                <Expand className="h-3.5 w-3.5" />
+                <Expand className="h-3 w-3" />
+                <span className="hidden sm:inline">Ver</span>
               </span>
             </div>
             <p className="p-2.5 text-xs font-extrabold text-ink group-hover:text-primary transition-colors">

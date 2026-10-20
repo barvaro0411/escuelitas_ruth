@@ -277,10 +277,13 @@ export default function SedesPage() {
           <div className="text-center">
             <Link
               href="/contacto"
-              className="inline-flex min-h-12 items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-extrabold text-white"
+              className="group inline-flex min-h-12 items-center gap-2 rounded-xl bg-primary px-7 py-3.5 text-sm font-extrabold text-white transition-all hover:bg-primary-dark btn-primary-glow"
             >
-              Coordinar una visita{" "}
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              <span>Coordinar una visita</span>
+              <ArrowRight
+                className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
+                aria-hidden="true"
+              />
             </Link>
           </div>
         </div>

@@ -414,28 +414,60 @@ h6 {
 
 /* ===== UI Micro-interactions & Tactile Buttons ===== */
 .btn-action-glow {
-  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 14px -2px rgba(250, 204, 21, 0.35);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow:
+    0 4px 14px -2px rgba(250, 204, 21, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.btn-action-glow::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+  transform: rotate(25deg);
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
 }
 
 .btn-action-glow:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px -2px rgba(250, 204, 21, 0.48);
+  box-shadow:
+    0 10px 24px -3px rgba(250, 204, 21, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.btn-action-glow:hover::after {
+  transform: translateX(380%) rotate(25deg);
 }
 
 .btn-action-glow:active {
   transform: translateY(0) scale(0.98);
-  box-shadow: 0 2px 8px -1px rgba(250, 204, 21, 0.3);
+  box-shadow: 0 2px 8px -1px rgba(250, 204, 21, 0.35);
 }
 
 .btn-primary-glow {
-  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 14px -2px rgba(3, 105, 161, 0.28);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow:
+    0 4px 14px -2px rgba(3, 105, 161, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .btn-primary-glow:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px -2px rgba(3, 105, 161, 0.42);
+  box-shadow: 0 10px 24px -3px rgba(3, 105, 161, 0.45);
 }
 
 .btn-primary-glow:active {
@@ -443,16 +475,57 @@ h6 {
   box-shadow: 0 2px 8px -1px rgba(3, 105, 161, 0.25);
 }
 
+.btn-instagram {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-instagram:hover {
+  transform: translateY(-2px) scale(1.03);
+  border-color: rgba(236, 72, 153, 0.6);
+  background-image: linear-gradient(
+    135deg,
+    rgba(131, 58, 180, 0.92),
+    rgba(253, 29, 29, 0.92),
+    rgba(252, 176, 69, 0.92)
+  );
+  color: #ffffff !important;
+  box-shadow: 0 8px 20px -4px rgba(225, 48, 108, 0.45);
+}
+
+.btn-instagram:hover svg {
+  color: #ffffff !important;
+}
+
 .card-interactive {
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.2s ease;
+  transition:
+    transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.22s ease;
 }
 
 .card-interactive:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 28px -4px rgba(3, 105, 161, 0.12),
-              0 4px 12px -2px rgba(15, 23, 42, 0.05);
+  transform: translateY(-5px);
+  border-color: rgba(3, 105, 161, 0.38);
+  box-shadow:
+    0 16px 32px -6px rgba(3, 105, 161, 0.15),
+    0 4px 12px -2px rgba(15, 23, 42, 0.06);
+}
+
+@keyframes voice-draw {
+  0% {
+    stroke-dashoffset: 1;
+    opacity: 0.3;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+.voice-contour-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  animation: voice-draw 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
 }
 
 @keyframes radar-pulse {
@@ -477,11 +550,17 @@ h6 {
 @media (prefers-reduced-motion: reduce) {
   .btn-action-glow:hover,
   .btn-primary-glow:hover,
+  .btn-instagram:hover,
   .card-interactive:hover {
     transform: none !important;
   }
 
-  .animate-radar-pulse {
+  .btn-action-glow::after {
+    display: none !important;
+  }
+
+  .animate-radar-pulse,
+  .voice-contour-draw {
     animation: none !important;
   }
 }

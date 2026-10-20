@@ -174,9 +174,13 @@ export default function MatriculasConchaliPage() {
               href={mainWhatsAppUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-xl bg-action px-7 py-4 text-center text-base font-extrabold text-primary-dark transition-colors hover:bg-action-hover sm:w-auto"
+              className="group inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-xl bg-action px-7 py-4 text-center text-base font-extrabold text-primary-dark transition-all hover:bg-action-hover btn-action-glow sm:w-auto"
             >
-              <MessageCircle className="h-6 w-6 shrink-0" aria-hidden="true" />
+              <span className="relative flex h-2.5 w-2.5 shrink-0" aria-hidden="true">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-600 animate-radar-pulse" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-600" />
+              </span>
+              <MessageCircle className="h-6 w-6 shrink-0 transition-transform duration-200 group-hover:scale-110" aria-hidden="true" />
               <span>Consultar disponibilidad por WhatsApp</span>
             </a>
 
@@ -220,7 +224,7 @@ export default function MatriculasConchaliPage() {
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
             >
               {/* Garantía 1 */}
-              <div className="rounded-2xl border border-primary/25 bg-surface-sunk p-6 flex flex-col justify-between">
+              <div className="rounded-2xl border border-primary/25 bg-surface-sunk p-6 flex flex-col justify-between card-interactive">
                 <div>
                   <div className="h-12 w-12 rounded-2xl bg-primary text-white flex items-center justify-center mb-4">
                     <WalletCards className="h-6 w-6" />
@@ -240,7 +244,7 @@ export default function MatriculasConchaliPage() {
               </div>
 
               {/* Garantía 2 */}
-              <div className="rounded-2xl border-2 border-primary/10 bg-surface-sunk p-6 flex flex-col justify-between">
+              <div className="rounded-2xl border-2 border-primary/10 bg-surface-sunk p-6 flex flex-col justify-between card-interactive">
                 <div>
                   <div className="h-12 w-12 rounded-2xl bg-primary text-white flex items-center justify-center mb-4">
                     <ClipboardCheck className="h-6 w-6" />
@@ -260,7 +264,7 @@ export default function MatriculasConchaliPage() {
               </div>
 
               {/* Garantía 3 */}
-              <div className="rounded-2xl border-2 border-primary/10 bg-surface-sunk p-6 flex flex-col justify-between">
+              <div className="rounded-2xl border-2 border-primary/10 bg-surface-sunk p-6 flex flex-col justify-between card-interactive">
                 <div>
                   <div className="h-12 w-12 rounded-2xl bg-accent text-white flex items-center justify-center mb-4">
                     <PackageCheck className="h-6 w-6" />
@@ -280,7 +284,7 @@ export default function MatriculasConchaliPage() {
               </div>
 
               {/* Garantía 4 */}
-              <div className="rounded-2xl border-2 border-primary/10 bg-surface-sunk p-6 flex flex-col justify-between">
+              <div className="rounded-2xl border-2 border-primary/10 bg-surface-sunk p-6 flex flex-col justify-between card-interactive">
                 <div>
                   <div className="h-12 w-12 rounded-2xl bg-primary-dark text-white flex items-center justify-center mb-4">
                     <Users className="h-6 w-6" />
@@ -337,7 +341,7 @@ export default function MatriculasConchaliPage() {
                   href={mainWhatsAppUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-primary text-white font-extrabold text-sm sm:text-base hover:bg-primary-dark transition-colors"
+                  className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-primary text-white font-extrabold text-sm sm:text-base hover:bg-primary-dark transition-all btn-primary-glow"
                 >
                   <MessageCircle className="h-5 w-5" />
                   <span>Consultar disponibilidad por WhatsApp</span>
@@ -347,7 +351,7 @@ export default function MatriculasConchaliPage() {
               <div className="lg:col-span-7">
                 <div data-reveal-group className="space-y-4">
                   {/* Paso 1 */}
-                  <div className="p-5 sm:p-6 rounded-2xl border border-border bg-surface flex items-start gap-4">
+                  <div className="p-5 sm:p-6 rounded-2xl border border-border bg-surface flex items-start gap-4 card-interactive">
                     <div className="h-10 w-10 rounded-xl bg-primary text-white flex items-center justify-center font-extrabold text-base shrink-0">
                       1
                     </div>
@@ -364,7 +368,7 @@ export default function MatriculasConchaliPage() {
                   </div>
 
                   {/* Paso 2 */}
-                  <div className="p-5 sm:p-6 rounded-2xl border border-border bg-surface flex items-start gap-4">
+                  <div className="p-5 sm:p-6 rounded-2xl border border-border bg-surface flex items-start gap-4 card-interactive">
                     <div className="h-10 w-10 rounded-xl bg-primary text-white flex items-center justify-center font-extrabold text-base shrink-0">
                       2
                     </div>
@@ -381,7 +385,7 @@ export default function MatriculasConchaliPage() {
                   </div>
 
                   {/* Paso 3 */}
-                  <div className="p-5 sm:p-6 rounded-2xl border border-border bg-surface flex items-start gap-4">
+                  <div className="p-5 sm:p-6 rounded-2xl border border-border bg-surface flex items-start gap-4 card-interactive">
                     <div className="h-10 w-10 rounded-xl bg-primary text-white flex items-center justify-center font-extrabold text-base shrink-0">
                       3
                     </div>
@@ -398,7 +402,7 @@ export default function MatriculasConchaliPage() {
                   </div>
 
                   {/* Paso 4 */}
-                  <div className="p-5 sm:p-6 rounded-2xl border border-primary/25 bg-surface-sunk flex items-start gap-4">
+                  <div className="p-5 sm:p-6 rounded-2xl border border-primary/25 bg-surface-sunk flex items-start gap-4 card-interactive">
                     <div className="h-10 w-10 rounded-xl bg-primary text-white flex items-center justify-center font-extrabold text-base shrink-0">
                       4
                     </div>
@@ -441,7 +445,7 @@ export default function MatriculasConchaliPage() {
               {faqsConchali.map((faq) => (
                 <div
                   key={faq.question}
-                  className="rounded-2xl border border-border p-5 sm:p-6 bg-surface-sunk"
+                  className="rounded-2xl border border-border p-5 sm:p-6 bg-surface-sunk card-interactive"
                 >
                   <h3 className="font-extrabold text-ink font-display flex items-start gap-3 mb-2 text-base">
                     <HelpCircle className="h-5 w-5 text-primary shrink-0 mt-0.5" />
@@ -482,18 +486,22 @@ export default function MatriculasConchaliPage() {
                 href={mainWhatsAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-xl bg-action px-7 py-4 text-base font-extrabold text-primary-dark transition-colors hover:bg-action-hover sm:w-auto"
+                className="group inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-xl bg-action px-7 py-4 text-base font-extrabold text-primary-dark transition-all hover:bg-action-hover btn-action-glow sm:w-auto"
               >
-                <MessageCircle className="h-6 w-6" />
+                <span className="relative flex h-2.5 w-2.5 shrink-0" aria-hidden="true">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-600 animate-radar-pulse" />
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-600" />
+                </span>
+                <MessageCircle className="h-6 w-6 transition-transform duration-200 group-hover:scale-110" />
                 <span>Consultar disponibilidad por WhatsApp</span>
               </a>
 
               <Link
                 href="/admision"
-                className="inline-flex min-h-14 w-full sm:w-auto items-center justify-center gap-2 px-7 py-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-extrabold text-base transition-colors"
+                className="group inline-flex min-h-14 w-full sm:w-auto items-center justify-center gap-2 px-7 py-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/30 text-white font-extrabold text-base transition-all hover:-translate-y-0.5"
               >
                 <span>Ver requisitos de admisión</span>
-                <ArrowRight className="h-5 w-5" />
+                <ArrowRight className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
             </div>
           </div>

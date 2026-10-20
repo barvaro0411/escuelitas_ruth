@@ -164,29 +164,38 @@ export default function StepByStepAdmission({
         </div>
 
         {/* Tarjetas de los 3 Pasos */}
-        <div className="mt-14 grid gap-8 md:grid-cols-3" data-reveal-group>
-          {steps.map((step) => {
-            const Icon = step.icon;
-            return (
-              <article
-                key={step.number}
-                className="relative flex flex-col justify-between rounded-3xl border border-amber-300/70 bg-white p-6 shadow-[0_12px_32px_-16px_rgba(146,64,14,0.45)] transition-all duration-300 hover:-translate-y-1.5 hover:border-amber-400 hover:shadow-[0_22px_44px_-16px_rgba(146,64,14,0.5)] sm:p-8"
-              >
-                <div>
-                  {/* Encabezado de la tarjeta: Número y Badge */}
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-dark font-display text-2xl font-extrabold text-accent-on-dark ring-4 ring-amber-200/70">
-                      {step.number}
+        <div className="relative mt-14">
+          <div
+            className="pointer-events-none absolute top-14 left-[16%] right-[16%] hidden h-1 rounded-full bg-gradient-to-r from-primary/30 via-action to-primary/30 md:block"
+            aria-hidden="true"
+          />
+          <div className="grid gap-8 md:grid-cols-3" data-reveal-group>
+            {steps.map((step) => {
+              const Icon = step.icon;
+              return (
+                <article
+                  key={step.number}
+                  className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-amber-300/80 bg-white p-6 shadow-[0_12px_32px_-16px_rgba(146,64,14,0.45)] transition-all duration-300 hover:-translate-y-2 hover:border-amber-400 hover:shadow-[0_24px_48px_-16px_rgba(146,64,14,0.55)] sm:p-8"
+                >
+                  <div
+                    className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-primary via-action to-primary"
+                    aria-hidden="true"
+                  />
+                  <div>
+                    {/* Encabezado de la tarjeta: Número y Badge */}
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-dark font-display text-2xl font-extrabold text-accent-on-dark ring-4 ring-amber-200/70 transition-transform duration-300 group-hover:scale-105">
+                        {step.number}
+                      </div>
+                      <span className="rounded-full border border-primary/15 bg-surface-sunk px-3 py-1 text-xs font-extrabold text-primary-dark">
+                        {step.badge}
+                      </span>
                     </div>
-                    <span className="rounded-full border border-primary/15 bg-surface-sunk px-3 py-1 text-xs font-extrabold text-primary-dark">
-                      {step.badge}
-                    </span>
-                  </div>
 
-                  {/* Título y descripción */}
-                  <h3 className="mt-5 font-display font-extrabold text-ink text-xl sm:text-2xl leading-snug">
-                    {step.title}
-                  </h3>
+                    {/* Título y descripción */}
+                    <h3 className="mt-5 font-display font-extrabold text-ink text-xl sm:text-2xl leading-snug">
+                      {step.title}
+                    </h3>
                   <p className="mt-3 text-sm leading-relaxed text-muted">
                     {step.description}
                   </p>
@@ -240,6 +249,7 @@ export default function StepByStepAdmission({
               </article>
             );
           })}
+          </div>
         </div>
 
         {/* Banner de Garantía y Confianza Institucional */}

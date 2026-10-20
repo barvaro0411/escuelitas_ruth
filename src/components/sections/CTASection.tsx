@@ -35,8 +35,12 @@ export default function CTASection() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Abrir WhatsApp para consultar disponibilidad 2027"
-              className="group inline-flex min-h-14 items-center justify-center gap-2 rounded-xl bg-action px-7 py-4 text-base font-extrabold text-primary-dark transition-all hover:bg-action-hover focus-visible:ring-4 focus-visible:ring-white btn-action-glow cursor-pointer"
+              className="group inline-flex min-h-14 items-center justify-center gap-2.5 rounded-xl bg-action px-7 py-4 text-base font-extrabold text-primary-dark transition-all hover:bg-action-hover focus-visible:ring-4 focus-visible:ring-white btn-action-glow cursor-pointer"
             >
+              <span className="relative flex h-2.5 w-2.5 shrink-0" aria-hidden="true">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-600 animate-radar-pulse" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-600" />
+              </span>
               <MessageCircle className="h-5 w-5 transition-transform duration-200 group-hover:scale-110" aria-hidden="true" />
               <span>Consultar disponibilidad</span>
             </a>

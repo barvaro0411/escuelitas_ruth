@@ -188,17 +188,17 @@ export default function AdmisionPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Abrir WhatsApp para consultar disponibilidad 2027"
-                  className="inline-flex min-h-14 items-center justify-center rounded-xl bg-action px-8 py-4 text-base font-extrabold text-primary-dark transition-colors hover:bg-action-hover"
+                  className="group inline-flex min-h-14 items-center justify-center rounded-xl bg-action px-8 py-4 text-base font-extrabold text-primary-dark transition-all hover:bg-action-hover btn-action-glow"
                 >
-                  <MessageCircle className="mr-3 h-6 w-6" />
+                  <MessageCircle className="mr-3 h-6 w-6 transition-transform duration-200 group-hover:scale-110" />
                   Consultar disponibilidad
                 </a>
                 <Link
                   href="/contacto"
-                  className="inline-flex min-h-14 items-center justify-center rounded-xl border border-white/25 bg-white/10 px-8 py-4 text-base font-extrabold text-white transition-colors hover:bg-white/20"
+                  className="group inline-flex min-h-14 items-center justify-center rounded-xl border border-white/35 bg-white/10 px-8 py-4 text-base font-extrabold text-white transition-all hover:bg-white/20 hover:-translate-y-0.5"
                 >
                   Formulario de contacto
-                  <ArrowRight className="ml-3 h-5 w-5" />
+                  <ArrowRight className="ml-3 h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" />
                 </Link>
               </div>
             </div>

@@ -108,15 +108,19 @@ export default function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Abrir WhatsApp para consultar disponibilidad y agendar evaluación"
-              className="group inline-flex min-h-14 items-center justify-center gap-2 rounded-xl bg-action px-6 py-4 text-center text-base font-extrabold text-primary-dark transition-all hover:bg-action-hover focus-visible:ring-4 focus-visible:ring-white sm:px-7 btn-action-glow cursor-pointer"
+              className="group inline-flex min-h-14 items-center justify-center gap-2.5 rounded-xl bg-action px-6 py-4 text-center text-base font-extrabold text-primary-dark transition-all hover:bg-action-hover focus-visible:ring-4 focus-visible:ring-white sm:px-7 btn-action-glow cursor-pointer"
             >
+              <span className="relative flex h-2.5 w-2.5 shrink-0" aria-hidden="true">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-600 animate-radar-pulse" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-600" />
+              </span>
               <MessageCircle className="h-5 w-5 transition-transform duration-200 group-hover:scale-110" aria-hidden="true" />
               <span>Consultar cupos por WhatsApp</span>
             </a>
 
             <Link
               href="/matriculas-2027-conchali"
-              className="group inline-flex min-h-14 items-center justify-center gap-2 rounded-xl border border-white/55 bg-white/5 px-6 py-4 text-center text-base font-semibold text-white transition-all hover:bg-white/15 hover:-translate-y-0.5 active:scale-[0.98] focus-visible:ring-4 focus-visible:ring-white sm:px-7"
+              className="group inline-flex min-h-14 items-center justify-center gap-2 rounded-xl border border-white/55 bg-white/10 backdrop-blur-xs px-6 py-4 text-center text-base font-semibold text-white transition-all hover:bg-white/20 hover:border-white hover:-translate-y-0.5 active:scale-[0.98] focus-visible:ring-4 focus-visible:ring-white sm:px-7"
             >
               <span>Ver sedes y requisitos</span>
               <ArrowRight className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />

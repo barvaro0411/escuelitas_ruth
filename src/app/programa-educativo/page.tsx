@@ -56,10 +56,11 @@ const programs = [
     description:
       "Iniciamos el camino del lenguaje a través del juego libre, la música y la exploración sensorial. Fomentamos la interacción y el descubrimiento.",
     icon: Music,
-    bg: "bg-surface-sunk",
+    bg: "bg-surface-sunk border border-sky-300/80",
+    topBar: "from-sky-500 to-cyan-400",
     color: "text-ink",
-    chip: "bg-white/50",
-    rotation: "-rotate-2",
+    chip: "bg-white/80 border border-sky-200 text-primary-dark",
+    stageBadge: "bg-primary-dark text-white",
     stage: "01",
   },
   {
@@ -68,10 +69,11 @@ const programs = [
     description:
       "Fortalecemos la estructura del lenguaje y la interacción social en un ambiente lúdico. Comenzamos a integrar rutinas escolares y habilidades pre-académicas.",
     icon: Users2,
-    bg: "bg-surface-sunk",
-    color: "text-primary-dark",
-    chip: "bg-white/40",
-    rotation: "rotate-2",
+    bg: "bg-action-soft border border-amber-300/90",
+    topBar: "from-amber-400 to-yellow-500",
+    color: "text-ink",
+    chip: "bg-white/85 border border-amber-300 text-primary-dark",
+    stageBadge: "bg-primary-dark text-accent-on-dark",
     stage: "02",
   },
   {
@@ -80,10 +82,11 @@ const programs = [
     description:
       "Preparamos la transición a la educación básica regular con énfasis en la conciencia fonológica y el desarrollo integral de sus habilidades de comunicación.",
     icon: BookOpen,
-    bg: "bg-primary",
+    bg: "bg-primary-dark border border-primary",
+    topBar: "from-action via-amber-300 to-action",
     color: "text-white",
-    chip: "bg-white/20",
-    rotation: "-rotate-1",
+    chip: "bg-white/15 border border-white/25 text-white",
+    stageBadge: "bg-action text-primary-dark",
     stage: "03",
   },
 ];
@@ -285,33 +288,40 @@ export default function ProgramaPage() {
               {programs.map((program) => (
                 <div
                   key={program.title}
-                  className={`relative overflow-hidden rounded-2xl p-8 ${program.bg} transition-shadow duration-200 hover:shadow-md group`}
+                  className={`relative overflow-hidden rounded-2xl p-8 ${program.bg} card-interactive group`}
                 >
-                  <span className="absolute top-6 right-6 px-3.5 py-1.5 rounded-full bg-primary-dark/70 text-white text-xs font-semibold uppercase tracking-widest">
+                  <div
+                    className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${program.topBar}`}
+                    aria-hidden="true"
+                  />
+
+                  <span
+                    className={`absolute top-6 right-6 px-3.5 py-1.5 rounded-full ${program.stageBadge} text-xs font-extrabold uppercase tracking-widest shadow-xs`}
+                  >
                     Nivel {program.stage}
                   </span>
 
                   <div
-                    className={`w-16 h-16 rounded-2xl ${program.chip} backdrop-blur-md flex items-center justify-center mb-8`}
+                    className={`w-16 h-16 rounded-2xl ${program.chip} backdrop-blur-md flex items-center justify-center mb-8 transition-transform duration-300 group-hover:scale-105`}
                   >
-                    <program.icon size={32} className={program.color} />
+                    <program.icon size={32} className="currentColor" />
                   </div>
 
                   <span
-                    className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full ${program.chip} text-xs font-semibold uppercase tracking-widest mb-5 ${program.color}`}
+                    className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full ${program.chip} text-xs font-extrabold uppercase tracking-widest mb-5`}
                   >
                     <Calendar size={14} />
                     {program.age}
                   </span>
 
                   <h3
-                    className={`font-extrabold ${program.color} mb-4 leading-tight drop-shadow-sm text-xl`}
+                    className={`font-extrabold ${program.color} mb-4 leading-tight text-2xl`}
                   >
                     {program.title}
                   </h3>
 
                   <p
-                    className={`text-lg ${program.color} opacity-90 leading-relaxed`}
+                    className={`text-base sm:text-lg ${program.color} opacity-90 leading-relaxed`}
                   >
                     {program.description}
                   </p>
