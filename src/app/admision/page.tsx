@@ -87,13 +87,14 @@ export default function AdmisionPage() {
           {/* Requirements and Info */}
           <div
             id="requisitos"
+            data-reveal
             className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24 items-center scroll-mt-32"
           >
-            <div className="relative rounded-2xl border border-border bg-surface p-8 lg:p-10 animate-fade-up">
+            <div className="relative rounded-2xl border border-border bg-surface p-8 lg:p-10">
               <h2 className="font-extrabold text-ink mb-8 text-3xl sm:text-4xl">
                 ¿Qué documentos necesitas?
               </h2>
-              <ul className="space-y-6">
+              <ul data-reveal-group className="space-y-6">
                 {documents.map((doc) => (
                   <li
                     key={doc}
@@ -110,7 +111,7 @@ export default function AdmisionPage() {
               <div className="mt-10 p-6 bg-surface-sunk rounded-2xl border border-accent/30 flex items-start">
                 <Info className="h-8 w-8 text-primary-dark mr-4 shrink-0" />
                 <p className="text-sm text-primary-dark leading-relaxed">
-                  <span className="block text-lg mb-1">
+                  <span className="block text-lg font-bold mb-1">
                     ¿No tienes diagnóstico?
                   </span>
                   No te preocupes, sabemos que las evaluaciones externas pueden
@@ -120,7 +121,10 @@ export default function AdmisionPage() {
               </div>
             </div>
 
-            <div className="flex flex-col justify-center space-y-10 animate-fade-up animate-delay-200">
+            <div
+              data-reveal-group
+              className="flex flex-col justify-center space-y-10"
+            >
               <div>
                 <span className="inline-block px-3 py-1 rounded-full bg-accent text-white text-xs font-semibold uppercase tracking-widest mb-3">
                   Requisitos
@@ -165,17 +169,20 @@ export default function AdmisionPage() {
           </div>
 
           {/* CTA */}
-          <div className="rounded-2xl bg-accent p-10 text-center text-white sm:p-14 animate-fade-up">
-
+          <div
+            id="consulta-final"
+            data-reveal
+            className="rounded-2xl bg-gradient-to-r from-primary-dark via-primary to-primary-dark p-10 text-center text-white sm:p-14"
+          >
             <div className="relative z-10">
               <h2 className="font-extrabold mb-6 tracking-tight text-3xl sm:text-4xl">
                 ¿Tienes alguna duda?
               </h2>
-              <p className="text-xl sm:text-2xl mb-12 font-semibold max-w-2xl mx-auto text-white/85">
+              <p className="text-lg sm:text-xl mb-10 font-semibold max-w-2xl mx-auto text-white/90">
                 Escríbenos ahora y revisamos contigo edad, nivel, cupo
                 disponible y fecha para evaluación.
               </p>
-              <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
                   href={admissionWhatsAppUrl}
                   target="_blank"
@@ -188,10 +195,10 @@ export default function AdmisionPage() {
                 </a>
                 <Link
                   href="/contacto"
-                  className="inline-flex items-center justify-center bg-surface text-primary-dark px-10 py-5 rounded-full font-extrabold uppercase tracking-widest text-lg hover:bg-gray-100 hover:scale-105 transition-all"
+                  className="inline-flex min-h-14 items-center justify-center rounded-xl border border-white/25 bg-white/10 px-8 py-4 text-base font-extrabold text-white transition-colors hover:bg-white/20"
                 >
                   Formulario de contacto
-                  <ArrowRight className="ml-3 h-6 w-6" />
+                  <ArrowRight className="ml-3 h-5 w-5" />
                 </Link>
               </div>
             </div>

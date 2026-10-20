@@ -4,6 +4,7 @@ import {
   ArrowRight,
   Building2,
   CalendarClock,
+  CheckCircle2,
   ExternalLink,
   MapPin,
   MessageCircle,
@@ -115,7 +116,12 @@ export default function SedesSelector() {
                         className="mt-0.5 h-4 w-4 shrink-0 text-accent"
                         aria-hidden="true"
                       />
-                      <span>{campus.address}</span>
+                      <div>
+                        <span>{campus.address}</span>
+                        <span className="block text-xs font-semibold text-muted mt-0.5">
+                          {campus.reference}
+                        </span>
+                      </div>
                     </div>
 
                     <p className="text-sm leading-relaxed text-muted">
@@ -137,6 +143,15 @@ export default function SedesSelector() {
                             Tarde (13:30–17:15)
                           </span>
                         </li>
+                        {campus.highlights.slice(0, 2).map((highlight) => (
+                          <li key={highlight} className="flex items-center gap-2">
+                            <CheckCircle2
+                              className="h-4 w-4 shrink-0 text-primary"
+                              aria-hidden="true"
+                            />
+                            <span>{highlight}</span>
+                          </li>
+                        ))}
                       </ul>
                     </div>
                   </div>

@@ -90,12 +90,15 @@ export default function NosotrosPage() {
       <div className="pb-24 pt-16 overflow-hidden relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Misión, Visión, Valores */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-6 mb-32">
-            {values.map((item, index) => (
+          <div
+            data-reveal
+            data-reveal-group
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-6 mb-32"
+          >
+            {values.map((item) => (
               <div
                 key={item.title}
-                className={`rounded-2xl p-8 ${item.bg} transition-shadow duration-200 hover:shadow-md animate-fade-up`}
-                style={{ animationDelay: `${index * 100}ms` }}
+                className={`rounded-2xl p-8 ${item.bg} transition-shadow duration-200 hover:shadow-md`}
               >
                 <div className="w-16 h-16 rounded-2xl bg-white/30 backdrop-blur-md flex items-center justify-center mb-8">
                   <item.icon size={32} className={item.color} />
@@ -113,8 +116,11 @@ export default function NosotrosPage() {
           </div>
 
           {/* Philosophy Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-32">
-            <div className="relative animate-fade-up">
+          <div
+            data-reveal
+            className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-32"
+          >
+            <div className="relative">
               <div className="relative aspect-square overflow-hidden rounded-2xl border-4 border-white bg-surface-sunk">
                 <Image
                   src="/hero-children.jpg"
@@ -135,7 +141,7 @@ export default function NosotrosPage() {
               </div>
             </div>
 
-            <div className="animate-fade-up animate-delay-200">
+            <div>
               <span className="inline-block px-3 py-1 rounded-full bg-surface-sunk text-ink text-xs font-semibold uppercase tracking-widest mb-4">
                 Filosofía
               </span>
@@ -148,7 +154,7 @@ export default function NosotrosPage() {
                   características únicas que guían nuestro quehacer pedagógico
                   diario:
                 </p>
-                <ul className="space-y-6">
+                <ul data-reveal-group className="space-y-6">
                   <li className="flex items-start bg-surface p-4 rounded-2xl border border-border/50 hover:-translate-y-1 transition-transform">
                     <div className="mr-4 mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-white">
                       <Heart size={20} className="fill-white" />

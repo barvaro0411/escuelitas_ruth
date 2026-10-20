@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { MessageCircle, PhoneCall } from "lucide-react";
 import { createWhatsAppUrl, siteConfig } from "@/lib/site";
 
@@ -19,8 +20,11 @@ const stickyWhatsAppUrl = createWhatsAppUrl({ source: "sticky" });
  * está siempre visible.
  */
 export default function EnrollmentBar() {
+  const pathname = usePathname();
   const [pastHero, setPastHero] = useState(false);
-  const [finalCtaVisible, setFinalCtaVisible] = useState(false);
+  const [finalCtaVisiblePath, setFinalCtaVisiblePath] = useState<string | null>(
+    null,
+  );
   const [formFocused, setFormFocused] = useState(false);
 
   useEffect(() => {
@@ -28,19 +32,22 @@ export default function EnrollmentBar() {
     updateScroll();
     window.addEventListener("scroll", updateScroll, { passive: true });
     return () => window.removeEventListener("scroll", updateScroll);
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     const finalCta = document.getElementById("consulta-final");
     if (!finalCta || !("IntersectionObserver" in window)) return;
 
     const observer = new IntersectionObserver(
-      ([entry]) => setFinalCtaVisible(entry.isIntersecting),
+      ([entry]) =>
+        setFinalCtaVisiblePath(entry.isIntersecting ? pathname : null),
       { threshold: 0.12 },
     );
     observer.observe(finalCta);
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
+
+  const finalCtaVisible = finalCtaVisiblePath === pathname;
 
   useEffect(() => {
     // Mientras se completa un formulario la barra estorba: con el teclado

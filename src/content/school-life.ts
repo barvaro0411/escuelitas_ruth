@@ -57,7 +57,35 @@ export type AnnualPlanUnit = {
   };
 };
 
-export const weeklyUpdates: WeeklyUpdate[] = [];
+export const weeklyUpdates: WeeklyUpdate[] = [
+  {
+    id: "admision-2027-orientacion",
+    title: "Consultas y Matrículas 2027 Abiertas",
+    description:
+      "Atendemos consultas de cupos para Medio Mayor, Pre-Kínder y Kínder en jornadas de mañana y tarde en ambas sedes.",
+    icon: "calendar",
+    campusIds: "all",
+    published: true,
+  },
+  {
+    id: "evaluacion-fonoaudiologica-sin-costo",
+    title: "Evaluación Fonoaudiológica Gratuita",
+    description:
+      "Agenda una sesión diagnóstica presencial sin costo para evaluar el desarrollo comunicativo de tu hijo(a) de 3 a 5 años.",
+    icon: "community",
+    campusIds: "all",
+    published: true,
+  },
+  {
+    id: "talleres-estimulacion-juego",
+    title: "Estimulación del Lenguaje a Través del Juego",
+    description:
+      "Actividades semanales de conciencia fonológica, cuentacuentos y expresión artística junto a educadoras y fonoaudiólogas.",
+    icon: "book",
+    campusIds: "all",
+    published: true,
+  },
+];
 
 // Fechas oficiales del Plan Anual de Escuela de Lenguaje Ruth para la comunidad escolar.
 export const calendarEvents: SchoolCalendarEvent[] = [

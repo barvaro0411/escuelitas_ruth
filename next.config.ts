@@ -1,8 +1,12 @@
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import type { NextConfig } from "next";
 import {
   ALTERNATE_SITE_HOSTS,
   CANONICAL_SITE_URL,
 } from "./site.constants";
+
+const projectRoot = path.dirname(fileURLToPath(import.meta.url));
 
 // CSP compatible con páginas prerenderizadas. Next.js necesita scripts y estilos
 // inline para la hidratación estática; si el sitio incorpora backend/middleware,
@@ -34,6 +38,7 @@ const contentSecurityPolicy = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  outputFileTracingRoot: projectRoot,
   allowedDevOrigins: ["127.0.0.1"],
   experimental: {
     optimizePackageImports: ["lucide-react"],

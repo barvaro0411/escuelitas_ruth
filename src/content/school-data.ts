@@ -118,7 +118,13 @@ export const campuses = [
     levelIds: ["medio-mayor", "prekinder", "kinder"],
     journeys: ["Mañana", "Tarde"],
     description:
-      "Sede de Escuela de Lenguaje Ruth ubicada en Vascongados 4314, Conchalí.",
+      "Sede de Escuela de Lenguaje Ruth ubicada en Vascongados 4314, Conchalí. Cuenta con patio techado, casa de juegos y salas de fonoaudiología.",
+    reference: "Sector Vascongados / Av. El Guanaco, Conchalí",
+    highlights: [
+      "Patio techado protegido del sol y la lluvia",
+      "Casa de juegos y área recreativa infantil",
+      "Sala de fonoaudiología equipada",
+    ],
     gallery: vascongadosGallery,
     media: {
       videoUrl: null as string | null,
@@ -144,7 +150,13 @@ export const campuses = [
     levelIds: ["medio-mayor", "prekinder", "kinder"],
     journeys: ["Mañana", "Tarde"],
     description:
-      "Sede de Escuela de Lenguaje Ruth ubicada en Gral. Gambino 4613, Conchalí.",
+      "Sede de Escuela de Lenguaje Ruth ubicada en Gral. Gambino 4613, Conchalí. Cuenta con patio techado, áreas de juego seguro y atención fonoaudiológica.",
+    reference: "Sector Gral. Gambino / Av. Zapadores, Conchalí",
+    highlights: [
+      "Patio techado y pasillo de juegos seguro",
+      "Casa de juegos y rincón pedagógico",
+      "Atención fonoaudiológica individual y en aula",
+    ],
     gallery: gambinoGallery,
     media: {
       videoUrl: null as string | null,
@@ -169,6 +181,8 @@ export const campuses = [
   levelIds: readonly LevelId[];
   journeys: readonly string[];
   description: string;
+  reference: string;
+  highlights: readonly string[];
   gallery: readonly CampusGalleryImage[];
   media: {
     videoUrl: string | null;

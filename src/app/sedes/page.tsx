@@ -14,6 +14,7 @@ import {
   Video,
 } from "lucide-react";
 import CTASection from "@/components/sections/CTASection";
+import CampusGalleryGrid from "@/components/sections/CampusGalleryGrid";
 import JsonLd from "@/components/seo/JsonLd";
 import { campuses, schoolLevels } from "@/content/school-data";
 import { buildBreadcrumbsJsonLd, createWhatsAppUrl } from "@/lib/site";
@@ -55,7 +56,7 @@ export default function SedesPage() {
         lead="Compara ubicación, niveles y jornadas. La disponibilidad de cupos se confirma directamente con la escuela."
       />
 
-      <section className="bg-surface-sunk py-16 sm:py-20">
+      <section data-cta="pagina-sedes" className="bg-surface-sunk py-16 sm:py-20">
         <div className="mx-auto max-w-7xl space-y-8 px-4 sm:px-6 lg:px-8">
           {campuses.map((campus) => {
             const levels = schoolLevels.filter((level) =>
@@ -74,38 +75,60 @@ export default function SedesPage() {
               <article
                 id={campus.id}
                 key={campus.id}
-                className="scroll-mt-36 overflow-hidden rounded-2xl border border-border bg-surface"
+                data-reveal
+                className="scroll-mt-36 overflow-hidden rounded-2xl border border-border bg-surface shadow-xs"
               >
                 <div className="grid lg:grid-cols-[0.95fr_1.05fr]">
-                  <div className="bg-primary-dark p-7 text-white sm:p-10">
-                    <div className="flex items-center justify-between gap-4">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-action text-primary-dark">
-                        <Building2 className="h-6 w-6" aria-hidden="true" />
+                  <div className="bg-primary-dark p-7 text-white sm:p-10 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center justify-between gap-4">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-action text-primary-dark">
+                          <Building2 className="h-6 w-6" aria-hidden="true" />
+                        </div>
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-extrabold">
+                          <ShieldCheck className="h-4 w-4" aria-hidden="true" />
+                          RBD {campus.rbd}
+                        </span>
                       </div>
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-extrabold">
-                        <ShieldCheck className="h-4 w-4" aria-hidden="true" />
-                        RBD {campus.rbd}
-                      </span>
+                      <h2 className="mt-7 font-display font-extrabold text-3xl sm:text-4xl">
+                        {campus.name}
+                      </h2>
+                      <p className="mt-3 flex items-start gap-2 font-semibold text-white/90">
+                        <MapPin
+                          className="mt-0.5 h-5 w-5 shrink-0 text-accent-on-dark"
+                          aria-hidden="true"
+                        />
+                        <span>
+                          {campus.address}
+                          <span className="mt-0.5 block text-xs font-normal text-white/75">
+                            {campus.reference}
+                          </span>
+                        </span>
+                      </p>
+                      <p className="mt-4 text-sm leading-relaxed text-white/85">
+                        {campus.description}
+                      </p>
+                      <ul className="mt-5 space-y-2 border-t border-white/15 pt-4">
+                        {campus.highlights.map((highlight) => (
+                          <li
+                            key={highlight}
+                            className="flex items-start gap-2 text-xs font-semibold text-white/90 sm:text-sm"
+                          >
+                            <CheckCircle2
+                              className="mt-0.5 h-4 w-4 shrink-0 text-accent-on-dark"
+                              aria-hidden="true"
+                            />
+                            <span>{highlight}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                    <h2 className="mt-7 font-display font-extrabold text-3xl sm:text-4xl">
-                      {campus.name}
-                    </h2>
-                    <p className="mt-3 flex items-start gap-2 font-semibold text-white/80">
-                      <MapPin
-                        className="mt-0.5 h-5 w-5 shrink-0 text-accent-on-dark"
-                        aria-hidden="true"
-                      />
-                      {campus.address}
-                    </p>
-                    <p className="mt-5 text-sm leading-relaxed text-white/80">
-                      {campus.description}
-                    </p>
                     <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                       <a
                         href={whatsappUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-action px-5 py-3 text-sm font-extrabold text-primary-dark"
+                        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-action px-5 py-3 text-sm font-extrabold text-primary-dark transition-all hover:bg-action-hover btn-action-glow"
                       >
                         <MessageCircle className="h-4 w-4" aria-hidden="true" />
                         Consultar disponibilidad
@@ -114,7 +137,7 @@ export default function SedesPage() {
                         href={campus.mapHref}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/35 px-5 py-3 text-sm font-extrabold text-white"
+                        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/35 px-5 py-3 text-sm font-extrabold text-white transition-colors hover:bg-white/15"
                       >
                         Abrir mapa{" "}
                         <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -154,8 +177,11 @@ export default function SedesPage() {
                           />
                           Jornadas
                         </p>
-                        <p className="mt-3 text-sm font-semibold text-muted">
-                          {campus.journeys.join(" y")}
+                        <p className="mt-3 text-sm font-semibold text-ink">
+                          {campus.journeys.join(" y ")}
+                        </p>
+                        <p className="mt-1 text-xs font-semibold text-muted">
+                          Mañana (08:15–12:15) · Tarde (13:30–17:15)
                         </p>
                         <p className="mt-2 text-xs leading-relaxed text-muted">
                           Consulta disponibilidad para la jornada que necesita
@@ -165,43 +191,31 @@ export default function SedesPage() {
                     </div>
 
                     <div className="mt-6 rounded-xl border border-dashed border-primary/25 p-5">
-                      <div className="flex items-center gap-3">
-                        <Camera
-                          className="h-5 w-5 text-primary"
-                          aria-hidden="true"
-                        />
-                        <Video
-                          className="h-5 w-5 text-primary"
-                          aria-hidden="true"
-                        />
-                        <h3 className="font-display font-extrabold text-ink text-base">
-                          Fotografías y recorrido virtual
-                        </h3>
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-3">
+                          <Camera
+                            className="h-5 w-5 text-primary"
+                            aria-hidden="true"
+                          />
+                          <Video
+                            className="h-5 w-5 text-primary"
+                            aria-hidden="true"
+                          />
+                          <h3 className="font-display font-extrabold text-ink text-base">
+                            Fotografías de la sede (clic para ampliar)
+                          </h3>
+                        </div>
+                        <span className="text-xs font-extrabold text-primary">
+                          {campus.gallery.length} fotos
+                        </span>
                       </div>
                       {hasPublishedMedia ? (
                         <div className="mt-4 space-y-4">
                           {campus.gallery.length > 0 && (
-                            <div className="grid grid-cols-2 gap-3">
-                              {campus.gallery.map((image) => (
-                                <figure
-                                  key={image.src}
-                                  className="overflow-hidden rounded-xl border border-border bg-surface"
-                                >
-                                  <div className="relative aspect-[4/3]">
-                                    <Image
-                                      src={image.src}
-                                      alt={image.alt}
-                                      fill
-                                      sizes="(min-width: 1024px) 25vw, 50vw"
-                                      className="object-cover"
-                                    />
-                                  </div>
-                                  <figcaption className="p-2 text-xs font-semibold text-muted">
-                                    {image.title}
-                                  </figcaption>
-                                </figure>
-                              ))}
-                            </div>
+                            <CampusGalleryGrid
+                              images={campus.gallery}
+                              campusName={campus.name}
+                            />
                           )}
                           {campus.media.panoramas.length > 0 && (
                             <div className="grid grid-cols-2 gap-3">

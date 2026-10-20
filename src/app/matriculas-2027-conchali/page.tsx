@@ -3,14 +3,12 @@ import PageHero from "@/components/layout/PageHero";
 import Image from "next/image";
 import Link from "next/link";
 import AgeCalculator from "@/components/sections/AgeCalculator";
+import SedesSelector from "@/components/sections/SedesSelector";
 import JsonLd from "@/components/seo/JsonLd";
 import {
   ArrowRight,
-  Baby,
-  Building2,
   CheckCircle2,
   ClipboardCheck,
-  Clock3,
   HelpCircle,
   MapPin,
   MessageCircle,
@@ -51,14 +49,6 @@ export const metadata: Metadata = {
 
 const mainWhatsAppUrl = buildWhatsAppUrl(
   "Hola, quisiera consultar cupos 2027 para mi hijo(a) en Escuela de Lenguaje Ruth y agendar una evaluación fonoaudiológica gratuita.",
-);
-
-const sedeVascongadosWhatsApp = buildWhatsAppUrl(
-  "Hola, quiero consultar cupo 2027 para la Sede Vascongados 4314 en Conchalí.",
-);
-
-const sedeGambinoWhatsApp = buildWhatsAppUrl(
-  "Hola, quiero consultar cupo 2027 para la Sede Gral. Gambino 4613 en Conchalí.",
 );
 
 const faqsConchali = [
@@ -211,7 +201,10 @@ export default function MatriculasConchaliPage() {
         </PageHero>
 
         {/* ── PILARES DE CONFIANZA: GARANTÍAS PARA LA FAMILIA ── */}
-        <section className="py-16 sm:py-20 bg-surface border-b border-border">
+        <section
+          data-reveal
+          className="py-16 sm:py-20 bg-surface border-b border-border"
+        >
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-12">
               <span className="inline-block px-3.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wider mb-3">
@@ -222,7 +215,10 @@ export default function MatriculasConchaliPage() {
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div
+              data-reveal-group
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+            >
               {/* Garantía 1 */}
               <div className="rounded-2xl border border-primary/25 bg-surface-sunk p-6 flex flex-col justify-between">
                 <div>
@@ -309,8 +305,11 @@ export default function MatriculasConchaliPage() {
         {/* ── CALCULADORA DE NIVEL (MICROINTERACCIÓN) ── */}
         <AgeCalculator />
 
-        {/* ── PROCESO TRANSPARENTE"PASO A PASO" ── */}
-        <section className="py-16 sm:py-24 bg-surface border-b border-border">
+        {/* ── PROCESO TRANSPARENTE "PASO A PASO" ── */}
+        <section
+          data-reveal
+          className="py-16 sm:py-24 bg-surface border-b border-border"
+        >
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
               <div className="lg:col-span-5">
@@ -346,7 +345,7 @@ export default function MatriculasConchaliPage() {
               </div>
 
               <div className="lg:col-span-7">
-                <div className="space-y-4">
+                <div data-reveal-group className="space-y-4">
                   {/* Paso 1 */}
                   <div className="p-5 sm:p-6 rounded-2xl border border-border bg-surface flex items-start gap-4">
                     <div className="h-10 w-10 rounded-xl bg-primary text-white flex items-center justify-center font-extrabold text-base shrink-0">
@@ -421,137 +420,13 @@ export default function MatriculasConchaliPage() {
         </section>
 
         {/* ── SEDES EN CONCHALÍ (TRANSPARENCIA TOTAL) ── */}
-        <section className="py-16 sm:py-20 bg-surface-sunk border-b border-border">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-2xl mx-auto mb-12">
-              <span className="inline-block px-3.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wider mb-3">
-                Ubicaciones en Conchalí
-              </span>
-              <h2 className="font-extrabold text-ink font-display tracking-tight text-3xl sm:text-4xl">
-                Elige la sede más cercana a tu hogar
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Sede Vascongados */}
-              <div className="rounded-2xl border border-border bg-surface p-7 sm:p-8 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between gap-3 mb-4">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-extrabold">
-                      <Building2 className="h-3.5 w-3.5" />
-                      Sede 1
-                    </div>
-                    <span className="text-xs font-semibold text-muted">
-                      RBD 26106-8
-                    </span>
-                  </div>
-
-                  <h3 className="font-extrabold text-ink font-display mb-2 text-xl">
-                    Escuela Vascongados
-                  </h3>
-                  <p className="text-sm font-semibold text-muted flex items-center gap-2 mb-4">
-                    <MapPin className="h-4 w-4 text-primary shrink-0" />
-                    Vascongados 4314, Conchalí
-                  </p>
-
-                  <div className="space-y-2 text-xs font-semibold text-muted mb-6 bg-surface-sunk p-4 rounded-xl">
-                    <div className="flex items-center gap-2">
-                      <Clock3 className="h-4 w-4 text-primary shrink-0" />
-                      <span>
-                        Mañana: 08:15 – 12:15 hrs · Tarde: 13:30 – 17:15 hrs
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Baby className="h-4 w-4 text-primary shrink-0" />
-                      <span>Niveles: Medio Mayor, Pre-Kínder y Kínder</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                  <a
-                    href={sedeVascongadosWhatsApp}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex flex-1 items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary text-white font-extrabold text-xs hover:bg-primary-dark transition-colors"
-                  >
-                    <MessageCircle className="h-4 w-4" />
-                    Consultar Sede Vascongados
-                  </a>
-                  <a
-                    href="https://maps.google.com/?q=Vascongados+4314+Conchali"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl border border-border text-muted font-semibold text-xs hover:bg-surface-sunk transition-colors"
-                  >
-                    <MapPin className="h-4 w-4" />
-                    Ver Mapa
-                  </a>
-                </div>
-              </div>
-
-              {/* Sede Gambino */}
-              <div className="rounded-2xl border border-border bg-surface p-7 sm:p-8 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between gap-3 mb-4">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-action/20 text-accent text-xs font-extrabold">
-                      <Building2 className="h-3.5 w-3.5" />
-                      Sede 2
-                    </div>
-                    <span className="text-xs font-semibold text-muted">
-                      RBD 10375-6
-                    </span>
-                  </div>
-
-                  <h3 className="font-extrabold text-ink font-display mb-2 text-xl">
-                    Escuela Gral. Gambino
-                  </h3>
-                  <p className="text-sm font-semibold text-muted flex items-center gap-2 mb-4">
-                    <MapPin className="h-4 w-4 text-accent shrink-0" />
-                    Gral. Gambino 4613, Conchalí
-                  </p>
-
-                  <div className="space-y-2 text-xs font-semibold text-muted mb-6 bg-surface-sunk p-4 rounded-xl">
-                    <div className="flex items-center gap-2">
-                      <Clock3 className="h-4 w-4 text-accent shrink-0" />
-                      <span>
-                        Mañana: 08:15 – 12:15 hrs · Tarde: 13:30 – 17:15 hrs
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Baby className="h-4 w-4 text-accent shrink-0" />
-                      <span>Niveles: Medio Mayor, Pre-Kínder y Kínder</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                  <a
-                    href={sedeGambinoWhatsApp}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex flex-1 items-center justify-center gap-2 px-5 py-3 rounded-xl bg-action text-primary-dark font-extrabold text-xs hover:bg-action-hover transition-colors"
-                  >
-                    <MessageCircle className="h-4 w-4" />
-                    Consultar Sede Gambino
-                  </a>
-                  <a
-                    href="https://maps.google.com/?q=Gral+Gambino+4613+Conchali"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl border border-border text-muted font-semibold text-xs hover:bg-surface-sunk transition-colors"
-                  >
-                    <MapPin className="h-4 w-4" />
-                    Ver Mapa
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <SedesSelector />
 
         {/* ── FAQ: RESOLUCIÓN DE MIEDOS Y DUDAS ── */}
-        <section className="py-16 sm:py-20 bg-surface border-b border-border">
+        <section
+          data-reveal
+          className="py-16 sm:py-20 bg-surface border-b border-border"
+        >
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-10">
               <span className="inline-block px-3.5 py-1 rounded-full bg-surface-sunk text-primary-dark text-xs font-semibold uppercase tracking-wider mb-3">
@@ -562,7 +437,7 @@ export default function MatriculasConchaliPage() {
               </h2>
             </div>
 
-            <div className="space-y-4">
+            <div data-reveal-group className="space-y-4">
               {faqsConchali.map((faq) => (
                 <div
                   key={faq.question}
@@ -582,7 +457,11 @@ export default function MatriculasConchaliPage() {
         </section>
 
         {/* ── CTA FINAL CÁLIDO & CONFIABLE ── */}
-        <section className="py-16 sm:py-20 bg-gradient-to-r from-primary-dark via-primary to-primary-dark text-white relative overflow-hidden">
+        <section
+          id="consulta-final"
+          data-reveal
+          className="py-16 sm:py-20 bg-gradient-to-r from-primary-dark via-primary to-primary-dark text-white relative overflow-hidden"
+        >
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-accent-on-dark text-xs font-semibold uppercase tracking-widest mb-4">
               Consulta disponibilidad por nivel y jornada
@@ -611,7 +490,7 @@ export default function MatriculasConchaliPage() {
 
               <Link
                 href="/admision"
-                className="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-7 py-5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-extrabold text-base transition-colors"
+                className="inline-flex min-h-14 w-full sm:w-auto items-center justify-center gap-2 px-7 py-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-extrabold text-base transition-colors"
               >
                 <span>Ver requisitos de admisión</span>
                 <ArrowRight className="h-5 w-5" />

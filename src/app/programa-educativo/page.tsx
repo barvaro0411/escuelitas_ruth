@@ -147,9 +147,8 @@ export default function ProgramaPage() {
       <div className="pb-24 pt-16 overflow-hidden relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* ¿Qué es el TEL? Section */}
-          <div className="mb-28">
-            <div className="relative overflow-hidden rounded-2xl bg-primary-dark p-8 text-white animate-fade-up lg:p-14">
-
+          <div data-reveal className="mb-28">
+            <div className="relative overflow-hidden rounded-2xl bg-primary-dark p-8 text-white lg:p-14">
               <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <div>
                   <span className="inline-block px-4 py-1.5 rounded-full bg-accent text-white font-semibold text-xs uppercase tracking-widest mb-6">
@@ -175,7 +174,10 @@ export default function ProgramaPage() {
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
+                  <div
+                    data-reveal-group
+                    className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8"
+                  >
                     <div className="p-4 bg-white/10 rounded-2xl border border-white/20 backdrop-blur-md">
                       <Ban className="text-accent-on-dark mb-3" size={24} />
                       <p className="text-sm text-white font-semibold leading-snug">
@@ -229,8 +231,8 @@ export default function ProgramaPage() {
           </div>
 
           {/* Nuestro Enfoque */}
-          <div id="niveles" className="mb-24 scroll-mt-36">
-            <div className="text-center mb-14 animate-fade-up">
+          <div id="niveles" data-reveal className="mb-24 scroll-mt-36">
+            <div className="text-center mb-14">
               <span className="inline-block px-4 py-1.5 rounded-full bg-surface-sunk text-accent font-semibold text-xs uppercase tracking-widest mb-5">
                 Nuestro Enfoque
               </span>
@@ -239,12 +241,14 @@ export default function ProgramaPage() {
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {focusAreas.map((area, index) => (
+            <div
+              data-reveal-group
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            >
+              {focusAreas.map((area) => (
                 <div
                   key={area.title}
-                  className="bg-surface rounded-2xl p-8 border border-border/50 hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 animate-fade-up group"
-                  style={{ animationDelay: `${index * 100}ms` }}
+                  className="bg-surface rounded-2xl p-8 border border-border/50 hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 group"
                 >
                   <div
                     className={`w-14 h-14 rounded-2xl ${area.bg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
@@ -263,8 +267,8 @@ export default function ProgramaPage() {
           </div>
 
           {/* Niveles Educativos */}
-          <div className="mb-24">
-            <div className="text-center mb-16 animate-fade-up">
+          <div data-reveal className="mb-24">
+            <div className="text-center mb-16">
               <h2 className="font-extrabold text-ink tracking-tight text-3xl sm:text-4xl">
                 Nuestros Niveles
               </h2>
@@ -274,14 +278,15 @@ export default function ProgramaPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {programs.map((program, index) => (
+            <div
+              data-reveal-group
+              className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            >
+              {programs.map((program) => (
                 <div
                   key={program.title}
-                  className={`relative overflow-hidden rounded-2xl p-8 ${program.bg} transition-shadow duration-200 hover:shadow-md animate-fade-up group`}
-                  style={{ animationDelay: `${index * 100}ms` }}
+                  className={`relative overflow-hidden rounded-2xl p-8 ${program.bg} transition-shadow duration-200 hover:shadow-md group`}
                 >
-
                   <span className="absolute top-6 right-6 px-3.5 py-1.5 rounded-full bg-primary-dark/70 text-white text-xs font-semibold uppercase tracking-widest">
                     Nivel {program.stage}
                   </span>

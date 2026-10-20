@@ -269,6 +269,12 @@ export default function AgeCalculator() {
   const ageAtCutoffLabel = result
     ? `${result.ageAtCutoff.years} ${result.ageAtCutoff.years === 1 ? "año" : "años"} y ${result.ageAtCutoff.months} ${result.ageAtCutoff.months === 1 ? "mes" : "meses"}`
     : "";
+  const contactPrefillHref = result
+    ? `/contacto?${new URLSearchParams({
+        ...(result.status === "eligible" ? { level: result.levelName } : {}),
+        ...(birthdate ? { birthdate } : {}),
+      }).toString()}`
+    : "/contacto";
 
   return (
     <section data-cta="calculadora" className="relative w-full overflow-hidden border-b border-border bg-paper py-14 sm:py-20 lg:py-24">
@@ -673,15 +679,24 @@ export default function AgeCalculator() {
                   </div>
                 )}
 
-                {result.status === "eligible" && (
+                <div className="mt-4 flex flex-col gap-2 sm:flex-row">
                   <Link
-                    href="/sedes"
-                    className="group mt-3 flex min-h-11 w-full items-center justify-center gap-1.5 text-center text-xs font-bold text-primary hover:text-primary-dark sm:text-sm"
+                    href={contactPrefillHref}
+                    className="group flex min-h-11 flex-1 items-center justify-center gap-1.5 rounded-xl border border-primary/25 bg-surface px-4 py-2.5 text-center text-xs font-extrabold text-primary transition-colors hover:border-primary hover:bg-surface-sunk sm:text-sm"
                   >
-                    <span>Conocer fotos, direcciones y horarios de las sedes</span>
+                    <span>Formulario con estos datos</span>
                     <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
                   </Link>
-                )}
+                  {result.status === "eligible" && (
+                    <Link
+                      href="/sedes"
+                      className="group flex min-h-11 flex-1 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-4 py-2.5 text-center text-xs font-bold text-ink transition-colors hover:border-primary hover:text-primary sm:text-sm"
+                    >
+                      <span>Ver fotos y sedes</span>
+                      <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+                    </Link>
+                  )}
+                </div>
               </div>
             )}
           </div>

@@ -36,6 +36,8 @@ export default function AnalyticsTracker() {
         track("email_click", { path, location });
       } else if (href.startsWith("tel:")) {
         track("phone_click", { path, location });
+      } else if (href.includes("instagram.com")) {
+        track("instagram_click", { path, location });
       }
     };
 
