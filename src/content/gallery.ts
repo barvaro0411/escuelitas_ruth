@@ -18,6 +18,22 @@ export type GalleryImage = {
 
 export const schoolLifeGallery: GalleryImage[] = [
   {
+    id: "dia-del-profesor-vascongados-1",
+    src: "/dia-del-profesor-vascongados-1.jpg",
+    alt: "Educadoras diferenciales, fonoaudiólogas y párvulos celebrando el Día del Profesor en el patio techado de sede Vascongados",
+    title: "Día del Profesor: Celebración junto a nuestras educadoras",
+    category: "Celebraciones",
+    campusId: "vascongados",
+  },
+  {
+    id: "dia-del-profesor-vascongados-2",
+    src: "/dia-del-profesor-vascongados-2.jpg",
+    alt: "Párvulos felicitando y compartiendo con sus educadoras en el patio techado de sede Vascongados",
+    title: "Día del Profesor: Homenaje y cariño de los niños a sus tías",
+    category: "Celebraciones",
+    campusId: "vascongados",
+  },
+  {
     id: "celebracion-patio-1",
     src: "/celebracion-patio-techado.jpg",
     alt: "Patio techado de Escuelitas Ruth decorado con globos y mesa de colación para celebraciones de los párvulos",

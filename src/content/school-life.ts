@@ -218,7 +218,28 @@ export const calendarEvents: SchoolCalendarEvent[] = [
   },
 ];
 
-export const schoolLifeEvents: SchoolLifeEvent[] = [];
+export const schoolLifeEvents: SchoolLifeEvent[] = [
+  {
+    id: "celebracion-dia-del-profesor",
+    title: "Celebración del Día del Profesor y la Educadora",
+    date: "2026-10-16",
+    category: "Celebraciones",
+    summary:
+      "Nuestros párvulos y equipo educativo celebraron con enorme cariño a las educadoras diferenciales y fonoaudiólogas en el patio techado de sede Vascongados, con flores, regalos personalizados y momentos de afecto compartido.",
+    campusIds: ["vascongados"],
+    images: [
+      {
+        src: "/dia-del-profesor-vascongados-1.jpg",
+        alt: "Educadoras diferenciales, fonoaudiólogas y párvulos celebrando el Día del Profesor en sede Vascongados",
+      },
+      {
+        src: "/dia-del-profesor-vascongados-2.jpg",
+        alt: "Párvulos felicitando y compartiendo con sus educadoras en el patio techado",
+      },
+    ],
+    published: true,
+  },
+];
 
 // Las 10 Unidades Temáticas Oficiales de la Escuela de Lenguaje Ruth (Marzo a Diciembre)
 export const annualPlanUnits: AnnualPlanUnit[] = [

@@ -33,6 +33,8 @@ describe("Integridad de Imágenes Públicas (Cero 404)", () => {
       "ambiente-festivo-patio.jpg",
       "patio-fiestas-patrias.jpg",
       "vista-cordillera-escuela.jpg",
+      "dia-del-profesor-vascongados-1.jpg",
+      "dia-del-profesor-vascongados-2.jpg",
     ];
 
     for (const filename of essentialAssets) {

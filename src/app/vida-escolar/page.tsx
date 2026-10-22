@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import PageHero from "@/components/layout/PageHero";
 import Link from "next/link";
 import {
@@ -124,27 +125,56 @@ export default function VidaEscolarPage() {
               </h2>
             </div>
 
-            <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {publishedEvents.map((event) => (
                 <article
                   key={event.id}
-                  className="rounded-2xl border border-border bg-surface p-6 card-interactive"
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-xs transition-[transform,box-shadow,border-color] hover:-translate-y-1 hover:border-primary/40 hover:shadow-md"
                 >
-                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-primary">
-                    {event.category}
-                  </p>
-                  <h3 className="mt-2 font-display font-extrabold text-ink text-xl">
-                    {event.title}
-                  </h3>
-                  <time
-                    dateTime={event.date}
-                    className="mt-2 block text-xs font-semibold text-muted"
-                  >
-                    {formatSchoolDate(event.date)}
-                  </time>
-                  <p className="mt-3 text-sm leading-relaxed text-muted">
-                    {event.summary}
-                  </p>
+                  {event.images && event.images.length > 0 && (
+                    <div className="relative aspect-[4/3] w-full overflow-hidden bg-surface-sunk">
+                      <Image
+                        src={event.images[0].src}
+                        alt={event.images[0].alt}
+                        fill
+                        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                      />
+                      <div className="absolute top-2.5 right-2.5 rounded-full bg-primary-dark/85 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-xs">
+                        Foto real
+                      </div>
+                      {event.images.length > 1 && (
+                        <div className="absolute bottom-2.5 right-2.5 rounded-full bg-primary-dark/85 px-2.5 py-0.5 text-[10px] font-bold text-white backdrop-blur-xs flex items-center gap-1">
+                          <Images className="h-3 w-3" aria-hidden="true" />
+                          <span>{event.images.length} fotos</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  <div className="flex flex-1 flex-col p-6">
+                    <span className="inline-flex w-fit items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-900 border border-amber-200">
+                      {event.category}
+                    </span>
+                    <h3 className="mt-3 font-display font-extrabold text-ink text-xl">
+                      {event.title}
+                    </h3>
+                    <time
+                      dateTime={event.date}
+                      className="mt-1 block text-xs font-semibold text-muted"
+                    >
+                      {formatSchoolDate(event.date)}
+                    </time>
+                    <p className="mt-3 text-sm leading-relaxed text-muted flex-1">
+                      {event.summary}
+                    </p>
+                    <a
+                      href="#gallery-title"
+                      className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary-dark transition-colors"
+                    >
+                      <Images className="h-3.5 w-3.5" aria-hidden="true" />
+                      <span>Ver fotos en la galería</span>
+                    </a>
+                  </div>
                 </article>
               ))}
             </div>
