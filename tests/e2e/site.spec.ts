@@ -249,3 +249,26 @@ test("la portada cumple el presupuesto de transferencia", async ({ page }) => {
   );
   expect(compressedBodyBytes).toBeLessThan(2_500_000);
 });
+
+test("la guía orientativa de lenguaje prellena el formulario de contacto", async ({
+  page,
+}) => {
+  await page.goto("/trastorno-especifico-lenguaje");
+  await page.getByRole("button", { name: /Pre-Kínder/ }).click();
+  await page
+    .getByRole("checkbox", { name: /pronunciar ciertos sonidos/ })
+    .click();
+  await page.getByRole("link", { name: "Dejar mis datos" }).click();
+
+  await expect(page).toHaveURL(/\/contacto\?/);
+  await expect(page.getByLabel(/Mensaje/)).toHaveValue(/Pre-Kínder \(NT1\)/);
+  await expect(page.getByLabel(/Mensaje/)).toHaveValue(/pronunciación/);
+});
+
+test("el formulario prellena sede y jornada desde la URL", async ({ page }) => {
+  await page.goto("/contacto?sede=vascongados&jornada=Ma%C3%B1ana");
+  await expect(page.getByLabel(/Sede de preferencia/)).toHaveValue(
+    "Escuela Vascongados",
+  );
+  await expect(page.getByLabel(/Jornada preferida/)).toHaveValue("Mañana");
+});

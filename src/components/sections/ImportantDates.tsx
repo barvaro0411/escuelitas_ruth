@@ -84,21 +84,21 @@ export default function ImportantDates({
                             ?.shortName,
                       )
                       .filter(Boolean)
-                      .join(" ·");
+                      .join(" · ");
               return (
                 <article
                   key={event.id}
-                  className="flex gap-4 rounded-2xl border border-border bg-surface p-5"
+                  className="flex gap-4 rounded-2xl border border-border bg-surface p-5 shadow-2xs card-interactive"
                 >
                   <time
                     dateTime={event.date}
-                    className="flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-xl bg-primary text-white"
+                    className="flex h-16 w-16 shrink-0 flex-col overflow-hidden rounded-xl border border-primary/20 bg-surface text-center shadow-2xs"
                   >
-                    <span className="font-display text-2xl font-extrabold leading-none">
-                      {day}
-                    </span>
-                    <span className="mt-1 text-[10px] font-extrabold tracking-[0.12em]">
+                    <span className="bg-primary-dark py-1 text-[10px] font-extrabold tracking-[0.14em] text-accent-on-dark">
                       {month}
+                    </span>
+                    <span className="flex flex-1 items-center justify-center font-display text-2xl font-extrabold leading-none text-ink">
+                      {day}
                     </span>
                   </time>
                   <div className="min-w-0">
@@ -111,7 +111,7 @@ export default function ImportantDates({
                       </p>
                     )}
                     <p className="mt-3 flex items-center gap-1.5 text-xs font-extrabold text-primary">
-                      <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
+                      <MapPin className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                       {event.location || campusLabel}
                     </p>
                   </div>

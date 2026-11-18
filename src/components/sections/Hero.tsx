@@ -66,9 +66,9 @@ export default function Hero() {
             </div>
           </FiestasPatriasMode>
 
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-action/30 bg-action px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-primary-dark">
-            <ShieldCheck className="h-4 w-4" aria-hidden="true" />
-            Consulta cupos 2027
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/12 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-white backdrop-blur-sm">
+            <ShieldCheck className="h-4 w-4 text-accent-on-dark" aria-hidden="true" />
+            <span>Consulta cupos 2027 · Reconocimiento MINEDUC</span>
           </div>
 
           <h1 className="max-w-2xl text-balance font-display font-extrabold leading-[1.08] tracking-tight text-white text-4xl drop-shadow-hero sm:text-5xl">
@@ -79,22 +79,22 @@ export default function Hero() {
           {/* El contorno de la voz: el único recurso gráfico del sitio. */}
           <VoiceContour
             variant="signature"
-            className="mt-1 mb-3 h-5 w-48 text-accent-on-dark/70 sm:w-56"
+            className="mt-1 mb-3 h-5 w-48 text-accent-on-dark/75 sm:w-56"
           />
 
-          <p className="mb-4 max-w-xl text-base leading-relaxed text-white/90 drop-shadow-hero-soft sm:text-lg">
+          <p className="mb-4 max-w-xl text-base leading-relaxed text-white/95 drop-shadow-hero-soft sm:text-lg">
             Educación parvularia y apoyo fonoaudiológico de 3 a 5 años 11 meses.
             Acompañamos a tu hijo a descubrir su propia voz.
           </p>
 
-          <ul className="mb-5 space-y-2" aria-label="Beneficios principales">
+          <ul className="mb-5 flex flex-wrap gap-2.5" aria-label="Beneficios principales">
             {proofPoints.map((point) => (
               <li
                 key={point}
-                className="flex items-start gap-3 text-sm font-semibold text-white drop-shadow-hero-soft sm:text-base"
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-primary-dark/55 px-3.5 py-1.5 text-xs font-bold text-white backdrop-blur-xs sm:text-sm"
               >
                 <CheckCircle2
-                  className="mt-0.5 h-5 w-5 shrink-0 text-accent-on-dark"
+                  className="h-4 w-4 shrink-0 text-accent-on-dark"
                   aria-hidden="true"
                 />
                 <span>{point}</span>

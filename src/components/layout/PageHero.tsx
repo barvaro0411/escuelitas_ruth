@@ -14,6 +14,8 @@ type PageHeroProps = {
   aside?: ReactNode;
   /** Capas de fondo (imagen, degradado, patrón). Van detrás del contenido. */
   decoration?: ReactNode;
+  /** Zona de atribución para analítica (`data-cta`) cuando el hero incluye botones de contacto. */
+  ctaZone?: string;
   className?: string;
 };
 
@@ -31,12 +33,14 @@ export default function PageHero({
   children,
   aside,
   decoration,
+  ctaZone,
   className = "",
 }: PageHeroProps) {
   const dark = variant === "dark";
 
   return (
     <section
+      data-cta={ctaZone}
       className={`relative isolate overflow-hidden pb-16 pt-36 sm:pb-20 sm:pt-40 ${
         dark
           ? "bg-primary-dark text-white"

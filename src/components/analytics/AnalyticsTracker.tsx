@@ -29,15 +29,17 @@ export default function AnalyticsTracker() {
 
       const path = window.location.pathname;
       const location = resolveCtaLocation(anchor);
+      const campaign = readCampaignParams();
+      const payload = { path, location, ...campaign };
 
       if (href.includes("wa.me") || href.includes("api.whatsapp.com")) {
-        track("whatsapp_click", { path, location });
+        track("whatsapp_click", payload);
       } else if (href.startsWith("mailto:")) {
-        track("email_click", { path, location });
+        track("email_click", payload);
       } else if (href.startsWith("tel:")) {
-        track("phone_click", { path, location });
+        track("phone_click", payload);
       } else if (href.includes("instagram.com")) {
-        track("instagram_click", { path, location });
+        track("instagram_click", payload);
       }
     };
 
@@ -47,6 +49,22 @@ export default function AnalyticsTracker() {
   }, []);
 
   return null;
+}
+
+function readCampaignParams() {
+  const params = new URLSearchParams(window.location.search);
+  const utmSource = cleanTag(params.get("utm_source"));
+  const utmCampaign = cleanTag(params.get("utm_campaign"));
+  return {
+    ...(utmSource ? { utmSource } : {}),
+    ...(utmCampaign ? { utmCampaign } : {}),
+  };
+}
+
+function cleanTag(value: string | null) {
+  if (!value) return undefined;
+  const normalized = value.trim().slice(0, 40);
+  return /^[a-zA-Z0-9_-]+$/.test(normalized) ? normalized : undefined;
 }
 
 /**

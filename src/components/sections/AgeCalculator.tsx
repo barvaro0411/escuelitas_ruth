@@ -3,6 +3,7 @@
 import { useRef, useState, type ComponentType, type FormEvent } from "react";
 import { flushSync } from "react-dom";
 import Link from "next/link";
+import { track } from "@vercel/analytics";
 import {
   AlertCircle,
   ArrowRight,
@@ -228,6 +229,11 @@ export default function AgeCalculator() {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const calculated = calculateEligibility(birthdate);
+    track("calculator_submit", {
+      status: calculated?.status ?? "invalid",
+      level: calculated?.levelName ?? "none",
+    });
     // El resultado se pinta antes de medir dónde quedó.
     flushSync(() => setHasCalculated(true));
     // Sin la acción no hay resultado: la fecha no es válida y el aviso de error
@@ -307,8 +313,9 @@ export default function AgeCalculator() {
           <form
             noValidate
             onSubmit={handleSubmit}
-            className="min-w-0 w-full rounded-2xl border border-border/80 bg-surface p-5 sm:p-7 lg:col-span-5 lg:p-8 shadow-xs"
+            className="relative min-w-0 w-full overflow-hidden rounded-2xl border border-border/80 bg-surface p-5 sm:p-7 lg:col-span-5 lg:p-8 shadow-xs"
           >
+            <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-primary via-action to-primary" aria-hidden="true" />
             <fieldset
               aria-invalid={hasDateError}
               aria-describedby={
@@ -480,33 +487,36 @@ export default function AgeCalculator() {
 
                 <ul className="mt-5 space-y-3">
                   {schoolLevels.map((level) => (
-                    <li
-                      key={level.id}
-                      className="flex items-center justify-between gap-4 rounded-xl border border-border bg-surface-sunk p-4 transition-all hover:border-primary/40 hover:bg-surface"
-                    >
-                      <div className="flex items-center gap-3.5">
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                          {level.id === "medio-mayor" ? (
-                            <Baby className="h-5 w-5" aria-hidden="true" />
-                          ) : (
-                            <GraduationCap
-                              className="h-5 w-5"
-                              aria-hidden="true"
-                            />
-                          )}
+                    <li key={level.id}>
+                      <Link
+                        href={`/contacto?level=${encodeURIComponent(level.name)}`}
+                        className="group flex items-center justify-between gap-4 rounded-xl border border-border bg-surface-sunk p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/50 hover:bg-surface hover:shadow-xs"
+                      >
+                        <div className="flex items-center gap-3.5">
+                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                            {level.id === "medio-mayor" ? (
+                              <Baby className="h-5 w-5" aria-hidden="true" />
+                            ) : (
+                              <GraduationCap
+                                className="h-5 w-5"
+                                aria-hidden="true"
+                              />
+                            )}
+                          </div>
+                          <div className="min-w-0">
+                            <p className="font-display text-base font-extrabold leading-tight text-ink">
+                              {level.name}
+                            </p>
+                            <p className="text-xs text-muted">
+                              {level.ageYears} años cumplidos al {admissionCutoff.label}
+                            </p>
+                          </div>
                         </div>
-                        <div className="min-w-0">
-                          <p className="font-display text-base font-extrabold leading-tight text-ink">
-                            {level.name}
-                          </p>
-                          <p className="text-xs text-muted">
-                            {level.ageYears} años cumplidos al {admissionCutoff.label}
-                          </p>
-                        </div>
-                      </div>
-                      <span className="rounded-full bg-primary/10 px-3 py-1 text-[11px] font-extrabold text-primary shrink-0">
-                        {level.journeys.join(" · ")}
-                      </span>
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-[11px] font-extrabold text-primary shrink-0 transition-colors group-hover:bg-primary group-hover:text-white">
+                          <span>{level.journeys.join(" · ")}</span>
+                          <ArrowRight className="h-3 w-3" aria-hidden="true" />
+                        </span>
+                      </Link>
                     </li>
                   ))}
                 </ul>

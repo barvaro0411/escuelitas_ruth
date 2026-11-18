@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, ImageIcon, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Expand, ImageIcon, X } from "lucide-react";
 import type { GalleryImage } from "@/content/gallery";
 
 export default function PhotoGallery({ images }: { images: GalleryImage[] }) {
@@ -129,33 +129,40 @@ export default function PhotoGallery({ images }: { images: GalleryImage[] }) {
     <>
       {/* Selector interactivo de categorías */}
       {filterTabs.length > 1 && (
-        <div className="mb-8 flex flex-wrap items-center gap-2">
-          {filterTabs.map((tab) => {
-            const isActive = activeFilter === tab.id;
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => handleFilterChange(tab.id)}
-                className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${
-                  isActive
-                    ? "bg-primary text-white shadow-sm ring-2 ring-primary/20"
-                    : "border border-border bg-surface text-ink hover:border-primary/40 hover:bg-surface-sunk"
-                }`}
-              >
-                <span>{tab.label}</span>
-                <span
-                  className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${
+        <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filtrar fotografías por categoría o sede">
+            {filterTabs.map((tab) => {
+              const isActive = activeFilter === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  aria-pressed={isActive}
+                  onClick={() => handleFilterChange(tab.id)}
+                  className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${
                     isActive
-                      ? "bg-white/20 text-white"
-                      : "bg-surface-sunk text-muted"
+                      ? "bg-primary text-white shadow-sm ring-2 ring-primary/20"
+                      : "border border-border bg-surface text-ink hover:border-primary/40 hover:bg-surface-sunk"
                   }`}
                 >
-                  {tab.count}
-                </span>
-              </button>
-            );
-          })}
+                  <span>{tab.label}</span>
+                  <span
+                    className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${
+                      isActive
+                        ? "bg-white/20 text-white"
+                        : "bg-surface-sunk text-muted"
+                    }`}
+                  >
+                    {tab.count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+          <p aria-live="polite" className="text-xs font-semibold text-muted">
+            Mostrando {filteredImages.length}{" "}
+            {filteredImages.length === 1 ? "fotografía" : "fotografías"}
+          </p>
         </div>
       )}
 
@@ -181,11 +188,19 @@ export default function PhotoGallery({ images }: { images: GalleryImage[] }) {
                 alt={image.alt}
                 fill
                 sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
               />
-              <div className="absolute top-2.5 right-2.5 rounded-full bg-primary-dark/80 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-xs">
-                Foto real
-              </div>
+              <div
+                className="absolute inset-0 bg-gradient-to-t from-primary-dark/55 via-transparent to-transparent opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+                aria-hidden="true"
+              />
+              <span
+                className="absolute bottom-2.5 right-2.5 inline-flex items-center gap-1 rounded-lg bg-primary-dark/85 px-2.5 py-1 text-[11px] font-extrabold text-white shadow-xs backdrop-blur-xs transition-all duration-200 group-hover:bg-action group-hover:text-primary-dark"
+                aria-hidden="true"
+              >
+                <Expand className="h-3 w-3" />
+                <span>Ampliar</span>
+              </span>
             </div>
             <div className="p-4">
               <div className="flex items-center gap-2">
@@ -236,7 +251,7 @@ export default function PhotoGallery({ images }: { images: GalleryImage[] }) {
               ref={closeButtonRef}
               type="button"
               onClick={close}
-              className="ml-auto mb-3 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-surface text-primary-dark"
+              className="ml-auto mb-3 flex h-12 w-12 shrink-0 cursor-pointer items-center justify-center rounded-full bg-surface text-primary-dark transition-colors hover:bg-action"
               aria-label="Cerrar galería"
             >
               <X className="h-6 w-6" aria-hidden="true" />
@@ -256,8 +271,9 @@ export default function PhotoGallery({ images }: { images: GalleryImage[] }) {
                 <p className="font-display text-lg font-extrabold">
                   {selected.title}
                 </p>
-                <p className="text-sm font-semibold text-white/80">
-                  {selected.category}
+                <p className="text-xs font-semibold text-white/80 sm:text-sm">
+                  {selected.category} · Foto {(selectedIndex ?? 0) + 1} de{" "}
+                  {filteredImages.length}
                 </p>
               </div>
               {filteredImages.length > 1 && (
@@ -265,7 +281,7 @@ export default function PhotoGallery({ images }: { images: GalleryImage[] }) {
                   <button
                     type="button"
                     onClick={showPrevious}
-                    className="flex h-12 w-12 items-center justify-center rounded-full border border-white/35 bg-white/10"
+                    className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-white/35 bg-white/10 transition-colors hover:bg-white/20"
                     aria-label="Fotografía anterior"
                   >
                     <ChevronLeft aria-hidden="true" />
@@ -273,7 +289,7 @@ export default function PhotoGallery({ images }: { images: GalleryImage[] }) {
                   <button
                     type="button"
                     onClick={showNext}
-                    className="flex h-12 w-12 items-center justify-center rounded-full border border-white/35 bg-white/10"
+                    className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-white/35 bg-white/10 transition-colors hover:bg-white/20"
                     aria-label="Fotografía siguiente"
                   >
                     <ChevronRight aria-hidden="true" />

@@ -103,7 +103,8 @@ export type WhatsAppContext = {
     | "faq"
     | "seasonal"
     | "contact"
-    | "family-resource";
+    | "family-resource"
+    | "speech-checklist";
   campusId?: CampusId;
   level?: string;
   birthdate?: string;
@@ -121,6 +122,14 @@ export function createWhatsAppMessage(context: WhatsAppContext) {
       ? ` Mi hijo/a nació el ${context.birthdate}.`
       : "";
     return `Hola, utilicé la calculadora de nivel y a mi hijo/a le correspondería ${context.level}.${birthdate} Quisiera consultar disponibilidad para ${year} y la evaluación fonoaudiológica sin costo.`;
+  }
+
+  if (context.source === "speech-checklist") {
+    const level = context.level ? ` (edad para ${cleanContactField(context.level, 60)})` : "";
+    const topic = context.topic
+      ? ` y marqué señales sobre ${cleanContactField(context.topic, 180)}`
+      : "";
+    return `Hola, revisé la guía orientativa de lenguaje en su web${level}${topic}. Quisiera agendar una evaluación fonoaudiológica sin costo para ${year}.`;
   }
 
   if (campus) {

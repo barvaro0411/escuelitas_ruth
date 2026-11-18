@@ -18,6 +18,14 @@ const icons = {
   calendar: CalendarDays,
 } satisfies Record<WeeklyUpdate["icon"], typeof BookOpen>;
 
+const iconPalettes: Record<WeeklyUpdate["icon"], string> = {
+  calendar: "bg-sky-100 text-primary-dark",
+  community: "bg-emerald-100 text-emerald-800",
+  book: "bg-amber-100 text-amber-900",
+  music: "bg-purple-100 text-purple-800",
+  palette: "bg-pink-100 text-pink-800",
+};
+
 // `hideWhenEmpty` se usa en la portada: una sección vacía ahí comunica abandono.
 // En /vida-escolar el estado vacío sí informa, y se mantiene.
 export default function WeeklyUpdates({
@@ -76,26 +84,30 @@ export default function WeeklyUpdates({
                             ?.shortName,
                       )
                       .filter(Boolean)
-                      .join(" ·");
+                      .join(" · ");
               return (
                 <article
                   key={update.id}
-                  className="rounded-2xl border border-border bg-surface p-5"
+                  className="group flex flex-col justify-between rounded-2xl border border-border bg-surface p-5 sm:p-6 shadow-2xs card-interactive"
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white">
-                    <Icon className="h-5 w-5" aria-hidden="true" />
+                  <div>
+                    <div className="flex items-center justify-between gap-2">
+                      <div className={`flex h-11 w-11 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110 ${iconPalettes[update.icon]}`}>
+                        <Icon className="h-5 w-5" aria-hidden="true" />
+                      </div>
+                      <span className="rounded-full bg-surface-sunk px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.08em] text-primary">
+                        {campusLabel}
+                      </span>
+                    </div>
+                    <h3 className="mt-4 font-display font-extrabold text-ink text-lg leading-snug">
+                      {update.title}
+                    </h3>
+                    {update.description && (
+                      <p className="mt-2 text-sm leading-relaxed text-muted">
+                        {update.description}
+                      </p>
+                    )}
                   </div>
-                  <h3 className="mt-4 font-display font-extrabold text-ink text-base">
-                    {update.title}
-                  </h3>
-                  {update.description && (
-                    <p className="mt-2 text-sm leading-relaxed text-muted">
-                      {update.description}
-                    </p>
-                  )}
-                  <p className="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-primary">
-                    {campusLabel}
-                  </p>
                 </article>
               );
             })}

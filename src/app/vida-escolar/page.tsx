@@ -140,12 +140,9 @@ export default function VidaEscolarPage() {
                         sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                         className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                       />
-                      <div className="absolute top-2.5 right-2.5 rounded-full bg-primary-dark/85 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-xs">
-                        Foto real
-                      </div>
                       {event.images.length > 1 && (
-                        <div className="absolute bottom-2.5 right-2.5 rounded-full bg-primary-dark/85 px-2.5 py-0.5 text-[10px] font-bold text-white backdrop-blur-xs flex items-center gap-1">
-                          <Images className="h-3 w-3" aria-hidden="true" />
+                        <div className="absolute bottom-2.5 right-2.5 rounded-full bg-primary-dark/85 px-2.5 py-1 text-[11px] font-bold text-white backdrop-blur-xs flex items-center gap-1">
+                          <Images className="h-3.5 w-3.5 text-accent-on-dark" aria-hidden="true" />
                           <span>{event.images.length} fotos</span>
                         </div>
                       )}

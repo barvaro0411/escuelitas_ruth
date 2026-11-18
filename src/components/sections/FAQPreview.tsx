@@ -27,10 +27,10 @@ export default function FAQPreview() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section data-cta="faq" className="border-b border-border bg-surface py-14">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:px-8">
-        <div data-reveal="left">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+    <section data-cta="faq" className="border-b border-border bg-surface py-16 sm:py-20">
+      <div className="mx-auto grid max-w-7xl items-start gap-10 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:px-8">
+        <div className="lg:sticky lg:top-28" data-reveal="left">
+          <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-primary">
             Preguntas frecuentes
           </p>
           <h2 className="mt-2 font-display font-extrabold leading-tight text-ink text-3xl sm:text-4xl">
@@ -42,10 +42,10 @@ export default function FAQPreview() {
           </p>
           <Link
             href="/preguntas-frecuentes"
-            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-dark"
+            className="group mt-6 inline-flex min-h-11 items-center gap-2 rounded-xl border border-primary/25 bg-surface-sunk px-4 py-2.5 text-sm font-extrabold text-primary transition-colors hover:border-primary hover:bg-primary hover:text-white"
           >
-            Ver todas las preguntas
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            <span>Ver todas las preguntas</span>
+            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
           </Link>
         </div>
 

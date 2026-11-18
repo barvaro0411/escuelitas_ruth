@@ -11,6 +11,7 @@ import Link from "next/link";
 import JsonLd from "@/components/seo/JsonLd";
 import { createWhatsAppUrl, buildBreadcrumbsJsonLd } from "@/lib/site";
 import StepByStepAdmission from "@/components/sections/StepByStepAdmission";
+import ResponseNote from "@/components/ui/ResponseNote";
 
 export const metadata: Metadata = {
   title: "Admisión y Matrículas 2027",
@@ -171,6 +172,7 @@ export default function AdmisionPage() {
           {/* CTA */}
           <div
             id="consulta-final"
+            data-cta="cierre-admision"
             data-reveal
             className="rounded-2xl bg-gradient-to-r from-primary-dark via-primary to-primary-dark p-10 text-center text-white sm:p-14"
           >
@@ -201,6 +203,7 @@ export default function AdmisionPage() {
                   <ArrowRight className="ml-3 h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" />
                 </Link>
               </div>
+              <ResponseNote tone="dark" align="center" className="mx-auto mt-6 max-w-lg" />
             </div>
           </div>
         </div>

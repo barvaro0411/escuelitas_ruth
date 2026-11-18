@@ -3,6 +3,7 @@ import Image from "next/image";
 import PageHero from "@/components/layout/PageHero";
 import Link from "next/link";
 import AgeCalculator from "@/components/sections/AgeCalculator";
+import SpeechChecklist from "@/components/sections/SpeechChecklist";
 import CTASection from "@/components/sections/CTASection";
 import JsonLd from "@/components/seo/JsonLd";
 import {
@@ -167,9 +168,10 @@ export default function TrastornoEspecificoLenguajePage() {
   return (
     <>
       <JsonLd data={breadcrumbsJsonLd} />
-      <div className="pt-28 overflow-hidden bg-paper">
+      <div className="overflow-hidden bg-paper">
         {/* ── HERO ── */}
         <PageHero
+          ctaZone="hero-tel"
           eyebrow="Trastorno específico del lenguaje"
           eyebrowIcon={Brain}
           title="¿Qué es el TEL?"
@@ -278,6 +280,8 @@ export default function TrastornoEspecificoLenguajePage() {
             </div>
           </div>
         </section>
+
+        <SpeechChecklist />
 
         {/* ── WHAT IS TEL ── */}
         <section className="py-24 bg-paper border-b border-border">
@@ -445,7 +449,7 @@ export default function TrastornoEspecificoLenguajePage() {
         <AgeCalculator />
 
         {/* ── ELIGIBILITY ── */}
-        <section className="py-24 bg-paper border-b border-border">
+        <section data-cta="requisitos-tel" className="py-24 bg-paper border-b border-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-14 items-center">
             <div>
               <span className="inline-block px-4 py-2 rounded-full bg-accent text-white font-semibold uppercase tracking-widest text-xs mb-5">

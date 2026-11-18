@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import AgeCalculator from "@/components/sections/AgeCalculator";
 import SedesSelector from "@/components/sections/SedesSelector";
+import ResponseNote from "@/components/ui/ResponseNote";
 import JsonLd from "@/components/seo/JsonLd";
 import {
   ArrowRight,
@@ -86,10 +87,11 @@ export default function MatriculasConchaliPage() {
     <>
       <JsonLd data={breadcrumbsJsonLd} />
 
-      <div className="pt-24 sm:pt-28 overflow-hidden bg-paper">
+      <div className="overflow-hidden bg-paper">
         {/* ── HERO SECTION HUMANO & OFICIAL ── */}
         <PageHero
           variant="light"
+          ctaZone="hero-conchali"
           eyebrow="Reconocido por MINEDUC · RBD 10375-6 y 26106-8"
           eyebrowIcon={ShieldCheck}
           title={
@@ -201,6 +203,8 @@ export default function MatriculasConchaliPage() {
                 Llamar al {siteConfig.contact.phone.label}
               </a>
             </div>
+
+            <ResponseNote tone="light" />
           </div>
         </PageHero>
 
@@ -311,6 +315,7 @@ export default function MatriculasConchaliPage() {
 
         {/* ── PROCESO TRANSPARENTE "PASO A PASO" ── */}
         <section
+          data-cta="pasos-conchali"
           data-reveal
           className="py-16 sm:py-24 bg-surface border-b border-border"
         >
@@ -463,6 +468,7 @@ export default function MatriculasConchaliPage() {
         {/* ── CTA FINAL CÁLIDO & CONFIABLE ── */}
         <section
           id="consulta-final"
+          data-cta="cierre-conchali"
           data-reveal
           className="py-16 sm:py-20 bg-gradient-to-r from-primary-dark via-primary to-primary-dark text-white relative overflow-hidden"
         >

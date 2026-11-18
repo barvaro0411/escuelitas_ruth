@@ -136,8 +136,8 @@ export default function NosotrosPage() {
                 </div>
               </div>
               {/* Decorative element */}
-              <div className="absolute -bottom-4 -left-4 flex h-16 w-16 items-center justify-center rounded-full border-4 border-white bg-accent">
-                <Sparkles size={24} className="text-primary-dark" />
+              <div className="absolute -bottom-4 -left-4 flex h-16 w-16 items-center justify-center rounded-full border-4 border-white bg-action shadow-md">
+                <Sparkles size={24} className="text-primary-dark" aria-hidden="true" />
               </div>
             </div>
 

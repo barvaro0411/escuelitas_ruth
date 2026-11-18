@@ -121,8 +121,9 @@ export default function MatriculasSantiagoNortePage() {
   return (
     <>
       <JsonLd data={breadcrumbsJsonLd} />
-      <div className="pt-28 overflow-hidden bg-paper">
+      <div className="overflow-hidden bg-paper">
         <PageHero
+          ctaZone="hero-santiago-norte"
           eyebrow="Cupos 2027 — Santiago Norte"
           eyebrowIcon={ShieldCheck}
           title="Escuela de lenguaje en Santiago norte — matrículas 2027"
@@ -235,7 +236,7 @@ export default function MatriculasSantiagoNortePage() {
 
         <AgeCalculator />
 
-        <section className="py-24 bg-paper">
+        <section data-cta="cierre-santiago-norte" className="py-24 bg-paper">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-14 items-center">
             <div>
               <span className="inline-block px-4 py-2 rounded-full bg-surface-sunk text-primary-dark font-semibold uppercase tracking-widest text-xs mb-5">

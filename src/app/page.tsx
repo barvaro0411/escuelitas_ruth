@@ -13,6 +13,7 @@ import WeeklyUpdates from "@/components/sections/WeeklyUpdates";
 import ImportantDates from "@/components/sections/ImportantDates";
 import CommunityPreview from "@/components/sections/CommunityPreview";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
+import SpeechChecklist from "@/components/sections/SpeechChecklist";
 
 const homeFaqs = [
   {
@@ -48,6 +49,7 @@ export default function Home() {
       <ImportantDates hideWhenEmpty compact />
       <CommunityPreview />
       <TestimonialsSection />
+      <SpeechChecklist />
       <FAQPreview />
       <CTASection />
     </>

@@ -33,4 +33,16 @@ describe("mensajes de contacto", () => {
     expect(url.hostname).toBe("wa.me");
     expect(url.searchParams.get("text")).toBe("Hola, matrícula");
   });
+
+  it("construye mensaje limpio para la guía orientativa de lenguaje", () => {
+    const message = createWhatsAppMessage({
+      source: "speech-checklist",
+      level: "Pre-Kínder (NT1)",
+      topic: "pronunciación\n y frases cortas",
+    });
+    expect(message).toContain("Pre-Kínder (NT1)");
+    expect(message).toContain("pronunciación y frases cortas");
+    expect(message).not.toContain("\n");
+    expect(message).toContain(String(siteConfig.admissionYear));
+  });
 });

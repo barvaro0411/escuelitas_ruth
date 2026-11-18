@@ -203,7 +203,7 @@ export default function ProgramaPage() {
 
                   <div className="p-6 bg-white/10 rounded-2xl border border-white/20 mt-8 backdrop-blur-md">
                     <p className="text-white font-semibold m-0 flex items-center">
-                      <Speech className="mr-4 text-accent shrink-0" size={32} />
+                      <Speech className="mr-4 text-accent-on-dark shrink-0" size={32} aria-hidden="true" />
                       Con la intervención adecuada y temprana, los niños superan
                       estas dificultades exitosamente.
                     </p>
@@ -304,7 +304,7 @@ export default function ProgramaPage() {
                   <div
                     className={`w-16 h-16 rounded-2xl ${program.chip} backdrop-blur-md flex items-center justify-center mb-8 transition-transform duration-300 group-hover:scale-105`}
                   >
-                    <program.icon size={32} className="currentColor" />
+                    <program.icon size={32} aria-hidden="true" />
                   </div>
 
                   <span

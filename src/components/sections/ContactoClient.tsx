@@ -1,9 +1,20 @@
 "use client";
 
-import { useEffect, Suspense } from "react";
+import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { Clock, Instagram, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
+import {
+  Check,
+  CheckCircle2,
+  Clock,
+  Copy,
+  Instagram,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Phone,
+  Send,
+} from "lucide-react";
 import { toast } from "sonner";
 import { track } from "@vercel/analytics";
 import { useSearchParams } from "next/navigation";
@@ -42,6 +53,18 @@ const allowedLevelPrefills: Record<string, { label: string; age: string }> = {
   "Kínder (NT2)": { label: "Kínder (NT2)", age: "5 años" },
 };
 
+const allowedJornadas = new Set(["Mañana", "Tarde"]);
+
+function cleanQueryTopic(value: string | null) {
+  if (!value) return undefined;
+  const cleaned = value
+    .replace(/[\u0000-\u001f\u007f]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 180);
+  return cleaned || undefined;
+}
+
 function isValidBirthdate(value: string | null): value is string {
   if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
 
@@ -77,10 +100,28 @@ function ContactoForm() {
   const searchParams = useSearchParams();
   const levelParam = searchParams?.get("level");
   const birthdateParam = searchParams?.get("birthdate");
+  const sedeParam = searchParams?.get("sede");
+  const jornadaParam = searchParams?.get("jornada");
+  const topicParam = cleanQueryTopic(searchParams?.get("topic") ?? null);
+
   const levelPrefill = levelParam
     ? allowedLevelPrefills[levelParam]
     : undefined;
   const validBirthdate = isValidBirthdate(birthdateParam);
+  const sedePrefill = sedeParam
+    ? campuses.find((campus) => campus.id === sedeParam)?.name
+    : undefined;
+  const jornadaPrefill =
+    jornadaParam && allowedJornadas.has(jornadaParam)
+      ? jornadaParam
+      : undefined;
+
+  const [preparedSubmission, setPreparedSubmission] = useState<{
+    whatsappUrl: string;
+    messageText: string;
+    data: FormData;
+  } | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const {
     register,
@@ -96,16 +137,51 @@ function ContactoForm() {
       setValue("fechaNacimiento", birthdateParam);
     }
 
-    if (levelPrefill) {
+    if (sedePrefill) {
+      setValue("sede", sedePrefill);
+    }
+
+    if (jornadaPrefill) {
+      setValue("jornada", jornadaPrefill);
+    }
+
+    if (levelPrefill && topicParam) {
       setValue(
         "mensaje",
-        `Hola, realicé el cálculo en su web y mi hijo(a) tiene edad para ${levelPrefill.label}. Quisiera consultar disponibilidad para ${admissionCutoff.year}.`,
+        `Hola, revisé la guía orientativa para ${levelPrefill.label} (${topicParam}) y quisiera agendar una evaluación fonoaudiológica sin costo para ${admissionCutoff.year}.`,
+      );
+    } else if (levelPrefill) {
+      setValue(
+        "mensaje",
+        `Hola, mi hijo(a) tiene edad para ${levelPrefill.label}. Quisiera consultar disponibilidad para ${admissionCutoff.year} y agendar evaluación gratuita.`,
+      );
+    } else if (topicParam) {
+      setValue(
+        "mensaje",
+        `Hola, quisiera orientación y evaluación fonoaudiológica sin costo (${topicParam}) para ${admissionCutoff.year}.`,
+      );
+    } else if (sedePrefill) {
+      setValue(
+        "mensaje",
+        `Hola, quisiera consultar disponibilidad ${admissionCutoff.year} en ${sedePrefill} y coordinar una evaluación o visita.`,
       );
     }
-  }, [birthdateParam, levelPrefill, setValue, validBirthdate]);
+  }, [
+    birthdateParam,
+    jornadaPrefill,
+    levelPrefill,
+    sedePrefill,
+    setValue,
+    topicParam,
+    validBirthdate,
+  ]);
 
   const onSubmit = (data: FormData) => {
-    const whatsappUrl = buildWhatsAppUrl(buildContactWhatsAppMessage(data));
+    const messageText = buildContactWhatsAppMessage(data);
+    const whatsappUrl = buildWhatsAppUrl(messageText);
+    setPreparedSubmission({ whatsappUrl, messageText, data });
+    setCopied(false);
+
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
 
     track("contact_form_submit", { channel: "whatsapp" });
@@ -123,6 +199,18 @@ function ContactoForm() {
     const targetUrl = buildContactMailtoUrl(data);
     track("contact_form_submit", { channel: "email" });
     window.location.assign(targetUrl);
+  };
+
+  const handleCopyPrepared = async () => {
+    if (!preparedSubmission) return;
+    try {
+      await navigator.clipboard.writeText(preparedSubmission.messageText);
+      setCopied(true);
+      track("contact_message_copy");
+      toast.success("Mensaje copiado al portapapeles");
+    } catch {
+      toast.error("No pudimos copiar automáticamente. Puedes usar el correo.");
+    }
   };
 
   return (
@@ -144,7 +232,7 @@ function ContactoForm() {
             target="_blank"
             rel="noopener noreferrer"
             data-cta="contacto-directo"
-            className="mt-5 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-action px-5 py-3 text-sm font-extrabold text-action-ink transition-colors hover:bg-action-hover"
+            className="mt-5 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-action px-5 py-3 text-sm font-extrabold text-action-ink transition-all hover:bg-action-hover btn-action-glow"
           >
             <MessageCircle className="h-5 w-5" aria-hidden="true" />
             Consultar por WhatsApp sin formulario
@@ -152,7 +240,8 @@ function ContactoForm() {
         </div>
 
         <div className="grid items-start gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-          <section data-cta="formulario-contacto" className="rounded-2xl border border-border bg-surface p-6 sm:p-9">
+          <section data-cta="formulario-contacto" className="relative overflow-hidden rounded-2xl border border-border bg-surface p-6 shadow-xs sm:p-9">
+            <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-primary via-action to-primary" aria-hidden="true" />
             <div className="mb-7">
               <h2 className="font-display font-extrabold text-ink text-3xl sm:text-4xl">
                 Cuéntanos cómo orientarte
@@ -402,11 +491,67 @@ function ContactoForm() {
 
               <button
                 type="submit"
-                className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-4 text-base font-extrabold text-white transition-colors hover:bg-primary-dark focus-visible:ring-4 focus-visible:ring-primary/20"
+                className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-4 text-base font-extrabold text-white transition-colors hover:bg-primary-dark focus-visible:ring-4 focus-visible:ring-primary/20 cursor-pointer"
               >
                 <Send className="h-5 w-5" aria-hidden="true" />
                 Abrir WhatsApp con mi consulta
               </button>
+
+              {preparedSubmission && (
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className="rounded-2xl border border-emerald-300 bg-emerald-50/80 p-5 text-left"
+                >
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2
+                      className="mt-0.5 h-5 w-5 shrink-0 text-emerald-700"
+                      aria-hidden="true"
+                    />
+                    <div className="min-w-0 flex-1">
+                      <p className="font-display text-base font-extrabold text-ink">
+                        Tu consulta quedó preparada
+                      </p>
+                      <p className="mt-1 text-xs leading-relaxed text-muted sm:text-sm">
+                        Si WhatsApp no se abrió (por ejemplo, desde el navegador
+                        de Instagram o sin sesión en el computador), puedes
+                        reabrirlo, copiar el texto o enviarlo por correo:
+                      </p>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        <a
+                          href={preparedSubmission.whatsappUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex min-h-10 items-center gap-1.5 rounded-xl bg-action px-3.5 py-2 text-xs font-extrabold text-primary-dark transition-colors hover:bg-action-hover"
+                        >
+                          <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                          Reabrir WhatsApp
+                        </a>
+                        <button
+                          type="button"
+                          onClick={handleCopyPrepared}
+                          className="inline-flex min-h-10 items-center gap-1.5 rounded-xl border border-border bg-surface px-3.5 py-2 text-xs font-bold text-ink transition-colors hover:border-primary hover:text-primary cursor-pointer"
+                        >
+                          {copied ? (
+                            <Check className="h-4 w-4 text-emerald-700" aria-hidden="true" />
+                          ) : (
+                            <Copy className="h-4 w-4" aria-hidden="true" />
+                          )}
+                          <span>{copied ? "Mensaje copiado" : "Copiar texto"}</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => onEmailSubmit(preparedSubmission.data)}
+                          className="inline-flex min-h-10 items-center gap-1.5 rounded-xl border border-border bg-surface px-3.5 py-2 text-xs font-bold text-ink transition-colors hover:border-primary hover:text-primary cursor-pointer"
+                        >
+                          <Mail className="h-4 w-4" aria-hidden="true" />
+                          <span>Enviar por correo</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* El botón abre WhatsApp en otra pestaña con el mensaje ya
                   redactado. Sin avisarlo, en móvil parece que el formulario se
@@ -482,41 +627,47 @@ function ContactoForm() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-border bg-surface p-6">
+            <div className="rounded-2xl border border-border bg-surface p-6 shadow-xs">
               <h2 className="font-display font-extrabold text-ink text-2xl">
                 Canales directos
               </h2>
-              <div className="mt-5 space-y-4 text-sm font-semibold text-muted">
+              <div className="mt-5 space-y-3.5 text-sm font-semibold text-muted">
                 <a
                   href={siteConfig.contact.phone.href}
-                  className="flex items-center gap-3 hover:text-primary"
+                  className="flex items-center gap-3 rounded-xl border border-border/60 bg-paper px-3.5 py-2.5 transition-colors hover:border-primary/40 hover:text-primary"
                 >
-                  <Phone className="h-5 w-5 text-primary" aria-hidden="true" />
-                  {siteConfig.contact.phone.label}
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <Phone className="h-4 w-4" aria-hidden="true" />
+                  </span>
+                  <span>{siteConfig.contact.phone.label}</span>
                 </a>
                 <a
                   href={siteConfig.contact.email.href}
-                  className="flex items-center gap-3 break-all hover:text-primary"
+                  className="flex items-center gap-3 break-all rounded-xl border border-border/60 bg-paper px-3.5 py-2.5 transition-colors hover:border-primary/40 hover:text-primary"
                 >
-                  <Mail className="h-5 w-5 text-primary" aria-hidden="true" />
-                  {siteConfig.contact.email.label}
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <Mail className="h-4 w-4" aria-hidden="true" />
+                  </span>
+                  <span>{siteConfig.contact.email.label}</span>
                 </a>
                 <a
                   href={siteConfig.social.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram oficial de Escuelitas Ruth"
-                  className="flex items-center gap-3 hover:text-pink-600 transition-colors"
+                  className="flex items-center gap-3 rounded-xl border border-border/60 bg-paper px-3.5 py-2.5 transition-colors hover:border-pink-300 hover:text-pink-600"
                 >
-                  <Instagram className="h-5 w-5 text-pink-600" aria-hidden="true" />
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-pink-50 text-pink-600">
+                    <Instagram className="h-4 w-4" aria-hidden="true" />
+                  </span>
                   <span>Instagram: @escuelitasruthoficial_</span>
                 </a>
-                <p className="flex items-start gap-3">
+                <p className="flex items-start gap-3 rounded-xl border border-border/60 bg-surface-sunk/60 px-3.5 py-3 text-xs leading-relaxed text-ink/85 sm:text-sm">
                   <Clock
-                    className="mt-0.5 h-5 w-5 shrink-0 text-primary"
+                    className="mt-0.5 h-4 w-4 shrink-0 text-primary"
                     aria-hidden="true"
                   />
-                  {siteConfig.contact.hours}
+                  <span>{siteConfig.contact.hours}</span>
                 </p>
               </div>
             </div>

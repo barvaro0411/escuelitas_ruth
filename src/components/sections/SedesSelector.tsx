@@ -4,6 +4,7 @@ import {
   ArrowRight,
   Building2,
   CalendarClock,
+  Camera,
   CheckCircle2,
   ExternalLink,
   MapPin,
@@ -62,9 +63,13 @@ export default function SedesSelector() {
                           <ShieldCheck className="h-3.5 w-3.5 text-action" aria-hidden="true" />
                           RBD {campus.rbd}
                         </span>
-                        <span className="inline-flex items-center gap-1 rounded-full bg-action px-3 py-1 text-[11px] font-extrabold text-primary-dark">
-                          Cupos 2027
-                        </span>
+                        <Link
+                          href={`/sedes#${campus.id}`}
+                          className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-primary-dark/80 px-3 py-1 text-[11px] font-extrabold text-white backdrop-blur-sm transition-colors hover:border-action hover:text-accent-on-dark"
+                        >
+                          <Camera className="h-3 w-3 text-accent-on-dark" aria-hidden="true" />
+                          <span>{campus.gallery.length} fotos</span>
+                        </Link>
                       </div>
                       <div className="absolute bottom-4 left-4 right-4 text-white">
                         <p className="text-xs font-semibold uppercase tracking-wider text-accent-on-dark">
@@ -111,17 +116,29 @@ export default function SedesSelector() {
                       </p>
                     </FiestasPatriasMode>
 
-                    <div className="flex items-start gap-2.5 text-sm font-bold text-primary mb-3">
-                      <MapPin
-                        className="mt-0.5 h-4 w-4 shrink-0 text-accent"
-                        aria-hidden="true"
-                      />
-                      <div>
-                        <span>{campus.address}</span>
-                        <span className="block text-xs font-semibold text-muted mt-0.5">
-                          {campus.reference}
-                        </span>
+                    <div className="flex items-start justify-between gap-3 text-sm font-bold text-primary mb-3">
+                      <div className="flex items-start gap-2.5">
+                        <MapPin
+                          className="mt-0.5 h-4 w-4 shrink-0 text-accent"
+                          aria-hidden="true"
+                        />
+                        <div>
+                          <span>{campus.address}</span>
+                          <span className="block text-xs font-semibold text-muted mt-0.5">
+                            {campus.reference}
+                          </span>
+                        </div>
                       </div>
+                      <a
+                        href={campus.mapHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Cómo llegar a ${campus.name} en Google Maps`}
+                        className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-border bg-paper px-2.5 py-1.5 text-[11px] font-bold text-primary transition-colors hover:border-primary hover:bg-surface-sunk"
+                      >
+                        <span>Mapa</span>
+                        <ExternalLink className="h-3 w-3" aria-hidden="true" />
+                      </a>
                     </div>
 
                     <p className="text-sm leading-relaxed text-muted">
@@ -158,7 +175,7 @@ export default function SedesSelector() {
                 </div>
 
                 {/* Footer de botones */}
-                <div className="p-6 sm:p-7 pt-0 space-y-3">
+                <div className="p-6 sm:p-7 pt-0 space-y-2.5">
                   <a
                     href={whatsappUrl}
                     target="_blank"
@@ -170,26 +187,23 @@ export default function SedesSelector() {
                     <span>Consultar cupos en {campus.shortName}</span>
                   </a>
 
-                  <div className="flex flex-col sm:flex-row gap-2 pt-1">
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                    <Link
+                      href={`/contacto?sede=${campus.id}`}
+                      className="flex min-h-11 items-center justify-center gap-1.5 rounded-xl border border-primary/25 bg-surface-sunk px-3 py-2 text-xs font-extrabold text-primary transition-colors hover:border-primary hover:bg-surface text-center"
+                    >
+                      <span>Dejar mis datos</span>
+                      <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                    </Link>
+
                     <Link
                       href={`/sedes#${campus.id}`}
                       aria-label={`Conocer información completa de ${campus.name}`}
-                      className="group/link flex-1 inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-3 py-2 text-xs font-bold text-ink transition-colors hover:border-primary hover:text-primary text-center"
+                      className="group/link inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-3 py-2 text-xs font-bold text-ink transition-colors hover:border-primary hover:text-primary text-center"
                     >
-                      <span>Ver detalles y fotos</span>
+                      <span>Ver fotos y detalles</span>
                       <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover/link:translate-x-1" aria-hidden="true" />
                     </Link>
-
-                    <a
-                      href={campus.mapHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group/map inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-3 py-2 text-xs font-bold text-muted transition-colors hover:border-primary hover:text-primary text-center"
-                    >
-                      <MapPin className="h-3.5 w-3.5 text-primary transition-transform duration-200 group-hover/map:scale-110" aria-hidden="true" />
-                      <span>Cómo llegar</span>
-                      <ExternalLink className="h-3 w-3 text-muted/70" aria-hidden="true" />
-                    </a>
                   </div>
                 </div>
               </article>
@@ -198,20 +212,22 @@ export default function SedesSelector() {
         </div>
 
         {/* Banner de comunas vecinas */}
-        <div className="mx-auto mt-8 max-w-5xl rounded-2xl border border-primary/20 bg-surface p-6 sm:p-8 text-center shadow-xs">
-          <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-primary">
-            Familias de comunas cercanas en Santiago Norte
-          </p>
-          <p className="mx-auto mt-2 max-w-3xl text-sm leading-relaxed text-muted sm:text-base">
-            Si vives en <strong>Huechuraba, Renca, Recoleta, Independencia o Quilicura</strong>,
-            también te orientamos sobre vacantes y el proceso de admisión.
-          </p>
+        <div className="mx-auto mt-8 flex max-w-5xl flex-col items-center justify-between gap-4 rounded-2xl border border-primary/20 bg-surface-sunk/60 p-6 text-center shadow-xs sm:flex-row sm:p-7 sm:text-left">
+          <div>
+            <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-primary">
+              Familias de comunas cercanas en Santiago Norte
+            </p>
+            <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
+              Si vives en <strong>Huechuraba, Renca, Recoleta, Independencia o Quilicura</strong>,
+              también te orientamos sobre vacantes y el proceso de admisión.
+            </p>
+          </div>
           <Link
             href="/matriculas-2027-santiago-norte"
-            className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-primary-dark transition-colors"
+            className="group inline-flex min-h-11 shrink-0 items-center gap-2 rounded-xl border border-primary/25 bg-surface px-4 py-2.5 text-sm font-bold text-primary transition-colors hover:border-primary hover:bg-primary hover:text-white"
           >
-            Revisar información para Santiago Norte
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            <span>Ver rutas Santiago Norte</span>
+            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
           </Link>
         </div>
       </div>

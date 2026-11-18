@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Phone, Mail, MapPin, Instagram } from "lucide-react";
+import { Clock, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import { siteConfig } from "@/lib/site";
 
 export default function Footer() {
@@ -35,7 +35,7 @@ export default function Footer() {
               <p className="text-xs text-accent-on-dark font-semibold uppercase tracking-widest">
                 {siteConfig.contact.addresses
                   .map((addr) => `RBD ${addr.rbd}`)
-                  .join(" ·")}
+                  .join(" · ")}
               </p>
               <div className="pt-1">
                 <a
@@ -168,6 +168,12 @@ export default function Footer() {
                   >
                     @escuelitasruthoficial_
                   </a>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Clock size={16} className="mt-0.5 shrink-0 text-accent-on-dark" aria-hidden="true" />
+                  <span className="text-xs text-white/75 leading-relaxed font-semibold">
+                    {siteConfig.contact.hours}
+                  </span>
                 </li>
               </ul>
             </div>
